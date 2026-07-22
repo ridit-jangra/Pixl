@@ -1,5 +1,5 @@
 {
-  "name": "pixl",
+  "name": "@pixl/pixl",
   "module": "index.ts",
   "type": "module",
   "private": true,
