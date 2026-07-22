@@ -158,7 +158,12 @@ export function Shell({
       label: "World",
       items: [
         { href: "/story", label: "Story", icon: "story", show: nav.story },
-        { href: "/community-goals", label: "Community Goals", icon: "goals", show: nav.goals },
+        {
+          href: "/community-goals",
+          label: "Community Goals",
+          icon: "goals",
+          show: nav.goals,
+        },
       ],
     },
     {
@@ -361,7 +366,7 @@ export function Shell({
     //     </main>
     //   </div> */}
     // </div>
-    <Sidebar side="right">
+    <Sidebar>
       <SidebarHeader className="border-b px-4 py-3">
         <Link href="/" className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand text-white font-bold">

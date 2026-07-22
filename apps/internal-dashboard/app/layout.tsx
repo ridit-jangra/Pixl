@@ -134,7 +134,7 @@ export default async function RootLayout({
           // >
           //   {children}
           // </Shell>
-          <SidebarProvider side="right">
+          <SidebarProvider>
             <Shell
               session={{ name: session.name, slackId: session.slackId }}
               nav={nav}

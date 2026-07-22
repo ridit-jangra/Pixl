@@ -117,7 +117,7 @@ export function AppSidebar() {
     <Sidebar side="right">
       <SidebarHeader>
         <SidebarMenu className="flex justify-center items-center">
-          <SidebarMenuItem className="flex items-center gap-2 mt-5">
+          <SidebarMenuItem className="flex items-center mt-5">
             <Image src={"/p.png"} alt="pixl" width={50} height={50} />
             <Image src={"/i.png"} alt="pixl" width={50} height={50} />
             <Image src={"/x.png"} alt="pixl" width={50} height={50} />
