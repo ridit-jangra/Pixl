@@ -27,37 +27,40 @@ export function AppSidebar() {
   const active = usePathname();
   const router = useRouter();
 
-  console.log(active);
-
   const groups = [
     {
-      name: "Actions",
+      name: "Dashboard",
       items: [
-        {
-          label: "Overview",
-          shortcut: ["Ctrl", "O"],
-          href: "/",
-        },
-        {
-          label: "Shop",
-          shortcut: ["Ctrl", "S"],
-          href: "/shop",
-        },
-        {
-          label: "Orders",
-          shortcut: ["Ctrl", "Shift", "O"],
-          href: "/orders",
-        },
+        { label: "Overview", shortcut: ["Ctrl", "O"], href: "/" },
+        { label: "Projects", shortcut: ["Ctrl", "P"], href: "/projects" },
       ],
     },
     {
-      name: "Projects",
+      name: "Community",
       items: [
-        {
-          label: "All projects",
-          shortcut: ["Ctrl", "N"],
-          href: "/projects",
-        },
+        { label: "Explore", shortcut: ["Ctrl", "E"], href: "/explore" },
+        { label: "Leaderboard", shortcut: ["Ctrl", "L"], href: "/explore?tab=leaderboard" },
+      ],
+    },
+    {
+      name: "Shop",
+      items: [
+        { label: "Shop", shortcut: ["Ctrl", "S"], href: "/shop" },
+        { label: "Orders", shortcut: ["Ctrl", "Shift", "O"], href: "/orders" },
+      ],
+    },
+    {
+      name: "World",
+      items: [
+        { label: "Quests", shortcut: ["Ctrl", "Q"], href: "/quests" },
+        { label: "Vault", shortcut: ["Ctrl", "V"], href: "/vault" },
+        { label: "Timeline", shortcut: ["Ctrl", "T"], href: "/timeline" },
+      ],
+    },
+    {
+      name: "Support",
+      items: [
+        { label: "Report", shortcut: ["Ctrl", "R"], href: "/report" },
       ],
     },
   ];
@@ -79,12 +82,12 @@ export function AppSidebar() {
           <SidebarGroup key={i}>
             <SidebarGroupLabel>{g.name}</SidebarGroupLabel>
             <SidebarMenu className="gap-1">
-              {g.items.map((i, j) => (
+              {g.items.map((item, j) => (
                 <Tooltip key={j}>
                   <TooltipContent side="right">
-                    {i.label}{" "}
+                    {item.label}{" "}
                     <KbdGroup>
-                      {i.shortcut.map((s, k) => (
+                      {item.shortcut.map((s, k) => (
                         <Kbd key={k}>{s}</Kbd>
                       ))}
                     </KbdGroup>
@@ -93,14 +96,14 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                       <SidebarMenuButton
                         className={cn(
-                          active === i.href &&
+                          active === item.href?.split("?")[0] &&
                             "bg-red hover:bg-red text-black/90",
                         )}
                         onClick={() => {
-                          router.push(i.href);
+                          router.push(item.href);
                         }}
                       >
-                        {i.label}
+                        {item.label}
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   </TooltipTrigger>
