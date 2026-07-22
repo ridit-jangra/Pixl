@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://fa3fub2wlv3v"]
+
+[ext_resource type="Script" uid="uid://cevd8o7d7sou1" path="res://scripts/player.gd" id="1_g2els"]
+[ext_resource type="FontFile" uid="uid://oex4cc8vn0hy" path="res://assets/fonts/Monocraft.ttf" id="3_qhqgy"]
+[ext_resource type="Script" uid="uid://by3clcnxa4og7" path="res://scripts/shadow.gd" id="4_dqkch"]
+[ext_resource type="SpriteFrames" uid="uid://tunfxupw42b5" path="res://scenes/character_frames.tres" id="5_frames"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g2els"]
+radius = 4.0
+
+[node name="player" type="CharacterBody2D" unique_id=393070258]
+y_sort_enabled = true
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_g2els")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=753521157]
+sprite_frames = ExtResource("5_frames")
+animation = &"front_idle"
+offset = Vector2(0, -15)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=970339276]
+position = Vector2(0, -7)
+shape = SubResource("CircleShape2D_g2els")
+
+[node name="Camera2d" type="Camera2D" parent="." unique_id=258357877]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(2, 4)
+zoom = Vector2(4, 4)
+position_smoothing_speed = 1.0
+
+[node name="NameLabel" type="Label" parent="." unique_id=1331379137]
+z_index = 21
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -27.0
+offset_top = -36.0
+offset_right = 28.0
+offset_bottom = -25.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_qhqgy")
+theme_override_font_sizes/font_size = 7
+horizontal_alignment = 1
+
+[node name="Shadow" type="Node2D" parent="." unique_id=1041736970]
+script = ExtResource("4_dqkch")

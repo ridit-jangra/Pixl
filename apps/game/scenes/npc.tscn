@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://bnpcpixl00001"]
+
+[ext_resource type="Script" path="res://scripts/npc.gd" id="1_npc"]
+[ext_resource type="SpriteFrames" uid="uid://tunfxupw42b5" path="res://scenes/character_frames.tres" id="2_frames"]
+[ext_resource type="Script" uid="uid://by3clcnxa4og7" path="res://scripts/shadow.gd" id="3_shadow"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
+radius = 4.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_npc"]
+radius = 26.0
+
+[node name="Npc" type="CharacterBody2D"]
+y_sort_enabled = true
+z_index = 10
+collision_layer = 8
+collision_mask = 1
+script = ExtResource("1_npc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = ExtResource("2_frames")
+animation = &"front_idle"
+offset = Vector2(0, -15)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("CircleShape2D_body")
+
+[node name="NameLabel" type="Label" parent="."]
+z_index = 21
+
+[node name="InteractArea" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+shape = SubResource("CircleShape2D_npc")
+
+[node name="Shadow" type="Node2D" parent="."]
+script = ExtResource("3_shadow")

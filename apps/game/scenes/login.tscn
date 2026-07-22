@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3 uid="uid://dv6e2uxkej2n7"]
+
+[ext_resource type="Theme" uid="uid://bv3yjmmciab5v" path="res://themes/main_theme.tres" id="1_nw41r"]
+[ext_resource type="Script" uid="uid://dnli4mn0oyso2" path="res://scripts/login.gd" id="1_pymad"]
+[ext_resource type="Texture2D" path="res://assets/ui/pixl_wordmark.png" id="2_logo"]
+
+[node name="Login" type="Control" unique_id=2039546782]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_nw41r")
+script = ExtResource("1_pymad")
+
+[node name="Backdrop" type="ColorRect" parent="." unique_id=104857602]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.078431, 0.062745, 0.039216, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=223593209]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1270512282]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+
+[node name="TitleLogo" type="TextureRect" parent="CenterContainer/VBoxContainer" unique_id=424695268]
+custom_minimum_size = Vector2(300, 93)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_logo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StatusLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1483478206]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"InfoText"
+horizontal_alignment = 1
+
+[node name="LoginButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=134122846]
+layout_mode = 2
+text = "Login with Hack Club"

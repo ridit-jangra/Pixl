@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap");
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-pixel: "Pixelify Sans", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes scroll-ltr {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0%); }
+}
+
+.marquee-track {
+  animation: scroll-ltr 40s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+:root {
+  --pixl-shadow:
+    2px 0 0 #16161e, -2px 0 0 #16161e,
+    0 2px 0 #16161e,  0 -2px 0 #16161e,
+    2px 2px 0 #16161e, -2px 2px 0 #16161e,
+    2px -2px 0 #16161e, -2px -2px 0 #16161e,
+    5px 5px 0 #16161e;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --pixl-shadow:
+      4px 0 0 #16161e, -4px 0 0 #16161e,
+      0 4px 0 #16161e,  0 -4px 0 #16161e,
+      4px 4px 0 #16161e, -4px 4px 0 #16161e,
+      4px -4px 0 #16161e, -4px -4px 0 #16161e,
+      10px 10px 0 #16161e;
+  }
+}

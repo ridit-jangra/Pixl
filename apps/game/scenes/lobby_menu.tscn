@@ -1,0 +1,204 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlobbymenu42"]
+
+[ext_resource type="Theme" uid="uid://bv3yjmmciab5v" path="res://themes/main_theme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://scripts/lobby_menu.gd" id="2_script"]
+
+[node name="LobbyMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_theme")
+script = ExtResource("2_script")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.054902, 0.035294, 0.015686, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Wrap" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = -22
+
+[node name="TitlePlate" type="PanelContainer" parent="CenterContainer/Wrap"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"TitlePlate"
+
+[node name="PlateLabel" type="Label" parent="CenterContainer/Wrap/TitlePlate"]
+layout_mode = 2
+theme_type_variation = &"TitlePlateText"
+text = "LOBBIES"
+
+[node name="Panel" type="PanelContainer" parent="CenterContainer/Wrap"]
+custom_minimum_size = Vector2(640, 0)
+layout_mode = 2
+
+[node name="Accents" type="Control" parent="CenterContainer/Wrap/Panel"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TL" type="ColorRect" parent="CenterContainer/Wrap/Panel/Accents"]
+layout_mode = 1
+offset_left = 9.0
+offset_top = 9.0
+offset_right = 17.0
+offset_bottom = 17.0
+mouse_filter = 2
+color = Color(0.85098, 0.643137, 0.25098, 1)
+
+[node name="TR" type="ColorRect" parent="CenterContainer/Wrap/Panel/Accents"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -17.0
+offset_top = 9.0
+offset_right = -9.0
+offset_bottom = 17.0
+grow_horizontal = 0
+mouse_filter = 2
+color = Color(0.85098, 0.643137, 0.25098, 1)
+
+[node name="BL" type="ColorRect" parent="CenterContainer/Wrap/Panel/Accents"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = -17.0
+offset_right = 17.0
+offset_bottom = -9.0
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0.85098, 0.643137, 0.25098, 1)
+
+[node name="BR" type="ColorRect" parent="CenterContainer/Wrap/Panel/Accents"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -17.0
+offset_top = -17.0
+offset_right = -9.0
+offset_bottom = -9.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0.85098, 0.643137, 0.25098, 1)
+
+[node name="Margin" type="MarginContainer" parent="CenterContainer/Wrap/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 34
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 24
+
+[node name="Body" type="VBoxContainer" parent="CenterContainer/Wrap/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="StatusLabel" type="Label" parent="CenterContainer/Wrap/Panel/Margin/Body"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"StatusText"
+horizontal_alignment = 1
+
+[node name="ActionsRow" type="HBoxContainer" parent="CenterContainer/Wrap/Panel/Margin/Body"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="QuickJoinButton" type="Button" parent="CenterContainer/Wrap/Panel/Margin/Body/ActionsRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Quick Join"
+
+[node name="RefreshButton" type="Button" parent="CenterContainer/Wrap/Panel/Margin/Body/ActionsRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"GreyButton"
+text = "Refresh"
+
+[node name="CreateRow" type="HBoxContainer" parent="CenterContainer/Wrap/Panel/Margin/Body"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="NameEdit" type="LineEdit" parent="CenterContainer/Wrap/Panel/Margin/Body/CreateRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Lobby name (optional)"
+max_length = 30
+
+[node name="CreatePublicButton" type="Button" parent="CenterContainer/Wrap/Panel/Margin/Body/CreateRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "Create Public"
+
+[node name="CreatePrivateButton" type="Button" parent="CenterContainer/Wrap/Panel/Margin/Body/CreateRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"StepButton"
+text = "Create Private"
+
+[node name="CodeRow" type="HBoxContainer" parent="CenterContainer/Wrap/Panel/Margin/Body"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="CodeEdit" type="LineEdit" parent="CenterContainer/Wrap/Panel/Margin/Body/CodeRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Lobby code"
+max_length = 8
+
+[node name="PasswordEdit" type="LineEdit" parent="CenterContainer/Wrap/Panel/Margin/Body/CodeRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Password (private only)"
+max_length = 4
+
+[node name="JoinCodeButton" type="Button" parent="CenterContainer/Wrap/Panel/Margin/Body/CodeRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "Join by Code"
+
+[node name="ListScroll" type="ScrollContainer" parent="CenterContainer/Wrap/Panel/Margin/Body"]
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="ListBox" type="VBoxContainer" parent="CenterContainer/Wrap/Panel/Margin/Body/ListScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="BackButton" type="Button" parent="CenterContainer/Wrap/Panel/Margin/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"GreyButton"
+text = "Back"

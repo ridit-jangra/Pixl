@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en" data-phase="night">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pixl · The Core Vault</title>
+<link rel="icon" href="/index.icon.png">
+<link rel="stylesheet" href="/pixl.css">
+<style>
+  .vwrap { max-width: 960px; margin: 0 auto; }
+
+  /* ---- energy gauge ---- */
+  .gauge {
+    margin-top: 14px; padding: 24px 26px;
+    background:
+      radial-gradient(120% 140% at 50% -20%, rgba(112,72,232,.14), transparent 60%),
+      linear-gradient(var(--panel), var(--panel-2));
+    border: 3px solid var(--stroke);
+    box-shadow: var(--drop);
+    position: relative; overflow: hidden;
+  }
+  .gauge-eyebrow { font-family: var(--pixel); font-size: 12px; letter-spacing: 4px; color: var(--violet); margin-bottom: 8px; }
+  .gauge-num { font-family: var(--pixel); font-size: clamp(38px, 8vw, 64px); line-height: 1; color: var(--gold);
+    text-shadow: 3px 3px 0 var(--stroke); }
+  .gauge-num small { font-family: var(--pixel); font-size: .28em; letter-spacing: 3px; color: var(--violet); display: block; margin-top: 8px; }
+  .gauge-next { margin-top: 4px; font-size: 14px; color: var(--dim); }
+  .gauge-next b { color: var(--gold-soft); }
+
+  .segbar { display: flex; gap: 3px; margin-top: 18px; height: 24px; }
+  .seg { flex: 1; border: 2px solid var(--stroke); background: var(--panel-deep); box-shadow: inset 0 0 0 1px rgba(0,0,0,.06); }
+  .seg.on { background: linear-gradient(#9775fa, #7048e8); box-shadow: inset 0 2px 0 rgba(255,255,255,.4), inset 0 -2px 0 rgba(0,0,0,.2); }
+
+  /* ---- vault chambers ---- */
+  .chambers { display: flex; flex-direction: column; gap: 16px; margin-top: 28px; }
+  .chamber {
+    display: flex; gap: 0; overflow: hidden; position: relative;
+    animation: rise .4s steps(6) backwards;
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) { .chamber { animation: none; } }
+
+  .ch-seal {
+    width: 108px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 4px; border-right: 4px solid var(--stroke); position: relative;
+    font-family: var(--pixel);
+  }
+  .ch-seal .lv-word { font-size: 10px; letter-spacing: 3px; }
+  .ch-seal .lv-num { font-size: 40px; line-height: 1; }
+  .chamber.on .ch-seal { background: linear-gradient(160deg, #7048e8, #5a35c0); color: #fff; }
+  .chamber.on .ch-seal .lv-word { color: #e5dbff; }
+  .chamber.off .ch-seal { background: var(--panel-deep); color: var(--faint); }
+  .chamber.on .ch-seal::after { content: "UNLOCKED"; font-family: var(--sans); font-size: 15px; }
+  .chamber.off .ch-seal::after { content: "LOCKED"; font-family: var(--sans); font-size: 15px; opacity: .8; }
+
+  .ch-body { flex: 1; min-width: 0; padding: 16px 20px; }
+  .ch-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 7px; }
+  .ch-title { font-family: var(--pixel); font-size: 21px; letter-spacing: 1px; }
+  .chamber.on .ch-title { color: var(--gold); }
+  .chamber.off .ch-title { color: var(--dim); }
+  .stamp { margin-left: auto; font-family: var(--pixel); font-size: 11px; letter-spacing: 2px; border: 3px solid; padding: 4px 9px 3px; }
+  .stamp.on { color: var(--violet); border-color: var(--violet); background: rgba(112,72,232,.10); }
+  .stamp.off { color: var(--faint); border-color: var(--faint); }
+  .ch-blurb { font-size: 14.5px; color: var(--dim); line-height: 1.6; margin-bottom: 12px; }
+  .chamber.off .ch-blurb { color: var(--faint); }
+  .rewards { display: flex; gap: 8px; flex-wrap: wrap; }
+  .rw { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 5px 10px 4px; border: 2px solid var(--stroke);
+    background: var(--panel-deep); color: var(--ink); }
+  .rw.energy { color: var(--gold); border-color: rgba(255,209,102,.5); }
+  .chamber.off .rw { color: var(--faint); }
+  .ch-need { margin-top: 10px; font-size: 12.5px; color: var(--violet); letter-spacing: .5px; }
+
+  .chamber.off { filter: saturate(.7) brightness(.97); opacity: .78; }
+  .chamber.on:hover { transform: translate(2px,-2px); box-shadow: 8px 8px 0 var(--stroke), 0 0 0 2px var(--violet); }
+
+  .lore { margin: 34px 0 10px; padding: 16px 20px; font-size: 14px; color: var(--dim); line-height: 1.75; }
+  .lore b { color: var(--violet); }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="vwrap">
+    <section style="text-align:center; padding: 24px 20px 4px">
+      <h1 class="page-title" style="text-shadow:4px 4px 0 var(--stroke), 0 0 26px rgba(154,123,255,.4)">THE CORE VAULT</h1>
+      <div class="page-sub" style="color:#c9b3ff">EVERY SHIP FEEDS RESTORATION ENERGY — THE COMMUNITY RECOVERS THE VAULT TOGETHER</div>
+    </section>
+
+    <section class="gauge">
+      <div class="gauge-eyebrow">RESTORATION ENERGY</div>
+      <div class="gauge-num" id="g-num">—<small id="g-sub">COMMUNITY TOTAL</small></div>
+      <div class="gauge-next" id="g-next"></div>
+      <div class="segbar" id="segbar"></div>
+    </section>
+
+    <div class="spin" id="loading"></div>
+    <div class="chambers" id="chambers"></div>
+    <div class="empty-note" id="empty" hidden>THE VAULT IS SEALED — NO LEVELS CONFIGURED YET.</div>
+
+    <div class="lore panel-deep" id="lore">
+      The Core is a vault holding the old civilization's technology. As the community pours in <b>Restoration Energy</b>, it recovers another chamber — and hands the equipment inside back to <b>everyone</b>. These aren't gifts from an NPC. They're what the Core has finally managed to restore.
+    </div>
+  </div>
+</main>
+
+<script src="/pixl.js"></script>
+<script>
+Pixl.mountTopbar("vault");
+Pixl.loadWallet();
+
+function fmt(n) { return (n || 0).toLocaleString(); }
+const SEGMENTS = 28;
+
+function render(data) {
+  const energy = data.energy || 0;
+  const levels = data.levels || [];
+
+  document.getElementById("g-num").firstChild.textContent = fmt(energy) + " ";
+
+  let filled = SEGMENTS, prev = 0, next = data.nextRequired;
+  if (next) {
+    prev = levels.filter((l) => l.unlocked).reduce((m, l) => Math.max(m, l.energyRequired), 0);
+    const span = Math.max(1, next - prev);
+    filled = Math.round(Math.max(0, Math.min(1, (energy - prev) / span)) * SEGMENTS);
+    document.getElementById("g-next").innerHTML =
+      `<b>${fmt(next - energy)}</b> more to recover <b>Vault Level ${data.currentLevel + 1}</b>`;
+  } else if (levels.length) {
+    document.getElementById("g-next").innerHTML = `<b>Vault fully recovered.</b> Every chamber is open.`;
+  }
+  document.getElementById("segbar").innerHTML =
+    Array.from({ length: SEGMENTS }, (_, i) => `<div class="seg ${i < filled ? "on" : ""}"></div>`).join("");
+
+  if (!levels.length) {
+    document.getElementById("empty").hidden = false;
+    document.getElementById("lore").hidden = true;
+    return;
+  }
+
+  document.getElementById("chambers").innerHTML = levels.map((l, i) => `
+    <div class="chamber panel ${l.unlocked ? "on" : "off"}" style="animation-delay:${Math.min(i * 70, 600)}ms">
+      <div class="ch-seal">
+        <span class="lv-word">VAULT LV</span>
+        <span class="lv-num">${l.level}</span>
+      </div>
+      <div class="ch-body">
+        <div class="ch-head">
+          <span class="ch-title">${Pixl.esc(l.title)}</span>
+          <span class="stamp ${l.unlocked ? "on" : "off"}">${l.unlocked ? "RECOVERED" : "SEALED"}</span>
+        </div>
+        <div class="ch-blurb">${Pixl.esc(l.blurb)}</div>
+        <div class="rewards">
+          <span class="rw energy">${fmt(l.energyRequired)}</span>
+          ${(l.rewards || []).map((r) => `<span class="rw">${Pixl.esc(r.icon || "")} ${Pixl.esc(r.label || "")}</span>`).join("")}
+        </div>
+        ${!l.unlocked ? `<div class="ch-need">◆ ${fmt(Math.max(0, l.energyRequired - energy))} more energy to recover</div>` : ""}
+      </div>
+    </div>`).join("");
+}
+
+async function boot() {
+  if (!Pixl.hasToken) return;
+  let data = null;
+  try { data = await Pixl.api("/api/vault"); }
+  catch (e) { if (e.message !== "unauthorized") Pixl.toast("Couldn't load the vault.", true); }
+  const l = document.getElementById("loading"); if (l) l.remove();
+  if (data) render(data);
+}
+boot();
+</script>
+</body>
+</html>

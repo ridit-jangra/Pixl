@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://cload5cr33n1x"]
+
+[ext_resource type="Script" path="res://scripts/loading_screen.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/ui/pixl_wordmark.png" id="2"]
+[ext_resource type="FontFile" path="res://assets/fonts/Monocraft.ttf" id="3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.929, 0.878, 0.769, 1.0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_bg"]
+bg_color = Color(0.961, 0.941, 0.910, 1.0)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.102, 0.102, 0.090, 1.0)
+corner_radius_top_left = 0
+corner_radius_top_right = 0
+corner_radius_bottom_right = 0
+corner_radius_bottom_left = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_fill"]
+bg_color = Color(0.831, 0.373, 0.416, 1.0)
+corner_radius_top_left = 0
+corner_radius_top_right = 0
+corner_radius_bottom_right = 0
+corner_radius_bottom_left = 0
+
+[node name="LoadingScreen" type="CanvasLayer"]
+layer = 128
+script = ExtResource("1")
+
+[node name="Background" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="Center" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBox" type="VBoxContainer" parent="Center"]
+custom_minimum_size = Vector2(560, 0)
+alignment = 1
+
+[node name="Logo" type="TextureRect" parent="Center/VBox"]
+custom_minimum_size = Vector2(560, 140)
+texture = ExtResource("2")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Spacer" type="Control" parent="Center/VBox"]
+custom_minimum_size = Vector2(0, 40)
+
+[node name="ProgressBar" type="ProgressBar" parent="Center/VBox"]
+custom_minimum_size = Vector2(560, 34)
+min_value = 0.0
+max_value = 100.0
+value = 0.0
+show_percentage = false
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bar_fill")
+
+[node name="LoadingLabel" type="Label" parent="Center/VBox"]
+text = "LOADING"
+horizontal_alignment = 1
+theme_override_fonts/font = ExtResource("3")
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.102, 0.102, 0.090, 0.7)

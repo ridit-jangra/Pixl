@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pixl · Projects</title>
+<link rel="icon" href="/index.icon.png">
+<script>
+  // Hackatime moved into the Projects page — carry the token across.
+  var qs = location.search || "";
+  location.replace("/projects/" + qs + (location.hash || ""));
+</script>
+</head>
+<body></body>
+</html>

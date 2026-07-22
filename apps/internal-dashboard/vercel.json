@@ -1,0 +1,9 @@
+{
+  "framework": "nextjs",
+  "crons": [
+    {
+      "path": "/api/cron/queue-health",
+      "schedule": "0 9 * * *"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+[gd_scene load_steps=3 format=3 uid="uid://d13chpcees7ql"]
+
+[ext_resource type="Theme" uid="uid://bv3yjmmciab5v" path="res://themes/main_theme.tres" id="1_rdavy"]
+[ext_resource type="Script" uid="uid://crg5why2myfcw" path="res://scripts/chat_hud.gd" id="2_d8vlu"]
+
+[node name="ChatHud" type="CanvasLayer"]
+layer = 100
+script = ExtResource("2_d8vlu")
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_rdavy")
+
+[node name="Lines" type="VBoxContainer" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_right = 490.0
+offset_bottom = -56.0
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+alignment = 2
+
+[node name="Hint" type="Label" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = -36.0
+offset_bottom = -16.0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 13
+text = "Press Enter to chat"
+
+[node name="Input" type="LineEdit" parent="Root"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = -52.0
+offset_right = 452.0
+offset_bottom = -12.0
+grow_vertical = 0
+placeholder_text = "Say something…"
+max_length = 160

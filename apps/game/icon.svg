@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" shape-rendering="crispEdges">
+  <rect x="6" y="6" width="116" height="116" rx="18" fill="#ec3750" stroke="#16161e" stroke-width="6"/>
+  <path d="M40 30 H90 V66 H56 V100 H40 Z M56 42 H74 V54 H56 Z"
+        fill="#f2b83c" fill-rule="evenodd"
+        stroke="#16161e" stroke-width="6" stroke-linejoin="miter"/>
+  <path d="M97 26 L101 36 L111 40 L101 44 L97 54 L93 44 L83 40 L93 36 Z"
+        fill="#fffdf5" stroke="#16161e" stroke-width="3" stroke-linejoin="miter"/>
+</svg>

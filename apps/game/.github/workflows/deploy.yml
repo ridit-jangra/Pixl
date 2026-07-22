@@ -1,0 +1,71 @@
+name: Export Web & Deploy to Vercel
+
+on:
+  push:
+    branches: [main, feat/godot-rewrite]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vercel-deploy
+  cancel-in-progress: true
+
+env:
+  GODOT_VERSION: "4.6"
+  GODOT_RELEASE: "stable"
+  EXPORT_PRESET: "Web"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Godot ${{ env.GODOT_VERSION }}-${{ env.GODOT_RELEASE }} (headless)
+        run: |
+          set -euo pipefail
+          BASE="https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}-${GODOT_RELEASE}"
+          curl -fSL -o godot.zip "${BASE}/Godot_v${GODOT_VERSION}-${GODOT_RELEASE}_linux.x86_64.zip"
+          curl -fSL -o templates.tpz "${BASE}/Godot_v${GODOT_VERSION}-${GODOT_RELEASE}_export_templates.tpz"
+          unzip -q godot.zip
+          mv "Godot_v${GODOT_VERSION}-${GODOT_RELEASE}_linux.x86_64" /usr/local/bin/godot
+          chmod +x /usr/local/bin/godot
+          mkdir -p "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}"
+          unzip -q templates.tpz
+          mv templates/* "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}/"
+
+      - name: Import project resources
+        run: godot --headless --import --quit-after 200 || true
+
+      - name: Export Web build
+        run: |
+          set -euo pipefail
+          mkdir -p build
+          godot --headless --verbose --export-release "${EXPORT_PRESET}" build/index.html
+          test -f build/index.html
+
+      - name: Add Vercel config (cross-origin isolation headers for threads)
+        run: cp vercel.json build/vercel.json
+
+      - name: Add web pages (shop / explore / quests / hackatime)
+        run: |
+          set -euo pipefail
+          cp -r web/. build/
+          rm -f build/.gdignore
+          mkdir -p build/fonts build/img
+          cp assets/fonts/Monocraft.ttf build/fonts/Monocraft.ttf
+          cp assets/npcs/cheetah_char.png build/img/cheetah_char.png
+          cp assets/ui/pixel_currency_red.png build/img/pixel.png
+
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          set -euo pipefail
+          npm i -g vercel@latest
+          vercel deploy build --prod --yes --token "$VERCEL_TOKEN"

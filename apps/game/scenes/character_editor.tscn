@@ -1,0 +1,456 @@
+[gd_scene load_steps=23 format=3 uid="uid://clriuxt7p6d21"]
+
+[ext_resource type="Script" uid="uid://bmdrawmhbvmnc" path="res://scripts/character_editor.gd" id="1_script"]
+[ext_resource type="Theme" uid="uid://bv3yjmmciab5v" path="res://themes/main_theme.tres" id="1_theme"]
+[ext_resource type="Texture2D" uid="uid://cwgi3alflksx" path="res://assets/cozy-towns/CozyValley_Premium_1.3/Characters/-- Pre-assembled Characters/char1.png" id="char1"]
+[ext_resource type="Texture2D" uid="uid://bhal7m0ab53om" path="res://assets/cozy-towns/CozyValley_Premium_1.3/Characters/-- Pre-assembled Characters/char2.png" id="char2"]
+[ext_resource type="Texture2D" uid="uid://dsihnfav7nutc" path="res://assets/cozy-towns/CozyValley_Premium_1.3/Characters/-- Pre-assembled Characters/char3.png" id="char3"]
+[ext_resource type="Texture2D" uid="uid://cle7mv4rvpofp" path="res://assets/cozy-towns/CozyValley_Premium_1.3/Characters/-- Pre-assembled Characters/char4.png" id="char4"]
+[ext_resource type="Texture2D" uid="uid://cfcrdbq2lu20e" path="res://assets/cozy-towns/CozyValley_Premium_1.3/Characters/-- Pre-assembled Characters/char5.png" id="char5"]
+[ext_resource type="Texture2D" uid="uid://hhoo2e0l2fey" path="res://assets/cozy-towns/CozyValley_Premium_1.3/Characters/-- Pre-assembled Characters/char6.png" id="char6"]
+[ext_resource type="Texture2D" uid="uid://cjfjr1wknh5nj" path="res://assets/cozy-towns/CozyValley_Premium_1.3/Characters/-- Pre-assembled Characters/char7.png" id="char7"]
+[ext_resource type="Texture2D" uid="uid://ciunvepvydfd2" path="res://assets/cozy-towns/CozyValley_Premium_1.3/Characters/-- Pre-assembled Characters/char8.png" id="char8"]
+[ext_resource type="Texture2D" uid="uid://cvujhn68dvtat" path="res://assets/cozy-towns/CozyValley_Premium_1.3/Characters/-- Pre-assembled Characters/char9.png" id="char9"]
+
+[sub_resource type="AtlasTexture" id="atlas1"]
+atlas = ExtResource("char1")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="atlas2"]
+atlas = ExtResource("char2")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="atlas3"]
+atlas = ExtResource("char3")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="atlas4"]
+atlas = ExtResource("char4")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="atlas5"]
+atlas = ExtResource("char5")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="atlas6"]
+atlas = ExtResource("char6")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="atlas7"]
+atlas = ExtResource("char7")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="atlas8"]
+atlas = ExtResource("char8")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="atlas9"]
+atlas = ExtResource("char9")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_preview"]
+bg_color = Color(0, 0, 0, 0.22)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 0.12)
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cell"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 0.25)
+corner_detail = 1
+anti_aliasing = false
+
+[node name="CharacterEditor" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_theme")
+script = ExtResource("1_script")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.054902, 0.035294, 0.015686, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Wrap" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = -22
+
+[node name="TitlePlate" type="PanelContainer" parent="CenterContainer/Wrap"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"TitlePlate"
+
+[node name="PlateLabel" type="Label" parent="CenterContainer/Wrap/TitlePlate"]
+layout_mode = 2
+theme_type_variation = &"TitlePlateText"
+text = "CUSTOMISE YOUR LOOK"
+
+[node name="Panel" type="PanelContainer" parent="CenterContainer/Wrap"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+
+[node name="Accents" type="Control" parent="CenterContainer/Wrap/Panel"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TL" type="ColorRect" parent="CenterContainer/Wrap/Panel/Accents"]
+layout_mode = 1
+offset_left = 9.0
+offset_top = 9.0
+offset_right = 17.0
+offset_bottom = 17.0
+mouse_filter = 2
+color = Color(0.85098, 0.643137, 0.25098, 1)
+
+[node name="TR" type="ColorRect" parent="CenterContainer/Wrap/Panel/Accents"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -17.0
+offset_top = 9.0
+offset_right = -9.0
+offset_bottom = 17.0
+grow_horizontal = 0
+mouse_filter = 2
+color = Color(0.85098, 0.643137, 0.25098, 1)
+
+[node name="BL" type="ColorRect" parent="CenterContainer/Wrap/Panel/Accents"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = -17.0
+offset_right = 17.0
+offset_bottom = -9.0
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0.85098, 0.643137, 0.25098, 1)
+
+[node name="BR" type="ColorRect" parent="CenterContainer/Wrap/Panel/Accents"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -17.0
+offset_top = -17.0
+offset_right = -9.0
+offset_bottom = -9.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0.85098, 0.643137, 0.25098, 1)
+
+[node name="Margin" type="MarginContainer" parent="CenterContainer/Wrap/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 34
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 24
+
+[node name="Body" type="VBoxContainer" parent="CenterContainer/Wrap/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TopRow" type="HBoxContainer" parent="CenterContainer/Wrap/Panel/Margin/Body"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="PreviewBox" type="PanelContainer" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_preview")
+
+[node name="Preview" type="TextureRect" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/PreviewBox"]
+unique_name_in_owner = true
+texture_filter = 1
+custom_minimum_size = Vector2(112, 112)
+layout_mode = 2
+texture = SubResource("atlas1")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Steppers" type="VBoxContainer" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="SkinStepper" type="HBoxContainer" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/Steppers"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="NameLabel" type="Label" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/Steppers/SkinStepper"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+theme_type_variation = &"InfoText"
+theme_override_font_sizes/font_size = 14
+text = "Skin"
+
+[node name="Dec" type="Button" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/Steppers/SkinStepper"]
+layout_mode = 2
+theme_type_variation = &"StepButton"
+text = "<"
+
+[node name="Value" type="Label" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/Steppers/SkinStepper"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "1 / 3"
+horizontal_alignment = 1
+
+[node name="Inc" type="Button" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/Steppers/SkinStepper"]
+layout_mode = 2
+theme_type_variation = &"StepButton"
+text = ">"
+
+[node name="HairStepper" type="HBoxContainer" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/Steppers"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="NameLabel" type="Label" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/Steppers/HairStepper"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+theme_type_variation = &"InfoText"
+theme_override_font_sizes/font_size = 14
+text = "Hair"
+
+[node name="Dec" type="Button" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/Steppers/HairStepper"]
+layout_mode = 2
+theme_type_variation = &"StepButton"
+text = "<"
+
+[node name="Value" type="Label" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/Steppers/HairStepper"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "1 / 6"
+horizontal_alignment = 1
+
+[node name="Inc" type="Button" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/Steppers/HairStepper"]
+layout_mode = 2
+theme_type_variation = &"StepButton"
+text = ">"
+
+[node name="TopStepper" type="HBoxContainer" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/Steppers"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="NameLabel" type="Label" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/Steppers/TopStepper"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+theme_type_variation = &"InfoText"
+theme_override_font_sizes/font_size = 14
+text = "Top"
+
+[node name="Dec" type="Button" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/Steppers/TopStepper"]
+layout_mode = 2
+theme_type_variation = &"StepButton"
+text = "<"
+
+[node name="Value" type="Label" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/Steppers/TopStepper"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "1 / 6"
+horizontal_alignment = 1
+
+[node name="Inc" type="Button" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/Steppers/TopStepper"]
+layout_mode = 2
+theme_type_variation = &"StepButton"
+text = ">"
+
+[node name="BottomStepper" type="HBoxContainer" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/Steppers"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="NameLabel" type="Label" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/Steppers/BottomStepper"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+theme_type_variation = &"InfoText"
+theme_override_font_sizes/font_size = 14
+text = "Bottom"
+
+[node name="Dec" type="Button" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/Steppers/BottomStepper"]
+layout_mode = 2
+theme_type_variation = &"StepButton"
+text = "<"
+
+[node name="Value" type="Label" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/Steppers/BottomStepper"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "1 / 6"
+horizontal_alignment = 1
+
+[node name="Inc" type="Button" parent="CenterContainer/Wrap/Panel/Margin/Body/TopRow/Steppers/BottomStepper"]
+layout_mode = 2
+theme_type_variation = &"StepButton"
+text = ">"
+
+[node name="RandomButton" type="Button" parent="CenterContainer/Wrap/Panel/Margin/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"GreyButton"
+text = "Random"
+
+[node name="HintLabel" type="Label" parent="CenterContainer/Wrap/Panel/Margin/Body"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"SubText"
+text = "— or pick a character —"
+horizontal_alignment = 1
+
+[node name="PresetGrid" type="GridContainer" parent="CenterContainer/Wrap/Panel/Margin/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 5
+
+[node name="Cell1" type="PanelContainer" parent="CenterContainer/Wrap/Panel/Margin/Body/PresetGrid"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cell")
+
+[node name="Preset1" type="TextureButton" parent="CenterContainer/Wrap/Panel/Margin/Body/PresetGrid/Cell1"]
+texture_filter = 1
+custom_minimum_size = Vector2(52, 52)
+layout_mode = 2
+texture_normal = SubResource("atlas1")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Cell2" type="PanelContainer" parent="CenterContainer/Wrap/Panel/Margin/Body/PresetGrid"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cell")
+
+[node name="Preset2" type="TextureButton" parent="CenterContainer/Wrap/Panel/Margin/Body/PresetGrid/Cell2"]
+texture_filter = 1
+custom_minimum_size = Vector2(52, 52)
+layout_mode = 2
+texture_normal = SubResource("atlas2")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Cell3" type="PanelContainer" parent="CenterContainer/Wrap/Panel/Margin/Body/PresetGrid"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cell")
+
+[node name="Preset3" type="TextureButton" parent="CenterContainer/Wrap/Panel/Margin/Body/PresetGrid/Cell3"]
+texture_filter = 1
+custom_minimum_size = Vector2(52, 52)
+layout_mode = 2
+texture_normal = SubResource("atlas3")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Cell4" type="PanelContainer" parent="CenterContainer/Wrap/Panel/Margin/Body/PresetGrid"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cell")
+
+[node name="Preset4" type="TextureButton" parent="CenterContainer/Wrap/Panel/Margin/Body/PresetGrid/Cell4"]
+texture_filter = 1
+custom_minimum_size = Vector2(52, 52)
+layout_mode = 2
+texture_normal = SubResource("atlas4")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Cell5" type="PanelContainer" parent="CenterContainer/Wrap/Panel/Margin/Body/PresetGrid"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cell")
+
+[node name="Preset5" type="TextureButton" parent="CenterContainer/Wrap/Panel/Margin/Body/PresetGrid/Cell5"]
+texture_filter = 1
+custom_minimum_size = Vector2(52, 52)
+layout_mode = 2
+texture_normal = SubResource("atlas5")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Cell6" type="PanelContainer" parent="CenterContainer/Wrap/Panel/Margin/Body/PresetGrid"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cell")
+
+[node name="Preset6" type="TextureButton" parent="CenterContainer/Wrap/Panel/Margin/Body/PresetGrid/Cell6"]
+texture_filter = 1
+custom_minimum_size = Vector2(52, 52)
+layout_mode = 2
+texture_normal = SubResource("atlas6")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Cell7" type="PanelContainer" parent="CenterContainer/Wrap/Panel/Margin/Body/PresetGrid"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cell")
+
+[node name="Preset7" type="TextureButton" parent="CenterContainer/Wrap/Panel/Margin/Body/PresetGrid/Cell7"]
+texture_filter = 1
+custom_minimum_size = Vector2(52, 52)
+layout_mode = 2
+texture_normal = SubResource("atlas7")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Cell8" type="PanelContainer" parent="CenterContainer/Wrap/Panel/Margin/Body/PresetGrid"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cell")
+
+[node name="Preset8" type="TextureButton" parent="CenterContainer/Wrap/Panel/Margin/Body/PresetGrid/Cell8"]
+texture_filter = 1
+custom_minimum_size = Vector2(52, 52)
+layout_mode = 2
+texture_normal = SubResource("atlas8")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Cell9" type="PanelContainer" parent="CenterContainer/Wrap/Panel/Margin/Body/PresetGrid"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cell")
+
+[node name="Preset9" type="TextureButton" parent="CenterContainer/Wrap/Panel/Margin/Body/PresetGrid/Cell9"]
+texture_filter = 1
+custom_minimum_size = Vector2(52, 52)
+layout_mode = 2
+texture_normal = SubResource("atlas9")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="DoneButton" type="Button" parent="CenterContainer/Wrap/Panel/Margin/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Done"

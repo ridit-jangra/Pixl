@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pixl · Quest Log</title>
+<link rel="icon" href="/index.icon.png">
+<link rel="stylesheet" href="/pixl.css">
+<style>
+  .hero {
+    padding: 26px 28px;
+    margin-top: 8px;
+    display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap;
+    background:
+      repeating-linear-gradient(rgba(0,0,0,.10) 0 3px, transparent 3px 34px),
+      linear-gradient(#d59a53, #c07f38);
+    border: 3px solid var(--stroke);
+    box-shadow: inset 0 3px 0 rgba(255,246,224,.35), var(--drop);
+  }
+  .progress-box { margin-left: auto; text-align: right; }
+  .progress-label { font-size: 13px; color: #3a2410; margin-bottom: 7px; letter-spacing: 1px; }
+  .progress-bar { width: 240px; max-width: 60vw; height: 18px; border: 3px solid var(--stroke); background: var(--panel-deep); }
+  .progress-bar > div { height: 100%; background: var(--gold); transition: width .5s steps(10); }
+  .quest-list { display: flex; flex-direction: column; gap: 16px; max-width: 860px; margin-top: 26px; }
+  .quest {
+    display: flex; gap: 18px;
+    padding: 18px 20px;
+    position: relative;
+  }
+  .quest.locked { filter: saturate(.6) brightness(.98); opacity: .72; }
+  .quest.unlocked { box-shadow: inset 0 0 0 3px var(--gold), 5px 5px 0 var(--stroke); }
+  .quest-icon {
+    width: 58px; height: 58px; flex-shrink: 0;
+    border: 3px solid var(--stroke);
+    background: var(--panel-deep);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+  }
+  .quest.unlocked .quest-icon { background: #ffe9b0; }
+  .quest-main { flex: 1; min-width: 0; }
+  .quest-name { font-size: 19px; color: var(--ink); margin-bottom: 5px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .quest.unlocked .quest-name { color: var(--gold); }
+  .quest-desc { font-size: 15px; color: var(--dim); line-height: 1.6; margin-bottom: 9px; white-space: pre-wrap; }
+  .quest-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+  .reward-tag { color: var(--good); }
+  .stamp {
+    position: absolute; top: 14px; right: 16px;
+    font-size: 12px; letter-spacing: 2px;
+    border: 3px solid;
+    padding: 4px 9px 3px;
+    transform: rotate(4deg);
+  }
+  .stamp.on { color: var(--good); border-color: var(--good); }
+  .stamp.off { color: var(--faint); border-color: var(--faint); transform: rotate(-3deg); }
+  .hint-box { margin-top: 30px; padding: 16px 20px; font-size: 14px; color: var(--dim); line-height: 1.7; max-width: 860px; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="hero">
+    <div>
+      <h1 class="page-title">QUEST LOG</h1>
+      <div class="page-sub" style="color:#f0dcb4">SIDEQUESTS FROM THE VILLAGERS — SPECIAL REWARDS ON TOP.</div>
+    </div>
+    <div class="progress-box">
+      <div class="progress-label" id="progress-label">— / — UNLOCKED</div>
+      <div class="progress-bar"><div id="progress-fill" style="width:0%"></div></div>
+    </div>
+  </section>
+
+  <div class="spin" id="loading"></div>
+  <div class="quest-list" id="quests"></div>
+  <div class="empty-note" id="empty" hidden>NO SIDEQUESTS POSTED RIGHT NOW.<br>THE VILLAGERS ARE THINKING…</div>
+
+  <div class="hint-box panel-deep" id="hint" hidden>
+    Locked quests are unlocked by talking to the right NPC in the game — wander the village, chat with everyone, and their quests open up here.
+  </div>
+</main>
+
+<script src="/pixl.js"></script>
+<script>
+Pixl.mountTopbar("quests");
+Pixl.loadWallet();
+
+const ICONS = ["MAP", "SWORD", "CRYSTAL", "WHEAT", "ARROW", "AXE", "POTION", "SCROLL", "CHICKEN", "FISH"];
+
+async function boot() {
+  if (!Pixl.hasToken) return;
+  let quests = [];
+  try {
+    const data = await Pixl.api("/api/sidequests");
+    quests = data.quests || [];
+  } catch (e) {
+    if (e.message !== "unauthorized") Pixl.toast("Couldn't load quests.", true);
+  }
+  document.getElementById("loading").remove();
+
+  const unlocked = quests.filter((q) => q.unlocked).length;
+  document.getElementById("progress-label").textContent = `${unlocked} / ${quests.length} UNLOCKED`;
+  document.getElementById("progress-fill").style.width =
+    quests.length ? (unlocked / quests.length) * 100 + "%" : "0%";
+
+  if (quests.length === 0) {
+    document.getElementById("empty").hidden = false;
+    return;
+  }
+  document.getElementById("hint").hidden = quests.every((q) => q.unlocked);
+
+  const sorted = [...quests].sort((a, b) => Number(b.unlocked) - Number(a.unlocked));
+  document.getElementById("quests").innerHTML = sorted.map((q, i) => `
+    <div class="quest panel ${q.unlocked ? "unlocked" : "locked"}" style="animation: toast-in .2s steps(4) both; animation-delay:${Math.min(i * 40, 500)}ms">
+      <div class="quest-icon">${q.unlocked ? ICONS[q.id % ICONS.length] : ""}</div>
+      <div class="quest-main">
+        <div class="quest-name">${Pixl.esc(q.name)}</div>
+        <div class="quest-desc">${q.description ? Pixl.bbcode(q.description) : Pixl.esc(q.unlocked ? "" : "Find the right villager to learn more…")}</div>
+        <div class="quest-meta">
+          ${q.region ? `<span class="chip">${Pixl.esc(q.region)}</span>` : ""}
+          ${q.npc ? `<span class="chip teal">${Pixl.esc(q.npc)}</span>` : ""}
+          ${q.reward ? `<span class="chip reward-tag">${Pixl.esc(q.reward)}</span>` : ""}
+        </div>
+      </div>
+      <div class="stamp ${q.unlocked ? "on" : "off"}">${q.unlocked ? "UNLOCKED" : "LOCKED"}</div>
+    </div>`).join("");
+}
+boot();
+</script>
+</body>
+</html>
