@@ -14,31 +14,6 @@ const supabase = createClient(
 function db() { return supabase; }
 
 async function aiPost(body) {
-  const ZEN_KEY = process.env.OPENCODE_ZEN_KEY;
-  if (ZEN_KEY) {
-    const ZEN_URL = process.env.OPENCODE_ZEN_URL || 'https://opencode.ai/zen/v1/chat/completions';
-    const zenBody = { ...body, model: process.env.ZEN_MODEL || 'opencode/deepseek-v4-flash-free' };
-    try {
-      const res = await axios.post(ZEN_URL, zenBody, {
-        headers: { Authorization: `Bearer ${ZEN_KEY}`, 'Content-Type': 'application/json' },
-        timeout: 25000,
-      });
-      const content = res.data?.choices?.[0]?.message?.content;
-      const reasoning = res.data?.choices?.[0]?.message?.reasoning_content;
-      console.log('[zen] ok — content:', JSON.stringify(content)?.slice(0, 80), '| reasoning:', !!reasoning);
-      if (!content && reasoning) {
-        console.warn('[zen] content empty but reasoning present — model is reasoning-only, falling back to OpenRouter');
-      } else {
-        return res;
-      }
-    } catch (e) {
-      if (e.response?.status === 402) {
-        console.error('[zen] no credits (402)');
-        const err = new Error('no credits'); err.code = NO_CREDITS; throw err;
-      }
-      console.error('[zen] failed (status', e.response?.status, '):', e.response?.data?.error?.message || e.message, '— falling back to OpenRouter');
-    }
-  }
   const openrouterKey = process.env.OPENROUTER_API_KEY;
   if (!openrouterKey) { const err = new Error('no credits'); err.code = NO_CREDITS; throw err; }
   const orBody = { ...body, model: 'google/gemini-2.5-flash-lite:nitro' };
