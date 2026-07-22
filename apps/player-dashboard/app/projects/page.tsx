@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Project } from "../types";
 import { api } from "../utils/server-utils";
-import { IndexBuild } from "@pixl/ui/dot-matrix";
+import { IndexBuild } from "@/components/ui/dot-matrix";
 
 export default function Projects() {
   const [projects, setProjects] = useState<Project[]>([]);

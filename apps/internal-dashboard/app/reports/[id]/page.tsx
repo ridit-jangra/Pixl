@@ -6,7 +6,7 @@ import { resolveReport } from "@/app/actions";
 import { slackHandle } from "@/lib/slack";
 import { BanForm, WarnForm } from "@/app/_components/Moderate";
 import { PendingButton } from "@/app/_components/PendingButton";
-import { Badge } from "@pixl/ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { Card } from "@pixl/ui/card";
 
 export const dynamic = "force-dynamic";

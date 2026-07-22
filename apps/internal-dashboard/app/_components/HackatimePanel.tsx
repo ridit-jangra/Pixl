@@ -2,14 +2,14 @@
 
 import { Bar, BarChart, XAxis, YAxis } from "recharts";
 import type { HackatimeReport, HackatimeBreakdown } from "@/lib/hackatime";
-import { Badge } from "@pixl/ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@pixl/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
-} from "@pixl/ui/chart";
+} from "@/components/ui/chart";
 
 function fmtDate(unix: number | null): string {
   if (!unix) return ",";

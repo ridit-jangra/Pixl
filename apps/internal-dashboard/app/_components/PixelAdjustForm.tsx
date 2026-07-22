@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { adjustPixels, searchPlayers, type PlayerHit } from "@/app/actions";
-import { Button } from "@pixl/ui/button";
-import { Input } from "@pixl/ui/input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@pixl/ui/textarea";
 
 function SubmitButton({ mode }: { mode: "deduct" | "grant" }) {

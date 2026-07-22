@@ -1,5 +1,5 @@
-import { Alert, AlertDescription } from "@pixl/ui/alert";
-import { Button } from "@pixl/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import { Card } from "@pixl/ui/card";
 
 export default async function LoginPage({

@@ -3,11 +3,11 @@ import { requireReportViewer } from "@/lib/guard";
 import { listReports, listReportViewers } from "@/lib/db";
 import { addReportViewerAction, removeReportViewerAction } from "@/app/actions";
 import { PendingButton } from "@/app/_components/PendingButton";
-import { Alert, AlertDescription } from "@pixl/ui/alert";
-import { Badge } from "@pixl/ui/badge";
-import { Button } from "@pixl/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card } from "@pixl/ui/card";
-import { Input } from "@pixl/ui/input";
+import { Input } from "@/components/ui/input";
 
 export const dynamic = "force-dynamic";
 

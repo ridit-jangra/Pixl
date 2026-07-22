@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Project } from "./types";
 import { api } from "./utils/server-utils";
-import { StarBurst } from "@pixl/ui/dot-matrix";
+import { StarBurst } from "@/components/ui/dot-matrix";
 
 export default function Overview() {
   const [projects, setProjects] = useState<Project[]>([]);

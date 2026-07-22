@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { StatusBadge } from "@/app/_components/ProjectBadges";
-import { Input } from "@pixl/ui/input";
+import { Input } from "@/components/ui/input";
 import { Kbd } from "@pixl/ui/kbd";
 
 interface PlayerHit {

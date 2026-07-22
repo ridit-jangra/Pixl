@@ -3,16 +3,16 @@ import { redirect } from "next/navigation";
 import { requirePagePerm } from "@/lib/guard";
 import { listPixelTransactions } from "@/lib/db";
 import { PixelAdjustForm } from "@/app/_components/PixelAdjustForm";
-import { Alert, AlertDescription } from "@pixl/ui/alert";
-import { Badge } from "@pixl/ui/badge";
-import { Button } from "@pixl/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card } from "@pixl/ui/card";
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
   PaginationLink,
-} from "@pixl/ui/pagination";
+} from "@/components/ui/pagination";
 import {
   Table,
   TableBody,

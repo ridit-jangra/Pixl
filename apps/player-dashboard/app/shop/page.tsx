@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { ShopData } from "../types";
 import { api } from "../utils/server-utils";
-import { Hash, HeartPulse } from "@pixl/ui/dot-matrix";
+import { Hash, HeartPulse } from "@/components/ui/dot-matrix";
 
 export default function Shop() {
   const [shop, setShop] = useState<ShopData>();

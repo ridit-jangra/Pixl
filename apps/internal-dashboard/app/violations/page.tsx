@@ -3,16 +3,16 @@ import { requirePagePerm } from "@/lib/guard";
 import { listViolations } from "@/lib/db";
 import { slackHandles } from "@/lib/slack";
 import { BanForm, WarnForm } from "@/app/_components/Moderate";
-import { Badge } from "@pixl/ui/badge";
-import { Button } from "@pixl/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card } from "@pixl/ui/card";
-import { Input } from "@pixl/ui/input";
+import { Input } from "@/components/ui/input";
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
   PaginationLink,
-} from "@pixl/ui/pagination";
+} from "@/components/ui/pagination";
 
 export const dynamic = "force-dynamic";
 

@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
-import { Dialog, DialogContent, DialogTitle } from "@pixl/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import {
   Command,
   CommandEmpty,
@@ -11,9 +11,9 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@pixl/ui/command";
+} from "@/components/ui/command";
 import { Kbd, KbdGroup } from "@pixl/ui/kbd";
-import { Button } from "@pixl/ui/button";
+import { Button } from "@/components/ui/button";
 
 export interface NavItem {
   href: string;

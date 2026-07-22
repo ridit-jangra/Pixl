@@ -2,7 +2,7 @@ import Link from "next/link";
 import { requirePagePerm } from "@/lib/guard";
 import { listBans, listBanLog, banIsActive } from "@/lib/db";
 import { LiftBanForm } from "@/app/_components/Moderate";
-import { Badge } from "@pixl/ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { Card } from "@pixl/ui/card";
 import {
   Table,

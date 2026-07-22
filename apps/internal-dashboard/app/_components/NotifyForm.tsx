@@ -3,10 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { sendNotification, searchPlayers, type PlayerHit } from "@/app/actions";
 import { PendingButton } from "@/app/_components/PendingButton";
-import { Button } from "@pixl/ui/button";
-import { Input } from "@pixl/ui/input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@pixl/ui/textarea";
-import { Label } from "@pixl/ui/label";
+import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@pixl/ui/card";
 
 export function NotifyForm() {

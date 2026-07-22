@@ -7,8 +7,8 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { TooltipProvider } from "@pixl/ui/tooltip";
-import { SidebarProvider, SidebarTrigger } from "@pixl/ui/sidebar";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "./components/Sidebar";
 import { AuthGate } from "./components/auth-gate";
 

@@ -2,15 +2,15 @@
 
 import { useFormStatus } from "react-dom";
 import { banPlayer, liftBan, sendNotification, warnPlayer } from "@/app/actions";
-import { Button } from "@pixl/ui/button";
-import { Input } from "@pixl/ui/input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@pixl/ui/select";
+} from "@/components/ui/select";
 
 function SubmitBtn({
   children,

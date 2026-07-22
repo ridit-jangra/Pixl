@@ -1,7 +1,7 @@
 import { listTeamLog, type TeamLogRow } from "@/lib/db";
 import { undoTeamChange } from "@/app/actions";
 import { PendingButton } from "@/app/_components/PendingButton";
-import { Badge } from "@pixl/ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { Card } from "@pixl/ui/card";
 import {
   Table,

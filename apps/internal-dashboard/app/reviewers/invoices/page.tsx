@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/guard";
 import { payoutInvoice } from "@/lib/db";
-import { Button } from "@pixl/ui/button";
+import { Button } from "@/components/ui/button";
 import { Card } from "@pixl/ui/card";
 import {
   Table,

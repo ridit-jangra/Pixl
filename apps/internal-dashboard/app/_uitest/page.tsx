@@ -1,7 +1,7 @@
-import { Button } from "@pixl/ui/button";
-import { Input } from "@pixl/ui/input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardContent } from "@pixl/ui/card";
-import { Badge } from "@pixl/ui/badge";
+import { Badge } from "@/components/ui/badge";
 
 export default function UITest() {
   return (

@@ -20,11 +20,11 @@ import { CommitList } from "@/app/_components/CommitList";
 import { PendingButton } from "@/app/_components/PendingButton";
 import { renderMarkdown } from "@/lib/markdown";
 import { slackHandle } from "@/lib/slack";
-import { Alert, AlertDescription, AlertTitle } from "@pixl/ui/alert";
-import { Badge } from "@pixl/ui/badge";
-import { Button } from "@pixl/ui/button";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card } from "@pixl/ui/card";
-import { Input } from "@pixl/ui/input";
+import { Input } from "@/components/ui/input";
 
 export const dynamic = "force-dynamic";
 

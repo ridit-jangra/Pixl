@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@pixl/ui/button";
+import { Button } from "@/components/ui/button";
 import { Kbd, KbdGroup } from "@pixl/ui/kbd";
 import {
   Sidebar,
@@ -12,12 +12,12 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@pixl/ui/sidebar";
+} from "@/components/ui/sidebar";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@pixl/ui/tooltip";
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { usePathname } from "next/navigation";

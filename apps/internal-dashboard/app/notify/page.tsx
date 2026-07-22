@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { requirePagePerm } from "@/lib/guard";
 import { NotifyForm } from "@/app/_components/NotifyForm";
-import { Alert, AlertDescription } from "@pixl/ui/alert";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export const dynamic = "force-dynamic";
 

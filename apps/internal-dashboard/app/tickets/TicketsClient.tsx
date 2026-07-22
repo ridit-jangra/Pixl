@@ -1,9 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Badge } from "@pixl/ui/badge";
-import { Button } from "@pixl/ui/button";
-import { Input } from "@pixl/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@pixl/ui/textarea";
 import { Skeleton } from "@pixl/ui/skeleton";
 

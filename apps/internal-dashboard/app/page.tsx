@@ -10,7 +10,7 @@ import {
 import { GrowthChart } from "@/app/_components/GrowthChart";
 import { PixelFlowChart } from "@/app/_components/PixelFlowChart";
 import { Badge } from "@/app/_components/ProjectBadges";
-import { Button } from "@pixl/ui/button";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@pixl/ui/card";
 
 const FEED_BADGE: Record<

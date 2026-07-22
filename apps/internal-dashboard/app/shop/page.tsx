@@ -7,16 +7,16 @@ import { Disclosure } from "@/app/_components/Disclosure";
 import { OptionsEditor } from "@/app/_components/OptionsEditor";
 import { AddShopItemForm } from "@/app/_components/AddShopItemForm";
 import { parseOptionGroups } from "@/lib/shopOptions";
-import { Badge } from "@pixl/ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { Card } from "@pixl/ui/card";
-import { Input } from "@pixl/ui/input";
-import { Label } from "@pixl/ui/label";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
   PaginationLink,
-} from "@pixl/ui/pagination";
+} from "@/components/ui/pagination";
 
 export const dynamic = "force-dynamic";
 

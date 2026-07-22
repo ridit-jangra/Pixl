@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@pixl/ui/button";
-import { Input } from "@pixl/ui/input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { parseOptionGroups } from "@/lib/shopOptions";
 
 type Row = { name: string; choices: string };
