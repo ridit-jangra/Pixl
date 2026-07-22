@@ -41,7 +41,7 @@ async function aiPost(body) {
   }
   const openrouterKey = process.env.OPENROUTER_API_KEY;
   if (!openrouterKey) { const err = new Error('no credits'); err.code = NO_CREDITS; throw err; }
-  const orBody = { ...body, model: 'meta-llama/llama-3.3-70b-instruct:free' };
+  const orBody = { ...body, model: 'google/gemini-2.5-flash-lite:free' };
   try {
     const res = await axios.post(OPENROUTER_URL, orBody, {
       headers: { Authorization: `Bearer ${openrouterKey}`, 'Content-Type': 'application/json', 'HTTP-Referer': 'https://pixorpheus.app', 'X-Title': 'Pixorpheus' },
@@ -61,6 +61,11 @@ const Anthropic = require("@anthropic-ai/sdk");
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET,
+});
+
+app.receiver.router.get('/', (req, res) => {
+  res.writeHead(200);
+  res.end('ok');
 });
 
 app.event('message', async ({ event, client }) => {
