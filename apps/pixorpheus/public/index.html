@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pixl Support Internal</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <span class="logo">Pixl Support</span>
+      <div class="user-info">
+        <img id="u-avatar" src="" alt="" style="display: none" />
+        <span id="u-name"></span>
+      </div>
+      <a href="/auth/logout" class="btn-logout">Sign out</a>
+    </header>
+
+    <div class="page">
+      <h2>Support</h2>
+      <p class="subtitle">Tickets from the Slack help channel.</p>
+
+      <div id="conf-overlay">
+        <div id="conf-card">
+          <div id="conf-tag">Confidential</div>
+          <h2 id="conf-title">Confidentiality Reminder</h2>
+          <p id="conf-text">
+            This dashboard contains sensitive and confidential information,
+            including private user support conversations.<br /><br />
+            Do not share, screenshot, copy, or discuss the content of this page
+            outside of your authorized team.
+          </p>
+          <button id="conf-btn" onclick="dismissReminder()">
+            I Understand
+          </button>
+        </div>
+      </div>
+
+      <div class="stats" id="stats">
+        <div class="stat-card neutral">
+          <div class="stat-label">Total Tickets</div>
+          <div class="stat-value sk" style="height: 2rem; width: 4rem">
+            &nbsp;
+          </div>
+        </div>
+        <div class="stat-card yellow">
+          <div class="stat-label">Open</div>
+          <div class="stat-value sk" style="height: 2rem; width: 3rem">
+            &nbsp;
+          </div>
+        </div>
+        <div class="stat-card teal">
+          <div class="stat-label">Resolved</div>
+          <div class="stat-value sk" style="height: 2rem; width: 4rem">
+            &nbsp;
+          </div>
+        </div>
+        <div class="stat-card red">
+          <div class="stat-label">Longest Open</div>
+          <div class="stat-value sk" style="height: 2rem; width: 4rem">
+            &nbsp;
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Activity</div>
+            <div class="card-big-title">Tickets, last 30 days</div>
+          </div>
+          <div class="card-hint">Created vs resolved per day</div>
+        </div>
+        <div class="chart-wrap"><canvas id="chart"></canvas></div>
+      </div>
+
+      <div class="card" style="overflow: hidden">
+        <div class="card-header" style="padding-bottom: 12px">
+          <div class="card-big-title">Resolver leaderboard</div>
+          <div class="card-hint">Top 10 each</div>
+        </div>
+        <div class="lb-grid" id="lb-grid">
+          <div class="lb-col">
+            <div class="lb-col-title">All Time</div>
+            <div class="sk" style="height: 160px"></div>
+          </div>
+          <div class="lb-col">
+            <div class="lb-col-title">This Week</div>
+            <div class="sk" style="height: 160px"></div>
+          </div>
+          <div class="lb-col">
+            <div class="lb-col-title">Today</div>
+            <div class="sk" style="height: 160px"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ticket-toolbar">
+          <button class="tab-btn active" data-status="open">Open</button>
+          <button class="tab-btn" data-status="closed">Resolved</button>
+          <button class="tab-btn" data-status="all">All</button>
+          <div class="search-wrap">
+            <input
+              class="search-input"
+              id="search"
+              type="text"
+              placeholder="Search tickets…"
+            />
+          </div>
+        </div>
+        <div class="ticket-list" id="ticket-list">
+          <div class="ticket-row">
+            <div class="ticket-top">
+              <span
+                class="sk"
+                style="height: 0.8rem; width: 60%; display: block"
+              ></span>
+            </div>
+          </div>
+          <div class="ticket-row">
+            <div class="ticket-top">
+              <span
+                class="sk"
+                style="height: 0.8rem; width: 45%; display: block; opacity: 0.6"
+              ></span>
+            </div>
+          </div>
+          <div class="ticket-row">
+            <div class="ticket-top">
+              <span
+                class="sk"
+                style="height: 0.8rem; width: 55%; display: block; opacity: 0.3"
+              ></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
