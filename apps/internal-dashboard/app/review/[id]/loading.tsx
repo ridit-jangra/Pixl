@@ -1,6 +1,6 @@
 import { Bar, CardSkeleton } from "@/app/_components/Loading";
-import { Card } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Card } from "@pixl/ui/card";
+import { Skeleton } from "@pixl/ui/skeleton";
 
 // The review detail page is the slowest (GitHub commits, Hackatime spans, YSWS
 // archive). This skeleton mirrors its layout so a reviewer sees the shape of

@@ -1,7 +1,7 @@
 import { requirePagePerm } from "@/lib/guard";
 import { db, type ReviewAuditRow } from "@/lib/db";
 import { ReviewTabs } from "@/app/_components/ReviewTabs";
-import { Card } from "@/components/ui/card";
+import { Card } from "@pixl/ui/card";
 import {
   Table,
   TableBody,
@@ -9,7 +9,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@pixl/ui/table";
 
 export const dynamic = "force-dynamic";
 

@@ -6,7 +6,7 @@ import { reviewProject } from "@/app/actions";
 import { initDeductions, clearDeductions, subscribeDeductions, totalDeductedMinutes } from "@/app/_components/deflateStore";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Textarea } from "@pixl/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 

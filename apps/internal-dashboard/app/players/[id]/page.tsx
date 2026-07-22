@@ -6,7 +6,7 @@ import { slackHandle } from "@/lib/slack";
 import { BanForm, LiftBanForm, NotifyForm, WarnForm } from "@/app/_components/Moderate";
 import { StatusBadge } from "@/app/_components/ProjectBadges";
 import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
+import { Card } from "@pixl/ui/card";
 import {
   Table,
   TableBody,
@@ -14,7 +14,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@pixl/ui/table";
 
 export const dynamic = "force-dynamic";
 

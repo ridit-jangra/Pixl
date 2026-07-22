@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/guard";
 import { payoutInvoice } from "@/lib/db";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card } from "@pixl/ui/card";
 import {
   Table,
   TableBody,
@@ -12,7 +12,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@pixl/ui/table";
 
 export const dynamic = "force-dynamic";
 

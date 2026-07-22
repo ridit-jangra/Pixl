@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Kbd, KbdGroup } from "@/components/ui/kbd";
+import { Kbd, KbdGroup } from "@pixl/ui/kbd";
 import {
   Sidebar,
   SidebarContent,

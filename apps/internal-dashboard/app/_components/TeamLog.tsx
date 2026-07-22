@@ -2,13 +2,13 @@ import { listTeamLog, type TeamLogRow } from "@/lib/db";
 import { undoTeamChange } from "@/app/actions";
 import { PendingButton } from "@/app/_components/PendingButton";
 import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
+import { Card } from "@pixl/ui/card";
 import {
   Table,
   TableBody,
   TableCell,
   TableRow,
-} from "@/components/ui/table";
+} from "@pixl/ui/table";
 
 function describe(row: TeamLogRow): string {
   const before = row.before ?? [];

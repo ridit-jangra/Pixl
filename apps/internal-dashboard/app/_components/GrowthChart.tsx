@@ -23,7 +23,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@pixl/ui/table";
 
 function fmt(n: number): string {
   return n.toLocaleString("en-US");

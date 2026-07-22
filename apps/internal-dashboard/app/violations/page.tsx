@@ -5,7 +5,7 @@ import { slackHandles } from "@/lib/slack";
 import { BanForm, WarnForm } from "@/app/_components/Moderate";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card } from "@pixl/ui/card";
 import { Input } from "@/components/ui/input";
 import {
   Pagination,

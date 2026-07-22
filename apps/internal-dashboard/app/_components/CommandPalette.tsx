@@ -12,7 +12,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { Kbd, KbdGroup } from "@/components/ui/kbd";
+import { Kbd, KbdGroup } from "@pixl/ui/kbd";
 import { Button } from "@/components/ui/button";
 
 export interface NavItem {

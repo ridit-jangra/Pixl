@@ -7,7 +7,7 @@ import { fulfillOrder, cancelOrder } from "@/app/actions";
 import { PendingButton } from "@/app/_components/PendingButton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card } from "@pixl/ui/card";
 import { Input } from "@/components/ui/input";
 
 export const dynamic = "force-dynamic";

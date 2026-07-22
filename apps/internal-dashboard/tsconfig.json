@@ -25,6 +25,9 @@
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "@pixl/ui/*": [
+        "../../packages/ui/src/components/ui/*"
       ]
     }
   },

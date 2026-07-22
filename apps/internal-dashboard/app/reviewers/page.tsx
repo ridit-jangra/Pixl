@@ -20,7 +20,7 @@ import { TeamLog } from "@/app/_components/TeamLog";
 import { PendingButton } from "@/app/_components/PendingButton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card } from "@pixl/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -36,7 +36,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@pixl/ui/table";
 
 export const dynamic = "force-dynamic";
 
