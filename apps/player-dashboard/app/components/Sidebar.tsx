@@ -37,16 +37,65 @@ export function AppSidebar() {
           label: "Overview",
           shortcut: ["Ctrl", "O"],
           href: "/",
+          activeColor: "text-red",
+          hoverColor: "hover:text-red",
         },
+      ],
+    },
+    {
+      name: "Shop",
+      items: [
         {
           label: "Shop",
           shortcut: ["Ctrl", "S"],
           href: "/shop",
+          activeColor: "text-orange",
+          hoverColor: "hover:text-orange",
         },
         {
           label: "Orders",
-          shortcut: ["Ctrl", "Shift", "O"],
+          shortcut: ["Ctrl", "Shift", "o"],
           href: "/orders",
+          activeColor: "text-yellow",
+          hoverColor: "hover:text-yellow",
+        },
+      ],
+    },
+    {
+      name: "Explore",
+      items: [
+        {
+          label: "Players",
+          shortcut: ["Ctrl", "P"],
+          href: "/explore/players",
+          activeColor: "text-green",
+          hoverColor: "hover:text-green",
+        },
+        {
+          label: "Projects",
+          shortcut: ["Ctrl", "Shift", "P"],
+          href: "/explore/projects",
+          activeColor: "text-cyan",
+          hoverColor: "hover:text-cyan",
+        },
+        {
+          label: "Leaderboard",
+          shortcut: ["Ctrl", "L"],
+          href: "/explore/leaderboard",
+          activeColor: "text-blue",
+          hoverColor: "hover:text-blue",
+        },
+      ],
+    },
+    {
+      name: "Help",
+      items: [
+        {
+          label: "Report",
+          shortcut: ["Ctrl", "R"],
+          href: "/report",
+          activeColor: "text-purple",
+          hoverColor: "hover:text-purple",
         },
       ],
     },
@@ -57,16 +106,18 @@ export function AppSidebar() {
           label: "All projects",
           shortcut: ["Ctrl", "N"],
           href: "/projects",
+          activeColor: "text-hc-muted",
+          hoverColor: "hover:text-hc-muted",
         },
       ],
     },
   ];
 
   return (
-    <Sidebar>
+    <Sidebar side="right">
       <SidebarHeader>
         <SidebarMenu className="flex justify-center items-center">
-          <SidebarMenuItem className="flex items-center gap-2">
+          <SidebarMenuItem className="flex items-center gap-2 mt-5">
             <Image src={"/p.png"} alt="pixl" width={50} height={50} />
             <Image src={"/i.png"} alt="pixl" width={50} height={50} />
             <Image src={"/x.png"} alt="pixl" width={50} height={50} />
@@ -80,31 +131,24 @@ export function AppSidebar() {
             <SidebarGroupLabel>{g.name}</SidebarGroupLabel>
             <SidebarMenu className="gap-1">
               {g.items.map((i, j) => (
-                <Tooltip key={j}>
-                  <TooltipContent side="right">
-                    {i.label}{" "}
-                    <KbdGroup>
-                      {i.shortcut.map((s, k) => (
-                        <Kbd key={k}>{s}</Kbd>
-                      ))}
-                    </KbdGroup>
-                  </TooltipContent>
-                  <TooltipTrigger>
-                    <SidebarMenuItem>
-                      <SidebarMenuButton
-                        className={cn(
-                          active === i.href &&
-                            "bg-red hover:bg-red text-black/90",
-                        )}
-                        onClick={() => {
-                          router.push(i.href);
-                        }}
-                      >
-                        {i.label}
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  </TooltipTrigger>
-                </Tooltip>
+                <SidebarMenuItem
+                  key={j}
+                  className={cn(
+                    "transition-transform duration-200 hover:-translate-x-3.5",
+                    active === i.href && "-translate-x-3.5",
+                  )}
+                >
+                  <SidebarMenuButton
+                    className={cn(
+                      "hover:bg-transparent",
+                      i.hoverColor,
+                      active === i.href && i.activeColor,
+                    )}
+                    onClick={() => router.push(i.href)}
+                  >
+                    {i.label}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
               ))}
             </SidebarMenu>
           </SidebarGroup>

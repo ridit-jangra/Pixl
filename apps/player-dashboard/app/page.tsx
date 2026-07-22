@@ -22,8 +22,8 @@ export default function Overview() {
 
   if (loading)
     return (
-      <div className="absolute top-1/2 left-[60%] -translate-x-1/2 -translate-y-1/2">
-        <StarBurst size={60} color="#f1c40f" />
+      <div className="absolute top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2">
+        <StarBurst size={60} color="#ec3750" />
       </div>
     );
 

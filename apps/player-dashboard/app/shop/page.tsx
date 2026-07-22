@@ -22,8 +22,8 @@ export default function Shop() {
 
   if (loading)
     return (
-      <div className="absolute top-1/2 left-[60%] -translate-x-1/2 -translate-y-1/2">
-        <HeartPulse size={60} color="var(--color-red)" />
+      <div className="absolute top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2">
+        <HeartPulse size={60} color="#ff8c37" />
       </div>
     );
 

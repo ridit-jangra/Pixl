@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { Project } from "../types";
 import { api } from "../utils/server-utils";
-import { IndexBuild } from "@/components/ui/dot-matrix";
+import { Compile } from "@/components/ui/dot-matrix";
 
-export default function Projects() {
+export default function Players() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState<boolean>();
 
@@ -22,8 +22,8 @@ export default function Projects() {
 
   if (loading)
     return (
-      <div className="absolute top-1/2 left-[60%] -translate-x-1/2 -translate-y-1/2">
-        <IndexBuild size={60} color="#a633d6" />
+      <div className="absolute top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2">
+        <Compile size={60} color="#8492a6" />
       </div>
     );
 

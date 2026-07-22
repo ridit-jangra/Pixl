@@ -361,7 +361,7 @@ export function Shell({
     //     </main>
     //   </div> */}
     // </div>
-    <Sidebar>
+    <Sidebar side="right">
       <SidebarHeader className="border-b px-4 py-3">
         <Link href="/" className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand text-white font-bold">

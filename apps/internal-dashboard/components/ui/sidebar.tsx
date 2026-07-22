@@ -39,6 +39,7 @@ type SidebarContextProps = {
   setOpenMobile: (open: boolean) => void
   isMobile: boolean
   toggleSidebar: () => void
+  side: "left" | "right"
 }
 
 const SidebarContext = React.createContext<SidebarContextProps | null>(null)
@@ -59,11 +60,13 @@ function SidebarProvider({
   className,
   style,
   children,
+  side: sideProp = "left",
   ...props
 }: React.ComponentProps<"div"> & {
   defaultOpen?: boolean
   open?: boolean
   onOpenChange?: (open: boolean) => void
+  side?: "left" | "right"
 }) {
   const isMobile = useIsMobile()
   const [openMobile, setOpenMobile] = React.useState(false)
@@ -121,8 +124,9 @@ function SidebarProvider({
       openMobile,
       setOpenMobile,
       toggleSidebar,
+      side: sideProp,
     }),
-    [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
+    [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar, sideProp]
   )
 
   return (
@@ -255,7 +259,7 @@ function SidebarTrigger({
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { toggleSidebar } = useSidebar()
+  const { toggleSidebar, side } = useSidebar()
 
   return (
     <Button
@@ -270,7 +274,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <SidebarIcon />
+      <SidebarIcon className={cn(side === "right" && "scale-x-[-1]")} />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )

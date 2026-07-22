@@ -8,6 +8,13 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-red: #ec3750;
+  --color-orange: #ff8c37;
+  --color-yellow: #f1c40f;
+  --color-green: #33d6a6;
+  --color-cyan: #5bc0de;
+  --color-blue: #338eda;
+  --color-purple: #a633d6;
+  --color-hc-muted: #8492a6;
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-heading);

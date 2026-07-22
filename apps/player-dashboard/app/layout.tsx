@@ -54,10 +54,14 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col dark">
         <TooltipProvider>
-          <SidebarProvider>
+          <SidebarProvider side="right">
+            <main className="flex-1 min-w-0">
+              <div className="flex items-center justify-end p-2">
+                <SidebarTrigger />
+              </div>
+              <AuthGate>{children}</AuthGate>
+            </main>
             <AppSidebar />
-            <SidebarTrigger />
-            <AuthGate>{children}</AuthGate>
           </SidebarProvider>
         </TooltipProvider>
       </body>
