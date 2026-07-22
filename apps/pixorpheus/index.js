@@ -1,11 +1,17 @@
 ﻿const axios = require("axios");
 const Jimp = require("jimp");
-const fs = require("fs");
-const path = require("path");
-require("dotenv").config();
+const { createClient } = require("@supabase/supabase-js");
 
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
 const NO_CREDITS = '__NO_CREDITS__';
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_KEY,
+  { auth: { persistSession: false } },
+);
+
+function db() { return supabase; }
 
 async function aiPost(body) {
   const ZEN_KEY = process.env.OPENCODE_ZEN_KEY;
@@ -51,9 +57,6 @@ async function aiPost(body) {
 
 const { App } = require("@slack/bolt");
 const Anthropic = require("@anthropic-ai/sdk");
-const { Pool } = require("pg");
-
-const db = new Pool({ connectionString: process.env.DATABASE_URL });
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
@@ -85,12 +88,13 @@ async function checkFAQAndSimilar(event, client) {
 
   let rows = [];
   try {
-    const result = await db.query(
-      `SELECT description, permalink, title FROM tickets
-       WHERE status = 'closed' AND description IS NOT NULL AND description != '[no text — see thread for attachments]'
-       ORDER BY closed_at DESC LIMIT 60`
-    );
-    rows = result.rows;
+    const result = await db().from("tickets").select("description, permalink, title")
+      .eq("status", "closed")
+      .not("description", "is", null)
+      .neq("description", "[no text — see thread for attachments]")
+      .order("closed_at", { ascending: false })
+      .limit(60);
+    rows = result.data || [];
   } catch (e) { return; }
   if (!rows.length) return;
 
@@ -148,14 +152,15 @@ async function checkFAQAndSimilar(event, client) {
 
 async function autoCloseOldTickets() {
   try {
-    const result = await db.query(
-      `SELECT * FROM tickets
-       WHERE status = 'open'
-         AND to_timestamp(msg_ts::float) < NOW() - INTERVAL '7 days'
-         AND COALESCE(last_msg_at, to_timestamp(msg_ts::float)) < NOW() - INTERVAL '7 days'`
-    );
+    const cutoff = new Date(Date.now() - 7 * 86400_000);
+    const { data: openTickets } = await db().from("tickets").select("*").eq("status", "open");
+    const result = (openTickets || []).filter(t => {
+      const msgDate = new Date(parseFloat(t.msg_ts) * 1000);
+      const lastDate = t.last_msg_at ? new Date(t.last_msg_at) : msgDate;
+      return msgDate < cutoff && lastDate < cutoff;
+    });
 
-    for (const ticket of result.rows) {
+    for (const ticket of result) {
       try {
         await app.client.chat.postMessage({
           channel: process.env.SLACK_HELP_CHANNEL,
@@ -163,10 +168,7 @@ async function autoCloseOldTickets() {
           text: "This ticket has been open for 7 days with no activity and is now automatically closed. If you still need help, just post a new message in this channel with the same question and a helper will get back to you.",
         });
 
-        await db.query(
-          `UPDATE tickets SET status = 'closed', closed_at = NOW() WHERE msg_ts = $1`,
-          [ticket.msg_ts]
-        );
+        await db().from("tickets").update({ status: "closed", closed_at: new Date().toISOString() }).eq("msg_ts", ticket.msg_ts);
 
         const updatedTicket = { ...ticket, status: 'closed' };
         if (ticket.ticket_msg_ts) {
@@ -186,7 +188,7 @@ async function autoCloseOldTickets() {
         console.error('[autoClose] ticket error:', e.message);
       }
     }
-    if (result.rows.length) console.log(`[autoClose] closed ${result.rows.length} stale ticket(s)`);
+    if (result.length) console.log(`[autoClose] closed ${result.length} stale ticket(s)`);
   } catch (e) {
     console.error('[autoClose]', e.message);
   }
@@ -284,8 +286,8 @@ async function createTicket(event, title, client) {
   // Fetch the ticket row that was already created in handleNewQuestion
   let ticketRow;
   try {
-    const r = await db.query(`SELECT * FROM tickets WHERE msg_ts = $1 LIMIT 1`, [event.ts]);
-    ticketRow = r.rows[0];
+    const r = await db().from("tickets").select("*").eq("msg_ts", event.ts).limit(1).maybeSingle();
+    ticketRow = r.data;
   } catch (e) {
     console.error('[createTicket] SELECT error:', e.message);
     creatingTickets.delete(event.ts);
@@ -296,16 +298,13 @@ async function createTicket(event, title, client) {
     // Fallback: ticket wasn't pre-created, insert it now
     const description = event.text || '[no text — see thread for attachments]';
     try {
-      const r = await db.query(
-        `INSERT INTO tickets (msg_ts, description, status, opened_by_slack_id) VALUES ($1, $2, 'open', $3) RETURNING *`,
-        [event.ts, description, event.user]
-      );
-      ticketRow = r.rows[0];
+      const r = await db().from("tickets").insert({ msg_ts: event.ts, description, status: "open", opened_by_slack_id: event.user }).select().single();
+      ticketRow = r.data;
     } catch (e) {
       // Might be a unique violation if another call snuck in — try SELECT again
       try {
-        const r = await db.query(`SELECT * FROM tickets WHERE msg_ts = $1 LIMIT 1`, [event.ts]);
-        ticketRow = r.rows[0];
+        const r = await db().from("tickets").select("*").eq("msg_ts", event.ts).limit(1).maybeSingle();
+        ticketRow = r.data;
       } catch (_) {}
     }
     if (!ticketRow) {
@@ -319,15 +318,13 @@ async function createTicket(event, title, client) {
   if (ticketRow.ticket_msg_ts) {
     if (title) {
       try {
-        const updated = await db.query(
-          `UPDATE tickets SET title = COALESCE($1, title) WHERE msg_ts = $2 RETURNING *`,
-          [title, event.ts]
-        );
+        const updates = { title };
+        const updated = await db().from("tickets").update(updates).eq("msg_ts", event.ts).select().single();
         await client.chat.update({
           channel: process.env.SLACK_TICKET_CHANNEL,
           ts: ticketRow.ticket_msg_ts,
           text: `Ticket from <@${event.user}>: ${title}`,
-          blocks: ticketBlocks(updated.rows[0] || ticketRow),
+          blocks: ticketBlocks(updated.data || ticketRow),
         });
       } catch (e) {}
     }
@@ -343,11 +340,11 @@ async function createTicket(event, title, client) {
   } catch (e) {}
 
   try {
-    const updated = await db.query(
-      `UPDATE tickets SET title = COALESCE($1, title), permalink = COALESCE($2, permalink) WHERE msg_ts = $3 RETURNING *`,
-      [title || null, permalink, event.ts]
-    );
-    if (updated.rows[0]) ticketRow = updated.rows[0];
+    const updates = {};
+    if (title) updates.title = title;
+    if (permalink) updates.permalink = permalink;
+    const updated = await db().from("tickets").update(updates).eq("msg_ts", event.ts).select().single();
+    if (updated.data) ticketRow = updated.data;
   } catch (e) {}
 
   // Post to ticket channel
@@ -357,7 +354,7 @@ async function createTicket(event, title, client) {
       text: `New ticket from <@${event.user}>${title ? `: ${title}` : ''}`,
       blocks: ticketBlocks(ticketRow),
     });
-    await db.query(`UPDATE tickets SET ticket_msg_ts = $1 WHERE msg_ts = $2`, [ticketMsg.ts, event.ts]);
+    await db().from("tickets").update({ ticket_msg_ts: ticketMsg.ts }).eq("msg_ts", event.ts);
   } catch (e) {
     console.error('[createTicket] post error:', e.message);
   }
@@ -372,10 +369,7 @@ async function handleNewQuestion(event, client) {
 
   // Create the ticket in DB immediately so mark_resolved always finds it
   try {
-    await db.query(
-      `INSERT INTO tickets (msg_ts, description, status, opened_by_slack_id) VALUES ($1, $2, 'open', $3)`,
-      [event.ts, event.text || '[no text]', event.user]
-    );
+    await db().from("tickets").insert({ msg_ts: event.ts, description: event.text || "[no text]", status: "open", opened_by_slack_id: event.user });
   } catch (e) {
     // Unique violation = already exists from a previous call, that's fine
     if (!e.message?.includes('unique') && !e.message?.includes('duplicate')) {
@@ -457,34 +451,26 @@ async function handleNewQuestion(event, client) {
 }
 
 async function handleMessageInThread(event, client) {
-  const ticket = await db.query(
-    `SELECT * FROM tickets WHERE msg_ts = $1`, [event.thread_ts]
-  );
-  if (!ticket.rows[0]) return;
+  const { data: ticket } = await db().from("tickets").select("*").eq("msg_ts", event.thread_ts).maybeSingle();
+  if (!ticket) return;
 
   const isHelper = await checkIsHelper(event.user);
   const text = event.text || '';
   const firstWord = text.trim().split(/\s+/)[0]?.toLowerCase();
 
   if (isHelper && firstWord?.startsWith('?')) {
-    await runMacro(firstWord.slice(1), ticket.rows[0], event, client);
+    await runMacro(firstWord.slice(1), ticket, event, client);
     return;
   }
 
-  await db.query(
-    `UPDATE tickets SET last_msg_at = NOW() WHERE msg_ts = $1`,
-    [event.thread_ts]
-  );
+  await db().from("tickets").update({ last_msg_at: new Date().toISOString() }).eq("msg_ts", event.thread_ts);
 }
 
 async function checkIsHelper(slackUserId) {
   const admins = (process.env.SLACK_ADMIN_USER_IDS || '').split(',').map(s => s.trim()).filter(Boolean);
   if (admins.includes(slackUserId)) return true;
-  const result = await db.query(
-    `SELECT 1 FROM helpers WHERE slack_user_id = $1 LIMIT 1`,
-    [slackUserId]
-  );
-  return result.rows.length > 0;
+  const { data } = await db().from("helpers").select("slack_user_id").eq("slack_user_id", slackUserId).maybeSingle();
+  return !!data;
 }
 
 async function checkIsInTicketChannel(slackUserId, client) {
@@ -546,16 +532,10 @@ async function runMacro(name, ticket, event, client) {
 }
 
 async function resolveTicket(msgTs, resolverSlackId, client) {
-  const check = await db.query(
-    `SELECT status FROM tickets WHERE msg_ts = $1`, [msgTs]
-  );
-  if (!check.rows[0] || check.rows[0].status === 'closed') return;
+  const { data: check } = await db().from("tickets").select("status").eq("msg_ts", msgTs).maybeSingle();
+  if (!check || check.status === 'closed') return;
 
-  await db.query(
-    `UPDATE tickets SET status = 'closed', closed_at = NOW(),
-     closed_by_slack_id = $1 WHERE msg_ts = $2`,
-    [resolverSlackId, msgTs]
-  );
+  await db().from("tickets").update({ status: "closed", closed_at: new Date().toISOString(), closed_by_slack_id: resolverSlackId }).eq("msg_ts", msgTs);
 
   await client.chat.postMessage({
     channel: process.env.SLACK_HELP_CHANNEL,
@@ -578,8 +558,7 @@ async function resolveTicket(msgTs, resolverSlackId, client) {
     ],
   });
 
-  const ticketResult = await db.query(`SELECT * FROM tickets WHERE msg_ts = $1`, [msgTs]);
-  const ticketRow = ticketResult.rows[0];
+  const { data: ticketRow } = await db().from("tickets").select("*").eq("msg_ts", msgTs).maybeSingle();
   if (ticketRow?.ticket_msg_ts) {
     try {
       await client.chat.update({
@@ -609,13 +588,10 @@ async function resolveTicket(msgTs, resolverSlackId, client) {
 }
 
 async function reopenTicket(msgTs, reopenerSlackId, client) {
-  const check = await db.query(`SELECT status FROM tickets WHERE msg_ts = $1`, [msgTs]);
-  if (!check.rows[0] || check.rows[0].status === 'open') return;
+  const { data: check } = await db().from("tickets").select("status").eq("msg_ts", msgTs).maybeSingle();
+  if (!check || check.status === 'open') return;
 
-  await db.query(
-    `UPDATE tickets SET status = 'open', closed_at = NULL, closed_by_slack_id = NULL WHERE msg_ts = $1`,
-    [msgTs]
-  );
+  await db().from("tickets").update({ status: "open", closed_at: null, closed_by_slack_id: null }).eq("msg_ts", msgTs);
 
   await client.chat.postMessage({
     channel: process.env.SLACK_HELP_CHANNEL,
@@ -623,8 +599,7 @@ async function reopenTicket(msgTs, reopenerSlackId, client) {
     text: `Ticket reopened by <@${reopenerSlackId}>.`,
   });
 
-  const ticketResult = await db.query(`SELECT * FROM tickets WHERE msg_ts = $1`, [msgTs]);
-  const ticketRow = ticketResult.rows[0];
+  const { data: ticketRow } = await db().from("tickets").select("*").eq("msg_ts", msgTs).maybeSingle();
   if (ticketRow?.ticket_msg_ts) {
     try {
       await client.chat.update({
@@ -661,10 +636,8 @@ app.action('mark_resolved', async ({ ack, body, client }) => {
 
   let ticket;
   try {
-    const result = await db.query(
-      `SELECT opened_by_slack_id FROM tickets WHERE msg_ts = $1`, [msgTs]
-    );
-    ticket = result.rows[0];
+    const { data } = await db().from("tickets").select("opened_by_slack_id").eq("msg_ts", msgTs).maybeSingle();
+    ticket = data;
   } catch (e) {
     await client.chat.postEphemeral({ channel: channelId, thread_ts: msgTs, user: resolver, text: "Database error — could not load the ticket." });
     return;
@@ -754,13 +727,13 @@ app.action('claim_ticket', async ({ ack, body, client }) => {
 
   let ticketRow;
   try {
-    const result = await db.query(`SELECT * FROM tickets WHERE msg_ts = $1`, [msgTs]);
-    ticketRow = result.rows[0];
+    const { data } = await db().from("tickets").select("*").eq("msg_ts", msgTs).maybeSingle();
+    ticketRow = data;
   } catch (e) { return; }
   if (!ticketRow || ticketRow.status === 'closed') return;
 
   const newClaimedBy = ticketRow.claimed_by_slack_id === claimerId ? null : claimerId;
-  await db.query(`UPDATE tickets SET claimed_by_slack_id = $1 WHERE msg_ts = $2`, [newClaimedBy, msgTs]);
+  await db().from("tickets").update({ claimed_by_slack_id: newClaimedBy }).eq("msg_ts", msgTs);
 
   if (ticketRow.ticket_msg_ts) {
     try {
@@ -1000,7 +973,7 @@ app.command("/pixl-addhelper", async ({ command, ack, respond, client }) => {
   }
 
   try {
-    await db.query(`INSERT INTO helpers (slack_user_id) VALUES ($1) ON CONFLICT DO NOTHING`, [userId]);
+    await db().from("helpers").upsert({ slack_user_id: userId }, { onConflict: "slack_user_id", ignoreDuplicates: true });
     await respond({ text: `<@${userId}> is now a helper.` });
   } catch (e) {
     await respond({ text: "Failed to add helper." });
@@ -1026,18 +999,18 @@ app.command("/pixl-removehelper", async ({ command, ack, respond, client }) => {
     return;
   }
 
-  await db.query(`DELETE FROM helpers WHERE slack_user_id = $1`, [userId]);
+  await db().from("helpers").delete().eq("slack_user_id", userId);
   await respond({ text: `<@${userId}> is no longer a helper.` });
 });
 
 app.command("/pixl-helpers", async ({ ack, respond }) => {
   await ack();
-  const result = await db.query(`SELECT slack_user_id FROM helpers`);
+  const { data: rows } = await db().from("helpers").select("slack_user_id");
   if (result.rows.length === 0) {
     await respond({ text: "No helpers registered yet." });
     return;
   }
-  await respond({ text: `*Current helpers:*\n${result.rows.map(r => `• <@${r.slack_user_id}>`).join('\n')}` });
+  await respond({ text: `*Current helpers:*\n${rows.map(r => `• <@${r.slack_user_id}>`).join('\n')}` });
 });
 
 app.command("/pixl-remember", async ({ command, ack, respond, client }) => {
@@ -1090,13 +1063,13 @@ app.command("/pixl-memories", async ({ command, ack, respond, client }) => {
 
 app.command("/pixl-helpstats", async ({ ack, respond }) => {
   await ack();
-  const [total, open, closed] = await Promise.all([
-    db.query(`SELECT COUNT(*) FROM tickets`),
-    db.query(`SELECT COUNT(*) FROM tickets WHERE status = 'open'`),
-    db.query(`SELECT COUNT(*) FROM tickets WHERE status = 'closed'`),
+  const [{ count: total }, { count: open }, { count: closed }] = await Promise.all([
+    db().from("tickets").select("*", { count: "exact", head: true }),
+    db().from("tickets").select("*", { count: "exact", head: true }).eq("status", "open"),
+    db().from("tickets").select("*", { count: "exact", head: true }).eq("status", "closed"),
   ]);
   await respond({
-    text: `*Ticket Stats*\n• Total: ${total.rows[0].count}\n• Open: ${open.rows[0].count}\n• Resolved: ${closed.rows[0].count}`
+    text: `*Ticket Stats*\n• Total: ${total ?? 0}\n• Open: ${open ?? 0}\n• Resolved: ${closed ?? 0}`
   });
 });
 
@@ -1304,70 +1277,62 @@ function parseFacts(raw) {
 
 async function loadMemory() {
   try {
-    const result = await db.query('SELECT slack_user_id, facts FROM user_memory');
-    for (const row of result.rows) userMemory.set(row.slack_user_id, parseFacts(row.facts));
+const { data } = await db().from("user_memory").select("slack_user_id, facts");
+  for (const row of data || []) userMemory.set(row.slack_user_id, parseFacts(row.facts));
   } catch (e) {}
 }
 
 async function loadPersonalityMemory() {
   try {
-    const result = await db.query('SELECT slack_user_id, traits FROM user_personality');
-    for (const row of result.rows) personalityMemory.set(row.slack_user_id, row.traits);
+const { data } = await db().from("user_personality").select("slack_user_id, traits");
+  for (const row of data || []) personalityMemory.set(row.slack_user_id, row.traits);
   } catch (e) {}
 }
 
 async function savePersonality(userId, traits) {
   personalityMemory.set(userId, traits);
   try {
-    await db.query(
-      `INSERT INTO user_personality (slack_user_id, traits) VALUES ($1, $2)
-       ON CONFLICT (slack_user_id) DO UPDATE SET traits = $2`,
-      [userId, JSON.stringify(traits)]
-    );
+    await db().from("user_personality").upsert({ slack_user_id: userId, traits }, { onConflict: "slack_user_id" });
   } catch (e) { console.error('savePersonality error:', e.message); }
 }
 
 async function saveUserMemory(userId, facts) {
   userMemory.set(userId, facts);
   try {
-    await db.query(
-      `INSERT INTO user_memory (slack_user_id, facts) VALUES ($1, $2)
-       ON CONFLICT (slack_user_id) DO UPDATE SET facts = $2`,
-      [userId, JSON.stringify(facts)]
-    );
+    await db().from("user_memory").upsert({ slack_user_id: userId, facts }, { onConflict: "slack_user_id" });
   } catch (e) { console.error('saveUserMemory error:', e.message); }
 }
 
 async function loadProgramMemory() {
   try {
-    const result = await db.query('SELECT fact FROM program_memory ORDER BY id');
-    programMemory = result.rows.map(r => r.fact);
+    const { data } = await db().from("program_memory").select("fact").order("id");
+    programMemory = (data || []).map(r => r.fact);
   } catch (e) { programMemory = []; }
 }
 
 async function addProgramFact(fact) {
-  await db.query('INSERT INTO program_memory (fact) VALUES ($1)', [fact]);
+  await db().from("program_memory").insert({ fact });
   programMemory.push(fact);
 }
 
 async function removeProgramFact(idx) {
   const fact = programMemory[idx];
-  await db.query('DELETE FROM program_memory WHERE fact = $1', [fact]);
+  await db().from("program_memory").delete().eq("fact", fact);
   programMemory.splice(idx, 1);
 }
 
 async function loadStyleMemory() {
   try {
-    const result = await db.query('SELECT notes FROM style_memory ORDER BY id DESC LIMIT 1');
-    styleNotes = result.rows[0]?.notes || '';
+    const { data } = await db().from("style_memory").select("notes").order("id", { ascending: false }).limit(1).maybeSingle();
+    styleNotes = data?.notes || '';
   } catch (e) { styleNotes = ''; }
 }
 
 async function saveStyleMemory(notes) {
   styleNotes = notes;
   try {
-    await db.query('DELETE FROM style_memory');
-    await db.query('INSERT INTO style_memory (notes) VALUES ($1)', [notes]);
+    await db().from("style_memory").delete().gte("id", 1);
+    await db().from("style_memory").insert({ notes });
   } catch (e) { console.error('saveStyleMemory error:', e.message); }
 }
 
@@ -1390,58 +1355,8 @@ async function extractStyle(messages) {
 }
 
 async function initMemoryTables() {
-  await db.query(`
-    CREATE TABLE IF NOT EXISTS user_memory (
-      slack_user_id TEXT PRIMARY KEY,
-      facts JSONB NOT NULL DEFAULT '[]'
-    )
-  `);
-  await db.query(`
-    CREATE TABLE IF NOT EXISTS program_memory (
-      id SERIAL PRIMARY KEY,
-      fact TEXT NOT NULL
-    )
-  `);
-  await db.query(`
-    CREATE TABLE IF NOT EXISTS user_personality (
-      slack_user_id TEXT PRIMARY KEY,
-      traits JSONB NOT NULL DEFAULT '[]'
-    )
-  `);
-  await db.query(`
-    CREATE TABLE IF NOT EXISTS polls (
-      id SERIAL PRIMARY KEY,
-      channel TEXT NOT NULL,
-      message_ts TEXT NOT NULL,
-      question TEXT NOT NULL,
-      options JSONB NOT NULL,
-      closes_at BIGINT NOT NULL
-    )
-  `);
-  await db.query(`
-    CREATE TABLE IF NOT EXISTS style_memory (
-      id SERIAL PRIMARY KEY,
-      notes TEXT NOT NULL
-    )
-  `);
-  // Add new ticket columns if they don't exist yet
-  try { await db.query(`ALTER TABLE tickets ADD COLUMN IF NOT EXISTS title TEXT`); } catch (e) {}
-  try { await db.query(`ALTER TABLE tickets ADD COLUMN IF NOT EXISTS claimed_by_slack_id TEXT`); } catch (e) {}
-  try { await db.query(`ALTER TABLE tickets ADD COLUMN IF NOT EXISTS permalink TEXT`); } catch (e) {}
-  try {
-    await db.query(`
-      DO $$
-      BEGIN
-        IF NOT EXISTS (
-          SELECT 1 FROM information_schema.columns
-          WHERE table_name='tickets' AND column_name='ticket_number'
-        ) THEN
-          CREATE SEQUENCE IF NOT EXISTS tickets_ticket_number_seq START 1;
-          ALTER TABLE tickets ADD COLUMN ticket_number INTEGER DEFAULT nextval('tickets_ticket_number_seq');
-        END IF;
-      END $$
-    `);
-  } catch (e) {}
+  // Tables are created by Supabase migration (0042_pixorpheus_tables.sql).
+  // No runtime DDL needed.
 }
 
 function schedulePollClose(channel, messageTs, question, options, pollId, delay) {
@@ -1466,20 +1381,20 @@ function schedulePollClose(channel, messageTs, question, options, pollId, delay)
         channel,
         text: `*📊 Poll closed: ${question}*\n${lines.join('\n')}\n\n🏆 *${winner.opt}* wins with ${winner.count} vote${winner.count !== 1 ? 's' : ''}!`,
       });
-      await db.query('DELETE FROM polls WHERE id = $1', [pollId]);
+      await db().from("polls").delete().eq("id", pollId);
     } catch (e) { console.error('poll close error:', e.message); }
   }, delay);
 }
 
 async function loadPendingPolls() {
   try {
-    const result = await db.query('SELECT * FROM polls WHERE closes_at > $1', [Date.now()]);
-    for (const row of result.rows) {
+    const { data: pollRows } = await db().from("polls").select("*").gt("closes_at", Date.now());
+    for (const row of pollRows || []) {
       const delay = Number(row.closes_at) - Date.now();
       const options = Array.isArray(row.options) ? row.options : JSON.parse(row.options);
       schedulePollClose(row.channel, row.message_ts, row.question, options, row.id, delay);
     }
-    if (result.rows.length) console.log(`Loaded ${result.rows.length} pending poll(s).`);
+    if ((pollRows || []).length) console.log(`Loaded ${pollRows.length} pending poll(s).`);
   } catch (e) { console.error('loadPendingPolls error:', e.message); }
 }
 
@@ -2243,11 +2158,8 @@ app.command("/pixl-poll", async ({ command, ack, client }) => {
 
   if (durationMs) {
     const closesAt = Date.now() + durationMs;
-    const result = await db.query(
-      'INSERT INTO polls (channel, message_ts, question, options, closes_at) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-      [command.channel_id, msg.ts, question, JSON.stringify(options), closesAt]
-    );
-    schedulePollClose(command.channel_id, msg.ts, question, options, result.rows[0].id, durationMs);
+    const { data } = await db().from("polls").insert({ channel: command.channel_id, message_ts: msg.ts, question, options, closes_at: closesAt }).select("id").single();
+    schedulePollClose(command.channel_id, msg.ts, question, options, data.id, durationMs);
   }
 });
 
@@ -2344,10 +2256,14 @@ app.command("/pixl-ship", async ({ command, ack, client }) => {
 app.command("/pixl-leaderboard", async ({ command, ack, client }) => {
   await ack();
   try {
-    const result = await db.query(`SELECT slack_user_id, jsonb_array_length(facts) as cnt FROM user_memory ORDER BY cnt DESC LIMIT 10`);
-    if (!result.rows.length) { await client.chat.postEphemeral({ channel: command.channel_id, user: command.user_id, text: "no data yet" }); return; }
+    const { data: rows } = await db().from("user_memory").select("slack_user_id, facts");
+    const leaderboard = (rows || [])
+      .map(r => ({ slack_user_id: r.slack_user_id, cnt: Array.isArray(r.facts) ? r.facts.length : (r.facts ? JSON.parse(String(r.facts)).length : 0) }))
+      .sort((a, b) => b.cnt - a.cnt)
+      .slice(0, 10);
+    if (!leaderboard.length) { await client.chat.postEphemeral({ channel: command.channel_id, user: command.user_id, text: "no data yet" }); return; }
     const medals = ['🥇','🥈','🥉'];
-    const lines = result.rows.map((r, i) => `${medals[i] || `${i+1}.`} <@${r.slack_user_id}> — ${r.cnt} facts remembered`);
+    const lines = leaderboard.map((r, i) => `${medals[i] || `${i+1}.`} <@${r.slack_user_id}> — ${r.cnt} facts remembered`);
     await client.chat.postMessage({ channel: command.channel_id, text: `*🏆 most known by pixorpheus:*\n${lines.join('\n')}` });
   } catch (e) { await client.chat.postEphemeral({ channel: command.channel_id, user: command.user_id, text: "failed" }); }
 });
