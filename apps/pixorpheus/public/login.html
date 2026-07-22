@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixl Support — Sign in</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    /* ── Brand ── */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .brand-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #111;
+      letter-spacing: -0.01em;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+      padding: 36px 36px 32px;
+    }
+
+    .card-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #bbb;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #111;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .divider {
+      height: 1px;
+      background: #f0f0f0;
+      margin-bottom: 20px;
+    }
+
+    .notice {
+      font-size: 0.84rem;
+      line-height: 1.7;
+      color: #888;
+      margin-bottom: 28px;
+    }
+    .notice strong {
+      color: #555;
+      font-weight: 500;
+    }
+
+    /* ── Button ── */
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      text-align: center;
+      background: #111;
+      border: none;
+      border-radius: 7px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 13px 20px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      letter-spacing: -0.01em;
+    }
+    .btn:hover { opacity: 0.82; }
+    .btn svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    /* ── Error ── */
+    .error {
+      margin-top: 14px;
+      padding: 10px 14px;
+      background: #fff5f5;
+      border: 1px solid #fecaca;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      color: #b91c1c;
+      display: none;
+      line-height: 1.5;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 20px;
+      font-size: 0.72rem;
+      color: #ccc;
+      text-align: center;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="brand">
+        <img src="/images/p-logo.png" alt="Pixl Support" style="width:30px;height:30px;object-fit:contain;">
+      <span class="brand-name">Pixl Support</span>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Internal Access</div>
+      <h1>Helper Dashboard</h1>
+      <div class="divider"></div>
+      <p class="notice">
+        This dashboard contains <strong>confidential support conversations</strong> and team data.
+        By signing in, you&nbsp;agree not to share, screenshot, or discuss its&nbsp;content outside the private slack channel <strong style="white-space:nowrap">#pixl-slop</strong>, as it falls <strong>under your NDA</strong>. 
+      </p>
+      <a href="/auth/slack" class="btn">
+        <img src="/images/slack-icon.png" alt="Slack" style="width:18px;height:18px;object-fit:contain;">
+        Log In with Slack
+      </a>
+      <div class="error" id="error-msg"></div>
+    </div>
+
+    <div class="footer">
+      Access restricted to helpers and admins.<br>
+      Not a helper? DM @Gabin on Slack.
+    </div>
+
+  </div>
+
+  <script>
+    const err = new URLSearchParams(location.search).get('error');
+    if (err) {
+      const el = document.getElementById('error-msg');
+      el.style.display = 'block';
+      el.textContent =
+        err === 'cancelled'     ? 'Sign-in was cancelled.' :
+        err === 'access_denied' ? 'Access denied — you are not registered as a helper.' :
+                                  'Authentication failed. Please try again.';
+    }
+  </script>
+</body>
+</html>

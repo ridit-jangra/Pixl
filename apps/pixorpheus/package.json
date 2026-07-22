@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "dashboard": "node dashboard.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,6 +18,10 @@
     "@slack/bolt": "^4.7.3",
     "@supabase/supabase-js": "^2.108.2",
     "axios": "^1.16.1",
-    "jimp": "^0.22.12"
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "jimp": "^0.22.12",
+    "pg": "^8.21.0"
   }
 }

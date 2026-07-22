@@ -7,7 +7,7 @@ const levels = [
   {
     level: "Beginner",
     color: "#4ade80",
-    hours: "~6h of work",
+    hours: "min 7h of work",
     quest: {
       title: "Build a merchant's storefront",
       description:
@@ -23,7 +23,7 @@ const levels = [
   {
     level: "Intermediate",
     color: "#ff8c37",
-    hours: "~20h of work",
+    hours: "min 30h of work",
     quest: {
       title: "Ship a mobile app for the Traveler",
       description:
@@ -39,7 +39,7 @@ const levels = [
   {
     level: "Expert",
     color: "#ec3750",
-    hours: "~35h of work",
+    hours: "min 55h of work",
     quest: {
       title: "Secure the Cyberpunk City network",
       description:
@@ -55,7 +55,7 @@ const levels = [
   {
     level: "Beginner",
     color: "#4ade80",
-    hours: "~5h of work",
+    hours: "min 7h of work",
     quest: {
       title: "Make me a Roblox game!!",
       description:
@@ -71,7 +71,7 @@ const levels = [
   {
     level: "Intermediate",
     color: "#ff8c37",
-    hours: "~15h of work",
+    hours: "min 20h of work",
     quest: {
       title: "Design your own region",
       description:
@@ -87,7 +87,7 @@ const levels = [
   {
     level: "Beginner",
     color: "#4ade80",
-    hours: "~5h of work",
+    hours: "min 8.5h of work",
     quest: {
       title: "Draw sprites for the Item Shop",
       description:

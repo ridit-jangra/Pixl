@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pixl Support Internal</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <span class="logo">Pixl Support</span>
+      <div class="user-info">
+        <img id="u-avatar" src="" alt="" style="display: none" />
+        <span id="u-name"></span>
+      </div>
+      <a href="/auth/logout" class="btn-logout">Sign out</a>
+    </header>
+
+    <div class="page">
+      <h2>Support</h2>
+      <p class="subtitle">Tickets from the Slack help channel.</p>
+
+      <div id="conf-overlay">
+        <div id="conf-card">
+          <div id="conf-tag">Confidential</div>
+          <h2 id="conf-title">Confidentiality Reminder</h2>
+          <p id="conf-text">
+            This dashboard contains sensitive and confidential information,
+            including private user support conversations.<br /><br />
+            Do not share, screenshot, copy, or discuss the content of this page
+            outside of your authorized team, as it falls under your NDA.
+          </p>
+          <button id="conf-btn" onclick="dismissReminder()">
+            I promise I will not leak
+          </button>
+        </div>
+      </div>
+
+      <div class="stats" id="stats">
+        <div class="stat-card neutral" style="position:relative;">
+          <img src="/images/gold-currency.png" alt="" style="position:absolute;top:50%;right:6px;width:84px;height:84px;opacity:.58;pointer-events:none;image-rendering:pixelated;transform:translateY(-50%) rotate(-22deg);">
+          <div class="stat-label">Total Tickets</div>
+          <div class="stat-value sk" style="height: 2rem; width: 4rem">
+            &nbsp;
+          </div>
+        </div>
+        <div class="stat-card yellow">
+          <div class="stat-label">Open</div>
+          <div class="stat-value sk" style="height: 2rem; width: 3rem">
+            &nbsp;
+          </div>
+        </div>
+        <div class="stat-card teal">
+          <div class="stat-label">Resolved</div>
+          <div class="stat-value sk" style="height: 2rem; width: 4rem">
+            &nbsp;
+          </div>
+        </div>
+        <div class="stat-card red" style="position:relative;">
+          <img src="/images/red-currency.png" alt="" style="position:absolute;bottom:4px;left:8px;width:80px;height:80px;opacity:.55;pointer-events:none;image-rendering:pixelated;transform:rotate(32deg);">
+          <div class="stat-label">Longest Open</div>
+          <div class="stat-value sk" style="height: 2rem; width: 4rem">
+            &nbsp;
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="position:relative;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Activity</div>
+            <div class="card-big-title">Tickets, last 30 days</div>
+          </div>
+          <div class="card-hint">Created vs resolved per day</div>
+        </div>
+        <div class="chart-wrap"><canvas id="chart"></canvas></div>
+        <img src="/images/gold-currency.png" alt="" style="position:absolute;bottom:18px;left:38%;width:88px;height:88px;opacity:.38;pointer-events:none;image-rendering:pixelated;transform:rotate(-18deg);">
+      </div>
+
+      <div class="card" style="overflow: hidden; position:relative;">
+        <img src="/images/red-currency.png" alt="" style="position:absolute;bottom:18px;right:calc(33% + 8px);width:80px;height:80px;opacity:.5;pointer-events:none;image-rendering:pixelated;transform:rotate(20deg);">
+        <div class="card-header" style="padding-bottom: 12px">
+          <div class="card-big-title">Resolver leaderboard</div>
+          <div class="card-hint">Top 10 each</div>
+        </div>
+        <div class="lb-grid" id="lb-grid">
+          <div class="lb-col">
+            <div class="lb-col-title">All Time</div>
+            <div class="sk" style="height: 160px"></div>
+          </div>
+          <div class="lb-col">
+            <div class="lb-col-title">This Week</div>
+            <div class="sk" style="height: 160px"></div>
+          </div>
+          <div class="lb-col">
+            <div class="lb-col-title">Today</div>
+            <div class="sk" style="height: 160px"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ticket-toolbar">
+          <button class="tab-btn active" data-status="open">Open</button>
+          <button class="tab-btn" data-status="closed">Resolved</button>
+          <button class="tab-btn" data-status="all">All</button>
+          <div class="search-wrap">
+            <input
+              class="search-input"
+              id="search"
+              type="text"
+              placeholder="Search tickets…"
+            />
+          </div>
+        </div>
+        <div class="ticket-list" id="ticket-list">
+          <div class="ticket-row">
+            <div class="ticket-top">
+              <span
+                class="sk"
+                style="height: 0.8rem; width: 60%; display: block"
+              ></span>
+            </div>
+          </div>
+          <div class="ticket-row">
+            <div class="ticket-top">
+              <span
+                class="sk"
+                style="height: 0.8rem; width: 45%; display: block; opacity: 0.6"
+              ></span>
+            </div>
+          </div>
+          <div class="ticket-row">
+            <div class="ticket-top">
+              <span
+                class="sk"
+                style="height: 0.8rem; width: 55%; display: block; opacity: 0.3"
+              ></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="log-panel" style="display:none;position:fixed;bottom:24px;left:24px;width:420px;max-height:480px;background:#fff;border:1px solid #e5e5e5;border-radius:8px;box-shadow:0 4px 24px rgba(0,0,0,.08);z-index:500;display:none;flex-direction:column;">
+      <div style="padding:16px 20px 12px;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+        <span style="font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#bbb;">Speak log</span>
+        <button onclick="document.getElementById('log-panel').style.display='none'" style="background:none;border:none;color:#bbb;font-size:.8rem;cursor:pointer;font-family:inherit;">Close</button>
+      </div>
+      <div id="log-list" style="overflow-y:auto;flex:1;padding:8px 0;"></div>
+    </div>
+
+    <div id="speak-panel" style="display:none;position:fixed;bottom:24px;right:24px;width:340px;background:#fff;border:1px solid #e5e5e5;border-radius:8px;box-shadow:0 4px 24px rgba(0,0,0,.08);z-index:500;padding:20px;">
+      <div style="font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#bbb;margin-bottom:12px;">Send as Pixo</div>
+      <input id="speak-channel" type="text" placeholder="Channel ID" style="width:100%;border:1px solid #e5e5e5;border-radius:5px;padding:7px 10px;font-size:.82rem;font-family:inherit;outline:none;margin-bottom:8px;color:#111;" />
+      <input id="speak-thread" type="text" placeholder="Thread TS (optional)" style="width:100%;border:1px solid #e5e5e5;border-radius:5px;padding:7px 10px;font-size:.82rem;font-family:inherit;outline:none;margin-bottom:8px;color:#111;" />
+      <textarea id="speak-text" placeholder="Message…" style="width:100%;border:1px solid #e5e5e5;border-radius:5px;padding:8px 10px;font-size:.82rem;font-family:inherit;outline:none;resize:vertical;min-height:80px;color:#111;margin-bottom:8px;"></textarea>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button onclick="speakSend()" style="background:#111;color:#fff;border:none;border-radius:5px;padding:8px 16px;font-size:.8rem;font-family:inherit;cursor:pointer;">Send</button>
+        <button onclick="document.getElementById('speak-panel').style.display='none'" style="background:none;border:none;color:#bbb;font-size:.8rem;cursor:pointer;font-family:inherit;">Close</button>
+        <span id="speak-status" style="font-size:.75rem;color:#bbb;margin-left:auto;"></span>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
