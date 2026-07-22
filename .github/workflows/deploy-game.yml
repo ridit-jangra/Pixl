@@ -2,7 +2,9 @@ name: Export Web & Deploy to Vercel
 
 on:
   push:
-    branches: [main, feat/godot-rewrite]
+    paths:
+      - "apps/game/**"
+      - "packages/**"
   workflow_dispatch:
 
 permissions:
