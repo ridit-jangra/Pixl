@@ -40,13 +40,13 @@ jobs:
           mv templates/* "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}/"
 
       - name: Import project resources
-        run: godot --headless --import --quit-after 200 || true
+        run: godot --headless --path apps/game --import --quit-after 200 || true
 
       - name: Export Web build
         run: |
           set -euo pipefail
           mkdir -p build
-          godot --headless --verbose --export-release "${EXPORT_PRESET}" build/index.html
+          godot --headless --path apps/game --verbose --export-release "${EXPORT_PRESET}" build/index.html
           test -f build/index.html
 
       - name: Add Vercel config (cross-origin isolation headers for threads)
