@@ -15,7 +15,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
-} from "@/components/ui/chart";
+} from "@pixl/ui/chart";
 import {
   Table,
   TableBody,

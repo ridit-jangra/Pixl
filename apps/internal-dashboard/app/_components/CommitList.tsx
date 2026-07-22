@@ -3,7 +3,7 @@
 import { useState } from "react";
 import type { CommitResult } from "@/lib/github";
 import { DeflateInput } from "@/app/_components/DeflateInput";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@pixl/ui/badge";
 import {
   Table,
   TableBody,
@@ -16,7 +16,7 @@ import {
   PaginationItem,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from "@pixl/ui/pagination";
 
 const PER_PAGE = 8;
 

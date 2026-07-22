@@ -9,7 +9,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   type ChartConfig,
-} from "@/components/ui/chart";
+} from "@pixl/ui/chart";
 
 function dateLabel(date: string): string {
   return new Date(`${date}T00:00:00Z`).toLocaleDateString("en-US", {

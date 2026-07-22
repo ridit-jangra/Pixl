@@ -13,9 +13,9 @@ import { PendingButton } from "@/app/_components/PendingButton";
 import { ReviewDetailTabs } from "@/app/_components/ReviewDetailTabs";
 import { LevelBadge, ShipBadges, StatusBadge } from "@/app/_components/ProjectBadges";
 import { slackHandle } from "@/lib/slack";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@pixl/ui/alert";
+import { Badge } from "@pixl/ui/badge";
+import { Button } from "@pixl/ui/button";
 import { Card } from "@pixl/ui/card";
 import { Textarea } from "@pixl/ui/textarea";
 

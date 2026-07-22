@@ -8,12 +8,12 @@ import {
   deleteStoryNode,
 } from "@/app/actions";
 import { PendingButton } from "@/app/_components/PendingButton";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@pixl/ui/alert";
+import { Badge } from "@pixl/ui/badge";
+import { Button } from "@pixl/ui/button";
 import { Card } from "@pixl/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Input } from "@pixl/ui/input";
+import { Label } from "@pixl/ui/label";
 import { Textarea } from "@pixl/ui/textarea";
 
 export const dynamic = "force-dynamic";

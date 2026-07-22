@@ -3,9 +3,9 @@ import { requirePagePerm } from "@/lib/guard";
 import { listProjects } from "@/lib/db";
 import { StatusBadge } from "@/app/_components/ProjectBadges";
 import { slackHandles } from "@/lib/slack";
-import { Button } from "@/components/ui/button";
+import { Button } from "@pixl/ui/button";
 import { Card } from "@pixl/ui/card";
-import { Input } from "@/components/ui/input";
+import { Input } from "@pixl/ui/input";
 import {
   Table,
   TableBody,

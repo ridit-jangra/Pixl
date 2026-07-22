@@ -2,7 +2,7 @@
 
 import { useFormStatus } from "react-dom";
 import type { ComponentProps, ReactNode } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@pixl/ui/button";
 
 export function PendingButton({
   children,

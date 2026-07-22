@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { PendingButton } from "@/app/_components/PendingButton";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Input } from "@pixl/ui/input";
+import { Label } from "@pixl/ui/label";
 
 const selectCls =
   "w-full h-9 rounded-md border border-input bg-transparent px-3 text-sm shadow-xs";

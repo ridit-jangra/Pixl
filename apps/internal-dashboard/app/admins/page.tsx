@@ -7,15 +7,15 @@ import { slackHandles } from "@/lib/slack";
 import { TeamLog } from "@/app/_components/TeamLog";
 import { PendingButton } from "@/app/_components/PendingButton";
 import { Card } from "@pixl/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Checkbox } from "@pixl/ui/checkbox";
+import { Input } from "@pixl/ui/input";
+import { Label } from "@pixl/ui/label";
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
   PaginationLink,
-} from "@/components/ui/pagination";
+} from "@pixl/ui/pagination";
 
 export const dynamic = "force-dynamic";
 

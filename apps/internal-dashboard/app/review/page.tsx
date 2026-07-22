@@ -5,15 +5,15 @@ import { slackHandles } from "@/lib/slack";
 import { ReviewTabs } from "@/app/_components/ReviewTabs";
 import { ReviewTable } from "@/app/_components/ReviewTable";
 import { LiveReview } from "@/app/_components/LiveReview";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Badge } from "@pixl/ui/badge";
+import { Button } from "@pixl/ui/button";
 import { Card } from "@pixl/ui/card";
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
   PaginationLink,
-} from "@/components/ui/pagination";
+} from "@pixl/ui/pagination";
 
 export const dynamic = "force-dynamic";
 

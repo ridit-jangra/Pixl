@@ -5,7 +5,7 @@ import { getAccess, canView, isReportViewer } from "@/lib/guard";
 import { countPendingReviews, countOpenReports } from "@/lib/db";
 import { ticketStats } from "@/lib/tickets";
 import { Shell } from "@/app/_components/Shell";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "@pixl/ui/sidebar";
 import { cn } from "@/lib/utils";
 
 const jetbrainsMonoHeading = JetBrains_Mono({

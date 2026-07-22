@@ -17,7 +17,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
+} from "@pixl/ui/sidebar";
 
 export interface NavFlags {
   players: boolean;

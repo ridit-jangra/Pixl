@@ -18,17 +18,17 @@ import { addReviewer } from "@/app/actions";
 import { slackHandles } from "@/lib/slack";
 import { TeamLog } from "@/app/_components/TeamLog";
 import { PendingButton } from "@/app/_components/PendingButton";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Badge } from "@pixl/ui/badge";
+import { Button } from "@pixl/ui/button";
 import { Card } from "@pixl/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Input } from "@pixl/ui/input";
+import { Label } from "@pixl/ui/label";
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
   PaginationLink,
-} from "@/components/ui/pagination";
+} from "@pixl/ui/pagination";
 import {
   Table,
   TableBody,

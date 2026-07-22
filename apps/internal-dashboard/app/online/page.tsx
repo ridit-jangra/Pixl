@@ -3,9 +3,9 @@ import { requirePagePerm } from "@/lib/guard";
 import { fetchOnlinePlayers, gameServerConfigured } from "@/lib/gameServer";
 import { kickPlayer } from "@/app/actions";
 import { PendingButton } from "@/app/_components/PendingButton";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@pixl/ui/badge";
 import { Card } from "@pixl/ui/card";
-import { Input } from "@/components/ui/input";
+import { Input } from "@pixl/ui/input";
 import {
   Table,
   TableBody,

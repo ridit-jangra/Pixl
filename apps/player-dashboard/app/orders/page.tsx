@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Project } from "../types";
 import { api } from "../utils/server-utils";
-import { PlusPulse } from "@/components/ui/dot-matrix";
+import { PlusPulse } from "@pixl/ui/dot-matrix";
 
 export default function Orders() {
   const [projects, setProjects] = useState<Project[]>([]);

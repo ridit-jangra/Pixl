@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@pixl/ui/button";
 
 const SERVER_URL = "https://server.pixl.rsvp";
 

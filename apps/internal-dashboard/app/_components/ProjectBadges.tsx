@@ -1,4 +1,4 @@
-import { Badge as UIBadge } from "@/components/ui/badge";
+import { Badge as UIBadge } from "@pixl/ui/badge";
 
 type Tone = "gray" | "green" | "amber" | "rose" | "blue" | "violet";
 

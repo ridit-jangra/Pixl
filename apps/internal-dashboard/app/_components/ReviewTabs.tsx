@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsList, TabsTrigger } from "@pixl/ui/tabs";
+import { Badge } from "@pixl/ui/badge";
 
 export function ReviewTabs({
   isSuper,

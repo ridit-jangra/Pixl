@@ -3,22 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "main": "./src/index.ts",
   "exports": {
-    "./card": "./src/components/ui/card.tsx",
-    "./skeleton": "./src/components/ui/skeleton.tsx",
-    "./kbd": "./src/components/ui/kbd.tsx",
-    "./textarea": "./src/components/ui/textarea.tsx",
-    "./table": "./src/components/ui/table.tsx"
+    "./*": "./src/components/ui/*.tsx"
   },
   "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
+    "@remixicon/react": "^4.9.0",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
+    "lucide-react": "^1.25.0",
+    "radix-ui": "^1.6.2",
+    "recharts": "3.8.0",
+    "sonner": "^2.0.7",
     "tailwind-merge": "^3.6.0"
   },
   "peerDependencies": {
-    "react": "^19"
+    "react": "^19",
+    "react-dom": "^19"
   },
   "devDependencies": {
-    "@types/react": "^19"
+    "@types/react": "^19",
+    "@types/react-dom": "^19"
   }
 }

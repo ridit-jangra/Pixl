@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ShippedProject } from "@/lib/db";
 import { LevelBadge, StatusBadge } from "@/app/_components/ProjectBadges";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@pixl/ui/badge";
 import { Card } from "@pixl/ui/card";
 import {
   Table,

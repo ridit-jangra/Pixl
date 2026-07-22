@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { setDeduction, getDeduction, subscribeDeductions } from "./deflateStore";
-import { Input } from "@/components/ui/input";
+import { Input } from "@pixl/ui/input";
 
 // Compact "deduct N minutes" control shown on a commit or journal row. Feeds the
 // shared store, which the review form reads to lower the credited hours. Stays in

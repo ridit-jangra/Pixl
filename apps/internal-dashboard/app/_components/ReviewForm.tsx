@@ -4,11 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { reviewProject } from "@/app/actions";
 import { initDeductions, clearDeductions, subscribeDeductions, totalDeductedMinutes } from "@/app/_components/deflateStore";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@pixl/ui/button";
+import { Input } from "@pixl/ui/input";
 import { Textarea } from "@pixl/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@pixl/ui/label";
+import { Checkbox } from "@pixl/ui/checkbox";
 
 function VerdictButtons({ secondPass }: { secondPass: boolean }) {
   const { pending } = useFormStatus();

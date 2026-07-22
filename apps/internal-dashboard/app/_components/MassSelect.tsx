@@ -1,6 +1,6 @@
 "use client";
 
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from "@pixl/ui/checkbox";
 
 export function SelectAllBox() {
   return (

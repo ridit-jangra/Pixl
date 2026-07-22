@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { PendingButton } from "@/app/_components/PendingButton";
 import { OptionsEditor } from "@/app/_components/OptionsEditor";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Input } from "@pixl/ui/input";
+import { Label } from "@pixl/ui/label";
 
 const FILE_INPUT =
   "block w-full text-sm text-muted-foreground file:mr-3 file:rounded-md file:border file:border-border file:bg-secondary file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-secondary-foreground hover:file:bg-secondary/80";

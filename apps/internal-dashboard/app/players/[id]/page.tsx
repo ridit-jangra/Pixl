@@ -5,7 +5,7 @@ import { banIsActive, getPlayer, listReportsAgainst } from "@/lib/db";
 import { slackHandle } from "@/lib/slack";
 import { BanForm, LiftBanForm, NotifyForm, WarnForm } from "@/app/_components/Moderate";
 import { StatusBadge } from "@/app/_components/ProjectBadges";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@pixl/ui/badge";
 import { Card } from "@pixl/ui/card";
 import {
   Table,
