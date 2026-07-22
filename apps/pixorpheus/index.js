@@ -2342,7 +2342,7 @@ app.command("/pixl-lastship", async ({ command, ack, client }) => {
 });
 
 (async () => {
-  await app.start(process.env.PORT || 3000);
+  await app.start(3000);
   try {
     const auth = await app.client.auth.test();
     botUserId = auth.user_id;
