@@ -6,7 +6,7 @@ import { PixelAdjustForm } from "@/app/_components/PixelAdjustForm";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card } from "@pixl/ui/card";
+import { Card } from "@/components/ui/card";
 import {
   Pagination,
   PaginationContent,
@@ -20,7 +20,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@pixl/ui/table";
+} from "@/components/ui/table";
 
 export const dynamic = "force-dynamic";
 

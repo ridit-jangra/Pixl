@@ -9,7 +9,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
-} from "@pixl/ui/table";
+} from "@/components/ui/table";
 import {
   Pagination,
   PaginationContent,

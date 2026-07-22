@@ -4,7 +4,7 @@ import { requirePagePerm } from "@/lib/guard";
 import { listReviewAudits } from "@/lib/db";
 import { ReviewTabs } from "@/app/_components/ReviewTabs";
 import { Badge } from "@/components/ui/badge";
-import { Card } from "@pixl/ui/card";
+import { Card } from "@/components/ui/card";
 
 export const dynamic = "force-dynamic";
 

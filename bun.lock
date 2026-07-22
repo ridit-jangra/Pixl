@@ -129,20 +129,6 @@
         "typescript": "^5.7.2",
       },
     },
-    "packages/ui": {
-      "name": "@pixl/ui",
-      "version": "0.1.0",
-      "dependencies": {
-        "clsx": "^2.1.1",
-        "tailwind-merge": "^3.6.0",
-      },
-      "devDependencies": {
-        "@types/react": "^19",
-      },
-      "peerDependencies": {
-        "react": "^19",
-      },
-    },
   },
   "trustedDependencies": [
     "sharp",
@@ -488,8 +474,6 @@
     "@pixl/player-dashboard": ["@pixl/player-dashboard@workspace:apps/player-dashboard"],
 
     "@pixl/server": ["@pixl/server@workspace:apps/server"],
-
-    "@pixl/ui": ["@pixl/ui@workspace:packages/ui"],
 
     "@radix-ui/number": ["@radix-ui/number@1.1.2", "", {}, "sha512-ceTwaxc4I5IOi97DgCotl3pqiyRGvffcc0oOsE2dQYaJOFIDsDt4VWG6xEbg1QePv9QWausCEIppud/tJ1wNig=="],
 

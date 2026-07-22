@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { getAccess } from "@/lib/guard";
 import { getSession } from "@/lib/session";
 import { Button } from "@/components/ui/button";
-import { Card } from "@pixl/ui/card";
+import { Card } from "@/components/ui/card";
 
 export const dynamic = "force-dynamic";
 

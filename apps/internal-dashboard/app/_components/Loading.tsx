@@ -2,8 +2,8 @@
 // navigation starts, so slow server components (the review page fetches
 // GitHub / Hackatime / YSWS) show feedback immediately instead of a frozen tab.
 
-import { Skeleton } from "@pixl/ui/skeleton";
-import { Card, CardContent } from "@pixl/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardContent } from "@/components/ui/card";
 
 export function Spinner({ label = "Loading…" }: { label?: string }) {
   return (

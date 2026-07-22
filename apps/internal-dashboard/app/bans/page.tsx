@@ -3,7 +3,7 @@ import { requirePagePerm } from "@/lib/guard";
 import { listBans, listBanLog, banIsActive } from "@/lib/db";
 import { LiftBanForm } from "@/app/_components/Moderate";
 import { Badge } from "@/components/ui/badge";
-import { Card } from "@pixl/ui/card";
+import { Card } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -11,7 +11,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@pixl/ui/table";
+} from "@/components/ui/table";
 
 export const dynamic = "force-dynamic";
 

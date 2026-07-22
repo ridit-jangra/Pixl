@@ -7,7 +7,7 @@ import { ReviewTable } from "@/app/_components/ReviewTable";
 import { LiveReview } from "@/app/_components/LiveReview";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card } from "@pixl/ui/card";
+import { Card } from "@/components/ui/card";
 import {
   Pagination,
   PaginationContent,

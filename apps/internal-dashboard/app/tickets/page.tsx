@@ -1,6 +1,6 @@
 import { requireAdmin } from "@/lib/guard";
 import { ticketStats, ticketActivity } from "@/lib/tickets";
-import { Card } from "@pixl/ui/card";
+import { Card } from "@/components/ui/card";
 import { TicketsClient } from "./TicketsClient";
 import { TicketsActivityChart } from "./TicketsActivityChart";
 

@@ -4,7 +4,7 @@ import { listProjects } from "@/lib/db";
 import { StatusBadge } from "@/app/_components/ProjectBadges";
 import { slackHandles } from "@/lib/slack";
 import { Button } from "@/components/ui/button";
-import { Card } from "@pixl/ui/card";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -13,7 +13,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@pixl/ui/table";
+} from "@/components/ui/table";
 
 export const dynamic = "force-dynamic";
 

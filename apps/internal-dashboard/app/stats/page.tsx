@@ -1,6 +1,6 @@
 import { publicStats, publicGallery } from "@/lib/db";
 import { GrowthChart } from "@/app/_components/GrowthChart";
-import { Card, CardContent } from "@pixl/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 export const dynamic = "force-dynamic";
 

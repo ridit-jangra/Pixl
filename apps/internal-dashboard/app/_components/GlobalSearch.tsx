@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { StatusBadge } from "@/app/_components/ProjectBadges";
 import { Input } from "@/components/ui/input";
-import { Kbd } from "@pixl/ui/kbd";
+import { Kbd } from "@/components/ui/kbd";
 
 interface PlayerHit {
   id: string;

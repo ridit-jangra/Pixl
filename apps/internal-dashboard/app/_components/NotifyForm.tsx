@@ -5,9 +5,9 @@ import { sendNotification, searchPlayers, type PlayerHit } from "@/app/actions";
 import { PendingButton } from "@/app/_components/PendingButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@pixl/ui/textarea";
+import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent } from "@pixl/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 export function NotifyForm() {
   const [everyone, setEveryone] = useState(true);

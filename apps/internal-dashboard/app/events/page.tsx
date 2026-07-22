@@ -13,7 +13,7 @@ import { CreateEventForm } from "@/app/_components/CreateEventForm";
 import { PendingButton } from "@/app/_components/PendingButton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import { Card } from "@pixl/ui/card";
+import { Card } from "@/components/ui/card";
 
 export const dynamic = "force-dynamic";
 

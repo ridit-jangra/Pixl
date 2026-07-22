@@ -8,7 +8,7 @@ import { OptionsEditor } from "@/app/_components/OptionsEditor";
 import { AddShopItemForm } from "@/app/_components/AddShopItemForm";
 import { parseOptionGroups } from "@/lib/shopOptions";
 import { Badge } from "@/components/ui/badge";
-import { Card } from "@pixl/ui/card";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {

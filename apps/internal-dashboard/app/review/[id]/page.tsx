@@ -16,8 +16,8 @@ import { slackHandle } from "@/lib/slack";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card } from "@pixl/ui/card";
-import { Textarea } from "@pixl/ui/textarea";
+import { Card } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
 
 export const dynamic = "force-dynamic";
 

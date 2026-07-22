@@ -9,7 +9,7 @@ import { CommitList } from "@/app/_components/CommitList";
 import { renderMarkdown } from "@/lib/markdown";
 import { DeflateInput } from "@/app/_components/DeflateInput";
 import { HackatimePanel } from "@/app/_components/HackatimePanel";
-import { Card } from "@pixl/ui/card";
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 

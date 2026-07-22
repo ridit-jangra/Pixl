@@ -23,7 +23,7 @@ import { removeReviewer, setSecondPass } from "@/app/actions";
 import { PendingButton } from "@/app/_components/PendingButton";
 import { slackHandle } from "@/lib/slack";
 import { Badge } from "@/components/ui/badge";
-import { Card } from "@pixl/ui/card";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -32,7 +32,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@pixl/ui/table";
+} from "@/components/ui/table";
 
 export const dynamic = "force-dynamic";
 

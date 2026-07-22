@@ -5,7 +5,7 @@ import { useFormStatus } from "react-dom";
 import { adjustPixels, searchPlayers, type PlayerHit } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@pixl/ui/textarea";
+import { Textarea } from "@/components/ui/textarea";
 
 function SubmitButton({ mode }: { mode: "deduct" | "grant" }) {
   const { pending } = useFormStatus();

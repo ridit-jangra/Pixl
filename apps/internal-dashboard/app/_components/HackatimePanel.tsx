@@ -3,7 +3,7 @@
 import { Bar, BarChart, XAxis, YAxis } from "recharts";
 import type { HackatimeReport, HackatimeBreakdown } from "@/lib/hackatime";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@pixl/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
