@@ -41,7 +41,7 @@ async function aiPost(body) {
   }
   const openrouterKey = process.env.OPENROUTER_API_KEY;
   if (!openrouterKey) { const err = new Error('no credits'); err.code = NO_CREDITS; throw err; }
-  const orBody = { ...body, model: 'google/gemini-2.5-flash-lite:free' };
+  const orBody = { ...body, model: 'google/gemini-2.5-flash-lite' };
   try {
     const res = await axios.post(OPENROUTER_URL, orBody, {
       headers: { Authorization: `Bearer ${openrouterKey}`, 'Content-Type': 'application/json', 'HTTP-Referer': 'https://pixorpheus.app', 'X-Title': 'Pixorpheus' },
