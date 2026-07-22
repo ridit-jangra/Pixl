@@ -63,11 +63,6 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
 });
 
-app.receiver.router.get('/', (req, res) => {
-  res.writeHead(200);
-  res.end('ok');
-});
-
 app.event('message', async ({ event, client }) => {
   const isHelpChannel = event.channel === process.env.SLACK_HELP_CHANNEL;
   const isTicketChannel = event.channel === process.env.SLACK_TICKET_CHANNEL;
