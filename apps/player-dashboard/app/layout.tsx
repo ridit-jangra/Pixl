@@ -11,6 +11,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "./components/Sidebar";
 import { AuthGate } from "./components/auth-gate";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollBar } from "@/components/ui/scroll-area";
 
 const jetbrainsMonoHeading = JetBrains_Mono({
   subsets: ["latin"],
@@ -51,16 +53,34 @@ export default function RootLayout({
         publicSans.variable,
         jetbrainsMonoHeading.variable,
       )}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col dark">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var t = localStorage.getItem("pixl_theme");
+                  if (t === "light") document.documentElement.classList.remove("dark");
+                  else document.documentElement.classList.add("dark");
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col">
         <TooltipProvider>
-          <SidebarProvider side="right">
-            <main className="flex-1 min-w-0">
-              <div className="flex items-center justify-end p-2">
-                <SidebarTrigger />
-              </div>
-              <AuthGate>{children}</AuthGate>
-            </main>
+          <SidebarProvider side="right" className="h-full">
+            <ScrollArea className="flex-1 min-w-0 h-dvh">
+              <main>
+                <div className="flex items-center justify-end p-2">
+                  <SidebarTrigger />
+                </div>
+                <AuthGate>{children}</AuthGate>
+              </main>
+            </ScrollArea>
             <AppSidebar />
           </SidebarProvider>
         </TooltipProvider>

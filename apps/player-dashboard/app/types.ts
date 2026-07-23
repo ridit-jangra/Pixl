@@ -21,4 +21,5 @@ export interface ShopData {
   items: ShopItem[];
   xp: number;
   claimed: number[];
+  pixels: number;
 }
