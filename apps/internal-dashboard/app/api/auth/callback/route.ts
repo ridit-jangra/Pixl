@@ -3,9 +3,27 @@ import { cookies } from "next/headers";
 import { isAllowed, setSessionCookie } from "@/lib/session";
 import { getAdmin } from "@/lib/db";
 
-interface SlackIdClaims {
-  "https://slack.com/user_id"?: string;
-  name?: string;
+const HCA_BASE_URL = "https://auth.hackclub.com";
+
+interface HackClubTokenResponse {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+  refresh_token: string;
+  scope: string;
+}
+
+interface HackClubMeResponse {
+  identity: {
+    id: string;
+    first_name?: string;
+    last_name?: string;
+    primary_email?: string;
+    slack_id?: string;
+    verification_status?: string;
+    [key: string]: unknown;
+  };
+  scopes: string[];
 }
 
 export async function GET(req: NextRequest) {
@@ -20,33 +38,41 @@ export async function GET(req: NextRequest) {
 
   if (!code || !state || !expected || state !== expected) return fail("state");
 
-  const body = new URLSearchParams({
-    client_id: process.env.SLACK_CLIENT_ID ?? "",
-    client_secret: process.env.SLACK_CLIENT_SECRET ?? "",
-    code,
-    redirect_uri: `${process.env.BASE_URL}/api/auth/callback`,
-  });
-  const res = await fetch("https://slack.com/api/openid.connect.token", {
+  const tokenRes = await fetch(`${HCA_BASE_URL}/oauth/token`, {
     method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      client_id: process.env.HCA_CLIENT_ID,
+      client_secret: process.env.HCA_CLIENT_SECRET,
+      redirect_uri: `${process.env.BASE_URL}/api/auth/callback`,
+      code,
+      grant_type: "authorization_code",
+    }),
   });
-  const json = (await res.json()) as { ok: boolean; id_token?: string };
-  if (!json.ok || !json.id_token) return fail("token");
 
-  // The id_token comes straight from Slack over TLS, so decoding its payload
-  // without JWKS verification is fine here.
-  const payload = json.id_token.split(".")[1];
-  let claims: SlackIdClaims;
-  try {
-    claims = JSON.parse(Buffer.from(payload, "base64url").toString());
-  } catch {
-    return fail("claims");
-  }
-  const slackId = claims["https://slack.com/user_id"];
-  if (!slackId) return fail("claims");
+  if (!tokenRes.ok) return fail("token");
+
+  const tokens = (await tokenRes.json()) as HackClubTokenResponse;
+
+  const meRes = await fetch(`${HCA_BASE_URL}/api/v1/me`, {
+    headers: { Authorization: `Bearer ${tokens.access_token}` },
+  });
+
+  if (!meRes.ok) return fail("identity");
+
+  const me = (await meRes.json()) as HackClubMeResponse;
+  const identity = me.identity;
+  const slackId = identity.slack_id;
+  if (!slackId) return fail("denied");
+
+  const fullName = [identity.first_name, identity.last_name]
+    .filter(Boolean)
+    .join(" ")
+    .trim();
+  const name = fullName || identity.primary_email || slackId;
+
   if (!isAllowed(slackId) && !(await getAdmin(slackId))) return fail("denied");
 
-  await setSessionCookie(slackId, claims.name ?? slackId);
+  await setSessionCookie(slackId, name);
   return NextResponse.redirect(`${process.env.BASE_URL}/`);
 }

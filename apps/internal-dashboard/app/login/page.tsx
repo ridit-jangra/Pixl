@@ -10,7 +10,7 @@ export default async function LoginPage({
   const { error } = await searchParams;
   const message =
     error === "denied"
-      ? "That Slack account isn't on the Pixl team (or was removed). If you think that's a mistake, contact the Pixl team."
+      ? "That Hack Club account isn't linked to a Pixl team member. If you think that's a mistake, contact the Pixl team."
       : error
         ? "Sign-in failed , try again."
         : null;
@@ -28,7 +28,7 @@ export default async function LoginPage({
         </div>
         <h1 className="text-xl font-semibold tracking-tight">Sign in</h1>
         <p className="text-sm text-muted-foreground mt-1 mb-6">
-          Access is limited to approved Slack accounts.
+          Access is limited to approved Hack Club accounts.
         </p>
         {message && (
           <Alert variant="destructive" className="mb-5">
@@ -36,7 +36,7 @@ export default async function LoginPage({
           </Alert>
         )}
         <Button asChild className="bg-ink text-white hover:bg-ink/90 w-full">
-          <a href="/api/auth/login">Continue with Slack</a>
+          <a href="/api/auth/login">Continue with Hack Club</a>
         </Button>
       </Card>
     </div>
