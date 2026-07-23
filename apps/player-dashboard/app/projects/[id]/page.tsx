@@ -247,7 +247,10 @@ export default function ProjectDetail() {
     if (!project) return false;
     if (project.status === "shipped" || project.status === "second_review")
       return false;
-    return ["draft", "needs_changes", "approved"].includes(project.status) || !!project.rejected_at;
+    return (
+      ["draft", "needs_changes", "approved"].includes(project.status) ||
+      !!project.rejected_at
+    );
   }
 
   function shipBlockers() {
@@ -260,7 +263,8 @@ export default function ProjectDetail() {
     return b;
   }
 
-  const inReview = project?.status === "shipped" || project?.status === "second_review";
+  const inReview =
+    project?.status === "shipped" || project?.status === "second_review";
   const blockers = shipBlockers();
   const statusColor: Record<string, string> = {
     draft: "bg-muted text-muted-foreground",
@@ -286,7 +290,7 @@ export default function ProjectDetail() {
     );
 
   return (
-    <div className="p-4 sm:p-6 space-y-6 max-w-3xl">
+    <div className="p-4 sm:p-6 space-y-6">
       <button
         onClick={() => router.push("/projects")}
         className="text-sm text-muted-foreground hover:text-foreground mb-2 inline-block"
@@ -317,8 +321,8 @@ export default function ProjectDetail() {
       )}
       {project.rejected_at && (
         <div className="p-3 rounded-lg border border-red/30 bg-red/5 text-sm">
-          REJECTED{project.reject_reason ? `: ${project.reject_reason}` : ""}
-          — fix it up and ship again.
+          REJECTED{project.reject_reason ? `: ${project.reject_reason}` : ""}—
+          fix it up and ship again.
         </div>
       )}
 
@@ -398,9 +402,15 @@ export default function ProjectDetail() {
             <div className="flex items-start gap-4 flex-wrap">
               <div className="w-32 h-24 rounded-lg bg-muted flex items-center justify-center overflow-hidden border">
                 {imageUrl ? (
-                  <img src={imageUrl} alt="" className="w-full h-full object-cover" />
+                  <img
+                    src={imageUrl}
+                    alt=""
+                    className="w-full h-full object-cover"
+                  />
                 ) : (
-                  <span className="text-xs text-muted-foreground">No image</span>
+                  <span className="text-xs text-muted-foreground">
+                    No image
+                  </span>
                 )}
               </div>
               <div className="space-y-2">
@@ -408,7 +418,9 @@ export default function ProjectDetail() {
                   variant="outline"
                   size="sm"
                   disabled={uploading || inReview}
-                  onClick={() => document.getElementById("thumb-input")?.click()}
+                  onClick={() =>
+                    document.getElementById("thumb-input")?.click()
+                  }
                 >
                   {uploading ? "UPLOADING…" : "CHOOSE IMAGE"}
                 </Button>
@@ -442,7 +454,9 @@ export default function ProjectDetail() {
                   }`}
                 >
                   <div className="font-medium">{l}</div>
-                  <div className="text-[10px] text-muted-foreground mt-0.5">{tip}</div>
+                  <div className="text-[10px] text-muted-foreground mt-0.5">
+                    {tip}
+                  </div>
                 </button>
               ))}
             </div>
@@ -520,11 +534,15 @@ export default function ProjectDetail() {
               Thumbnail uploaded
             </div>
             <div className="flex items-center gap-2">
-              <span className={linkedSeconds() >= 3600 ? "text-green" : "text-red"}>
+              <span
+                className={linkedSeconds() >= 3600 ? "text-green" : "text-red"}
+              >
                 {linkedSeconds() >= 3600 ? "+" : "-"}
               </span>
               &ge; 1h tracked on linked Hackatime projects{" "}
-              <span className="text-cyan">({(linkedSeconds() / 3600).toFixed(1)}h)</span>
+              <span className="text-cyan">
+                ({(linkedSeconds() / 3600).toFixed(1)}h)
+              </span>
             </div>
           </div>
 
@@ -576,7 +594,8 @@ export default function ProjectDetail() {
                     ? "Project created"
                     : e.kind === "shipped"
                       ? "Shipped for review"
-                      : e.verdict === "approved" || e.verdict === "first_pass_approved"
+                      : e.verdict === "approved" ||
+                          e.verdict === "first_pass_approved"
                         ? "Approved"
                         : e.verdict === "needs_changes"
                           ? "Sent back for changes"
@@ -593,11 +612,19 @@ export default function ProjectDetail() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-baseline gap-2 flex-wrap">
                         <span className="font-medium">{label}</span>
-                        <span className="text-xs text-muted-foreground">{timeAgo(e.at)}</span>
+                        <span className="text-xs text-muted-foreground">
+                          {timeAgo(e.at)}
+                        </span>
                       </div>
-                      {hoursHtml && <p className="text-xs text-muted-foreground">{hoursHtml}</p>}
+                      {hoursHtml && (
+                        <p className="text-xs text-muted-foreground">
+                          {hoursHtml}
+                        </p>
+                      )}
                       {e.note && (
-                        <p className="text-xs text-muted-foreground mt-0.5">{e.note}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5">
+                          {e.note}
+                        </p>
                       )}
                     </div>
                   </div>
@@ -647,11 +674,16 @@ export default function ProjectDetail() {
           ) : (
             <div className="space-y-2">
               {journal.map((e) => (
-                <div key={e.id} className="p-3 rounded-lg border text-sm space-y-1">
+                <div
+                  key={e.id}
+                  className="p-3 rounded-lg border text-sm space-y-1"
+                >
                   <div className="flex items-center gap-2 flex-wrap text-xs text-muted-foreground">
                     <span>{timeAgo(e.created_at)}</span>
                     {e.hours > 0 && (
-                      <span className="text-cyan">{Number(e.hours).toFixed(1)}h</span>
+                      <span className="text-cyan">
+                        {Number(e.hours).toFixed(1)}h
+                      </span>
                     )}
                     <button
                       onClick={() => handleDeleteJournal(e.id)}
@@ -662,7 +694,9 @@ export default function ProjectDetail() {
                   </div>
                   <div
                     className="md"
-                    dangerouslySetInnerHTML={{ __html: renderMarkdown(e.content) }}
+                    dangerouslySetInnerHTML={{
+                      __html: renderMarkdown(e.content),
+                    }}
                   />
                 </div>
               ))}

@@ -70,7 +70,9 @@ export default function Report() {
     if (q.length < 2 || picked) return;
     searchTimer.current = setTimeout(async () => {
       try {
-        const data = (await api(`/reports/players?q=${encodeURIComponent(q)}`)) as {
+        const data = (await api(
+          `/reports/players?q=${encodeURIComponent(q)}`,
+        )) as {
           players: PlayerSearchResult[];
         };
         setResults(data.players || []);
@@ -107,7 +109,7 @@ export default function Report() {
     );
 
   return (
-    <div className="p-6 space-y-6 max-w-xl">
+    <div className="p-6 space-y-6 ">
       <div>
         <h1 className="text-3xl font-heading font-bold tracking-tight">
           REPORT A PLAYER
@@ -237,9 +239,7 @@ export default function Report() {
                     </span>
                   </div>
                   {r.reason && (
-                    <p className="text-muted-foreground text-xs">
-                      {r.reason}
-                    </p>
+                    <p className="text-muted-foreground text-xs">{r.reason}</p>
                   )}
                 </div>
               ))}
