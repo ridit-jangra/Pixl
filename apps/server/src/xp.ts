@@ -1,10 +1,10 @@
 import { supabase } from "./db/client.js";
 
 // XP = 1 per approved hour; level = approved hours, capped at 100. Payout is a
-// flat $4.00/hr base plus an XP bonus that ramps linearly to $6.00/hr at level
-// 100. 10 px = $1, so px/hr = $/hr x 10 (40 px base -> 60 px at max level).
-export const BASE_PX_PER_HOUR = 40;
-export const MAX_PX_PER_HOUR = 60;
+// flat $3.50/hr base plus an XP bonus that ramps to $5.50/hr at level
+// 100. 50 px = $3.50 ($0.07/px), so base = 50 px/hr, max = 79 px/hr.
+export const BASE_PX_PER_HOUR = 50;
+export const MAX_PX_PER_HOUR = 79;
 export const MAX_LEVEL = 100;
 
 export function levelFor(xp: number): number {
