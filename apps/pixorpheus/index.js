@@ -485,12 +485,29 @@ async function checkIsInTicketChannel(slackUserId, client) {
   }
 }
 
+function ticketResultText(result) {
+  if (result === 'already_closed') return 'this ticket is already resolved';
+  if (result === 'already_open') return 'this ticket is already open';
+  if (result === 'not_found') return "couldn't find this ticket";
+  return null;
+}
+
+async function notifyIfNotOk(result, ticket, event, client) {
+  const text = ticketResultText(result);
+  if (!text) return;
+  try {
+    await client.chat.postEphemeral({ channel: event.channel, thread_ts: ticket.msg_ts, user: event.user, text });
+  } catch (e) {}
+}
+
 const macros = {
   resolve: async (ticket, event, client) => {
-    await resolveTicket(ticket.msg_ts, event.user, client);
+    const result = await resolveTicket(ticket.msg_ts, event.user, client);
+    await notifyIfNotOk(result, ticket, event, client);
   },
   close: async (ticket, event, client) => {
-    await resolveTicket(ticket.msg_ts, event.user, client);
+    const result = await resolveTicket(ticket.msg_ts, event.user, client);
+    await notifyIfNotOk(result, ticket, event, client);
   },
   faq: async (ticket, event, client) => {
     await client.chat.postMessage({
@@ -498,10 +515,12 @@ const macros = {
       thread_ts: ticket.msg_ts,
       text: `Hey! Check out the FAQ here: <${process.env.SLACK_FAQ_URL}|FAQ>`,
     });
-    await resolveTicket(ticket.msg_ts, event.user, client);
+    const result = await resolveTicket(ticket.msg_ts, event.user, client);
+    await notifyIfNotOk(result, ticket, event, client);
   },
   reopen: async (ticket, event, client) => {
-    await reopenTicket(ticket.msg_ts, event.user, client);
+    const result = await reopenTicket(ticket.msg_ts, event.user, client);
+    await notifyIfNotOk(result, ticket, event, client);
   },
 };
 
@@ -527,7 +546,8 @@ async function runMacro(name, ticket, event, client) {
 
 async function resolveTicket(msgTs, resolverSlackId, client) {
   const { data: check } = await db().from("tickets").select("status").eq("msg_ts", msgTs).maybeSingle();
-  if (!check || check.status === 'closed') return;
+  if (!check) return 'not_found';
+  if (check.status === 'closed') return 'already_closed';
 
   await db().from("tickets").update({ status: "closed", closed_at: new Date().toISOString(), closed_by_slack_id: resolverSlackId }).eq("msg_ts", msgTs);
 
@@ -579,11 +599,14 @@ async function resolveTicket(msgTs, resolverSlackId, client) {
       timestamp: msgTs,
     });
   } catch (e) {}
+
+  return 'ok';
 }
 
 async function reopenTicket(msgTs, reopenerSlackId, client) {
   const { data: check } = await db().from("tickets").select("status").eq("msg_ts", msgTs).maybeSingle();
-  if (!check || check.status === 'open') return;
+  if (!check) return 'not_found';
+  if (check.status === 'open') return 'already_open';
 
   await db().from("tickets").update({ status: "open", closed_at: null, closed_by_slack_id: null }).eq("msg_ts", msgTs);
 
@@ -620,6 +643,8 @@ async function reopenTicket(msgTs, reopenerSlackId, client) {
       timestamp: msgTs,
     });
   } catch (e) {}
+
+  return 'ok';
 }
 
 app.action('mark_resolved', async ({ ack, body, client }) => {
@@ -656,7 +681,11 @@ app.action('mark_resolved', async ({ ack, body, client }) => {
     return;
   }
 
-  await resolveTicket(msgTs, resolver, client);
+  const result = await resolveTicket(msgTs, resolver, client);
+  const resultText = ticketResultText(result);
+  if (resultText) {
+    await client.chat.postEphemeral({ channel: channelId, thread_ts: msgTs, user: resolver, text: resultText });
+  }
 });
 
 app.action('resolve_from_ticket_channel', async ({ ack, body, client }) => {
@@ -677,7 +706,11 @@ app.action('resolve_from_ticket_channel', async ({ ack, body, client }) => {
     return;
   }
 
-  await resolveTicket(msgTs, resolver, client);
+  const result = await resolveTicket(msgTs, resolver, client);
+  const resultText = ticketResultText(result);
+  if (resultText) {
+    await client.chat.postEphemeral({ channel: channelId, user: resolver, text: resultText });
+  }
 });
 
 app.action('reopen_ticket', async ({ ack, body, client }) => {
@@ -699,7 +732,11 @@ app.action('reopen_ticket', async ({ ack, body, client }) => {
     return;
   }
 
-  await reopenTicket(msgTs, reopener, client);
+  const result = await reopenTicket(msgTs, reopener, client);
+  const resultText = ticketResultText(result);
+  if (resultText) {
+    await client.chat.postEphemeral({ channel: channelId, thread_ts: msgTs, user: reopener, text: resultText });
+  }
 });
 
 app.action('view_thread', async ({ ack }) => { await ack(); });
