@@ -161,35 +161,90 @@ function SidequestCard({ l }: { l: (typeof levels)[number] }) {
   );
 }
 
+const MARQUEE_DURATION = 40;
+
+function wrap(value: number, min: number, max: number) {
+  const range = max - min;
+  return min + (((value - min) % range) + range) % range;
+}
+
 function Marquee({ children }: { children: React.ReactNode }) {
   const x = useMotionValue(0);
   const trackRef = useRef<HTMLDivElement>(null);
   const animRef = useRef<ReturnType<typeof animate> | null>(null);
+  const halfWidthRef = useRef(0);
+  const draggingRef = useRef(false);
+  const draggedRef = useRef(false);
+  const dragStartXRef = useRef(0);
+  const dragStartValueRef = useRef(0);
 
-  useEffect(() => {
-    if (!trackRef.current) return;
-    const halfWidth = trackRef.current.scrollWidth / 2;
-    x.set(-halfWidth);
-    animRef.current = animate(x, [- halfWidth, 0], {
-      duration: 40,
+  function startLoop(from: number) {
+    animRef.current?.stop();
+    animRef.current = animate(x, [from, from - halfWidthRef.current], {
+      duration: MARQUEE_DURATION,
       ease: "linear",
       repeat: Infinity,
       repeatType: "loop",
     });
+  }
+
+  useEffect(() => {
+    if (!trackRef.current) return;
+    const halfWidth = trackRef.current.scrollWidth / 2;
+    halfWidthRef.current = halfWidth;
+    x.set(-halfWidth);
+    startLoop(-halfWidth);
     return () => animRef.current?.stop();
   }, [x]);
 
+  function onPointerDown(e: React.PointerEvent) {
+    draggingRef.current = true;
+    draggedRef.current = false;
+    dragStartXRef.current = e.clientX;
+    dragStartValueRef.current = x.get();
+    animRef.current?.stop();
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+  }
+
+  function onPointerMove(e: React.PointerEvent) {
+    if (!draggingRef.current) return;
+    const delta = e.clientX - dragStartXRef.current;
+    if (Math.abs(delta) > 5) draggedRef.current = true;
+    const halfWidth = halfWidthRef.current;
+    if (halfWidth) x.set(wrap(dragStartValueRef.current + delta, -halfWidth, 0));
+  }
+
+  function endDrag() {
+    if (!draggingRef.current) return;
+    draggingRef.current = false;
+    startLoop(x.get());
+  }
+
+  function onClickCapture(e: React.MouseEvent) {
+    if (draggedRef.current) {
+      e.stopPropagation();
+      e.preventDefault();
+      draggedRef.current = false;
+    }
+  }
+
   return (
     <div
-      className="w-full overflow-hidden"
+      className="w-full overflow-hidden cursor-grab active:cursor-grabbing select-none touch-pan-y"
       style={{ maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)" }}
-      onMouseEnter={() => animRef.current?.pause()}
-      onMouseLeave={() => animRef.current?.play()}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={endDrag}
+      onPointerCancel={endDrag}
+      onClickCapture={onClickCapture}
+      onMouseEnter={() => { if (!draggingRef.current) animRef.current?.pause(); }}
+      onMouseLeave={() => { if (!draggingRef.current) animRef.current?.play(); }}
     >
       <motion.div
         ref={trackRef}
         className="flex gap-5"
         style={{ x, width: "max-content" }}
+        draggable={false}
       >
         {children}
       </motion.div>
