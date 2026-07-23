@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, animate } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 import { useEffect, useRef } from "react";
 
 type ShopItem = {
@@ -17,72 +17,86 @@ const generalItems: ShopItem[] = [
     id: "signed-photo",
     name: "Signed Org Photo",
     description: "A signed photo of one of the org members, shipped to your door.",
-    price: 80,
+    price: 100,
     image: "/shop/signed-photo.svg",
     niche: true,
   },
   {
     id: "assets-grant",
     name: "Game Assets Grant",
-    description: "A stackable grant to buy tilesets, sprites, music and sounds for your game.",
-    price: 120,
+    description: "A stackable $10 grant to buy tilesets, sprites, music and sounds for your game.",
+    price: 150,
     image: "/shop/assets-grant.png",
   },
   {
     id: "hc-stickers",
     name: "Hack Club Sticker Pack",
     description: "An envelope of Hack Club and Pixl stickers.",
-    price: 120,
+    price: 150,
     image: "/shop/hc-stickers.png",
   },
   {
     id: "api-credits",
     name: "AI Credits",
-    description: "A grant for AI credits for the provider of your choice.",
-    price: 120,
+    description: "A $10 grant for AI credits for the provider of your choice.",
+    price: 150,
     image: "/shop/api.png",
+  },
+  {
+    id: "music-grant",
+    name: "Music Grant",
+    description: "A stackable $10 grant to spend on instruments, plugins, samples or any music gear you want. Don't use it for subscription to spotify/apple music etc",
+    price: 150,
+    image: "/shop/music-grant.png",
   },
   {
     id: "mystery-object",
     name: "Random Desk Object",
     description: "A random object from our desks: a PCB, a sticker stash, anything. Comes with a signed letter. Only a few in stock!",
-    price: 160,
+    price: 200,
     image: "/shop/mystery-box.svg",
     niche: true,
+  },
+  {
+    id: "art-grant",
+    name: "Art Supply Grant",
+    description: "A stackable $10 grant to spend on paints, pens, canvases or any art supplies you want.",
+    price: 200,
+    image: "/shop/art-grant.png",
   },
   {
     id: "pixel-composer",
     name: "Pixel Composer License",
     description: "VFX compositor for pixel art. Effects and animations for your sprites.",
-    price: 200,
+    price: 250,
     image: "/shop/pixel-composer.png",
   },
   {
     id: "pico8",
     name: "PICO-8 License",
     description: "The fantasy console. Code, draw and compose tiny games in one tool.",
-    price: 200,
+    price: 250,
     image: "/shop/pico8.png",
   },
   {
     id: "pixl-poster",
     name: "PIXL Poster",
-    description: "A print grant for the PIXL poster or any poster you want. Everyone loves posters.",
-    price: 240,
+    description: "A $20 print grant for the PIXL poster or any poster you want. Everyone loves posters.",
+    price: 300,
     image: "/shop/poster.png",
   },
   {
     id: "aseprite",
     name: "Aseprite License",
     description: "The pixel art editor. Animated sprites, tilesets and more.",
-    price: 280,
+    price: 350,
     image: "/shop/aseprite.png",
   },
   {
     id: "tamagotchi-kit",
     name: "Pixl Tamagotchi DIY Kit",
     description: "Solder and code your own pocket pet, designed by mangoman.",
-    price: 320,
+    price: 400,
     image: "/shop/tamagotchi.png",
     niche: true,
   },
@@ -90,106 +104,141 @@ const generalItems: ShopItem[] = [
     id: "indie-game",
     name: "Indie Game of Your Choice",
     description: "Pick from our selection of cool indie games. Sent as a gift link on Steam or Humble Bundle.",
-    price: 320,
+    price: 400,
     image: "/shop/indie-game.png",
   },
   {
     id: "esp32-kit",
     name: "ESP32 Starter Kit",
     description: "ESP32 dev board with a breadboard and components to start hacking.",
-    price: 400,
+    price: 500,
     image: "/shop/esp32.png",
   },
   {
     id: "godot-plush",
     name: "Godot Plush (Limited Edition)",
     description: "The official Godot robot plushie. Emotional support for game jams.",
-    price: 520,
+    price: 650,
     image: "/shop/godot-plush.png",
   },
   {
     id: "pixl-hoodie",
     name: "PIXL Hoodie",
     description: "Limited PIXL hoodie with the logo on the chest.",
-    price: 560,
+    price: 700,
     image: "/shop/hoodie.png",
   },
   {
     id: "wacom-intuos",
     name: "Wacom Intuos (Small)",
     description: "A Wacom drawing tablet, the classic for digital art.",
-    price: 600,
+    price: 750,
     image: "/shop/wacom.png",
   },
   {
     id: "retro-handheld",
     name: "Retro Handheld (Miyoo Mini+ / RG35XX)",
     description: "A retro handheld to play your builds and the classics on the go.",
-    price: 800,
+    price: 1000,
     image: "/shop/retro-handheld.png",
   },
   {
     id: "keyboard-th80",
     name: "Epomaker TH80 V2 Pro",
     description: "Hot-swap mechanical keyboard with a little screen. Add a note to pick your color.",
-    price: 800,
+    price: 1000,
     image: "/shop/keyboard-th80.png",
   },
   {
     id: "keyboard-f75",
     name: "Epomaker x Aula F75",
     description: "75% hot-swap mechanical keyboard. Add a note to pick your color.",
-    price: 800,
+    price: 1000,
     image: "/shop/keyboard-f75.png",
   },
   {
     id: "gamemaker",
     name: "GameMaker Pro",
     description: "GameMaker Professional license to export your games everywhere.",
-    price: 1160,
+    price: 1450,
     image: "/shop/gamemaker.png",
   },
   {
     id: "monitor-grant",
     name: "Monitor Grant (Stackable)",
-    description: "A stackable grant towards the monitor of your choice. Your pixels deserve more pixels.",
-    price: 1200,
+    description: "A stackable $100 grant towards the monitor of your choice. Your pixels deserve more pixels.",
+    price: 1500,
     image: "/shop/monitor-4k.png",
   },
   {
     id: "raspberry-pi-5",
     name: "Raspberry Pi 5",
-    description: "A Raspberry Pi 5 (4GB) to run your servers, emulators and experiments. 8GB version for 2520 px.",
-    price: 1600,
+    description: "A Raspberry Pi 5 (4GB) to run your servers, emulators and experiments. 8GB version for 3150 px.",
+    price: 2000,
     image: "/shop/rpi.png",
   },
   {
     id: "a1-mini",
     name: "Bambu Lab A1 Mini",
     description: "A fast, quiet 3D printer. Print your own game props and cases.",
-    price: 2680,
+    price: 3350,
     image: "/shop/a1-mini.png",
   },
   {
     id: "sony-xm5",
     name: "Sony WH-1000XM5",
     description: "Noise cancelling headphones to get in the zone.",
-    price: 2880,
+    price: 3600,
     image: "/shop/sony-headphones.png",
+  },
+  {
+    id: "bambu-a1",
+    name: "Bambu Lab A1",
+    description: "A reliable, well-rounded 3D printer for props, cases and prototypes.",
+    price: 4250,
+    image: "/shop/bambu-a1.png",
+  },
+  {
+    id: "centauri-carbon",
+    name: "Centauri Carbon",
+    description: "A fast, enclosed 3D printer built for tougher, higher-temp filaments.",
+    price: 5000,
+    image: "/shop/centauri-carbon.png",
   },
   {
     id: "ipad",
     name: "iPad (11th gen)",
     description: "An iPad with pencil support for drawing and playtesting.",
-    price: 4600,
+    price: 5750,
     image: "/shop/ipad.png",
+  },
+  {
+    id: "bambu-a1-combo",
+    name: "Bambu Lab A1 Combo",
+    description: "The A1 bundled with the AMS Lite for multi-color prints out of the box.",
+    price: 5750,
+    image: "/shop/bambu-a1-combo.png",
   },
   {
     id: "airpods-max",
     name: "AirPods Max 2",
     description: "Apple's over-ear noise cancelling headphones. The endgame flex.",
-    price: 5160,
-    image: "/shop/airpods-max.svg",
+    price: 6450,
+    image: "/shop/airpods-max.png",
+  },
+  {
+    id: "macbook-neo",
+    name: "MacBook Neo",
+    description: "A light, portable MacBook for code, art and everything in between. 256GB shown, add a note to pick 512GB for 11500 px.",
+    price: 10000,
+    image: "/shop/macbook-neo.png",
+  },
+  {
+    id: "macbook-air-m5",
+    name: "MacBook Air M5",
+    description: "Apple's air laptop, 16GB/512GB shown, add a note to pick 24GB/1TB for 24250 px.",
+    price: 17150,
+    image: "/shop/macbook-air.png",
   },
 ];
 
@@ -235,30 +284,35 @@ function wrap(value: number, min: number, max: number) {
 function Marquee({ children }: { children: React.ReactNode }) {
   const x = useMotionValue(0);
   const trackRef = useRef<HTMLDivElement>(null);
-  const animRef = useRef<ReturnType<typeof animate> | null>(null);
   const halfWidthRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
+  const lastTsRef = useRef<number | null>(null);
+  const pausedRef = useRef(false);
   const draggingRef = useRef(false);
   const draggedRef = useRef(false);
   const dragStartXRef = useRef(0);
   const dragStartValueRef = useRef(0);
-
-  function startLoop(from: number) {
-    animRef.current?.stop();
-    animRef.current = animate(x, [from, from - halfWidthRef.current], {
-      duration: MARQUEE_DURATION,
-      ease: "linear",
-      repeat: Infinity,
-      repeatType: "loop",
-    });
-  }
 
   useEffect(() => {
     if (!trackRef.current) return;
     const halfWidth = trackRef.current.scrollWidth / 2;
     halfWidthRef.current = halfWidth;
     x.set(-halfWidth);
-    startLoop(-halfWidth);
-    return () => animRef.current?.stop();
+
+    function tick(ts: number) {
+      const dt = lastTsRef.current == null ? 0 : ts - lastTsRef.current;
+      lastTsRef.current = ts;
+      if (!pausedRef.current && !draggingRef.current && halfWidthRef.current) {
+        const speed = halfWidthRef.current / (MARQUEE_DURATION * 1000);
+        x.set(wrap(x.get() - speed * dt, -halfWidthRef.current, 0));
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    }
+    rafRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    };
   }, [x]);
 
   function onPointerDown(e: React.PointerEvent) {
@@ -266,7 +320,6 @@ function Marquee({ children }: { children: React.ReactNode }) {
     draggedRef.current = false;
     dragStartXRef.current = e.clientX;
     dragStartValueRef.current = x.get();
-    animRef.current?.stop();
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   }
 
@@ -281,7 +334,9 @@ function Marquee({ children }: { children: React.ReactNode }) {
   function endDrag() {
     if (!draggingRef.current) return;
     draggingRef.current = false;
-    startLoop(x.get());
+    // A real drag resumes the scroll immediately; a plain press/click stays
+    // paused until the pointer actually leaves the carousel.
+    if (draggedRef.current) pausedRef.current = false;
   }
 
   return (
@@ -292,8 +347,8 @@ function Marquee({ children }: { children: React.ReactNode }) {
       onPointerMove={onPointerMove}
       onPointerUp={endDrag}
       onPointerCancel={endDrag}
-      onMouseEnter={() => { if (!draggingRef.current) animRef.current?.pause(); }}
-      onMouseLeave={() => { if (!draggingRef.current) animRef.current?.play(); }}
+      onMouseEnter={() => { pausedRef.current = true; }}
+      onMouseLeave={() => { if (!draggingRef.current) pausedRef.current = false; }}
     >
       <motion.div ref={trackRef} className="flex gap-4 pt-9" style={{ x, width: "max-content" }} draggable={false}>
         {children}
@@ -331,7 +386,7 @@ export function Shop() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          1 hour of work = 40 pixels.
+          1 hour of work = 50 pixels.
         </motion.p>
       </div>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, animate } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 const levels = [
@@ -171,30 +171,35 @@ function wrap(value: number, min: number, max: number) {
 function Marquee({ children }: { children: React.ReactNode }) {
   const x = useMotionValue(0);
   const trackRef = useRef<HTMLDivElement>(null);
-  const animRef = useRef<ReturnType<typeof animate> | null>(null);
   const halfWidthRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
+  const lastTsRef = useRef<number | null>(null);
+  const pausedRef = useRef(false);
   const draggingRef = useRef(false);
   const draggedRef = useRef(false);
   const dragStartXRef = useRef(0);
   const dragStartValueRef = useRef(0);
-
-  function startLoop(from: number) {
-    animRef.current?.stop();
-    animRef.current = animate(x, [from, from - halfWidthRef.current], {
-      duration: MARQUEE_DURATION,
-      ease: "linear",
-      repeat: Infinity,
-      repeatType: "loop",
-    });
-  }
 
   useEffect(() => {
     if (!trackRef.current) return;
     const halfWidth = trackRef.current.scrollWidth / 2;
     halfWidthRef.current = halfWidth;
     x.set(-halfWidth);
-    startLoop(-halfWidth);
-    return () => animRef.current?.stop();
+
+    function tick(ts: number) {
+      const dt = lastTsRef.current == null ? 0 : ts - lastTsRef.current;
+      lastTsRef.current = ts;
+      if (!pausedRef.current && !draggingRef.current && halfWidthRef.current) {
+        const speed = halfWidthRef.current / (MARQUEE_DURATION * 1000);
+        x.set(wrap(x.get() - speed * dt, -halfWidthRef.current, 0));
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    }
+    rafRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    };
   }, [x]);
 
   function onPointerDown(e: React.PointerEvent) {
@@ -202,7 +207,6 @@ function Marquee({ children }: { children: React.ReactNode }) {
     draggedRef.current = false;
     dragStartXRef.current = e.clientX;
     dragStartValueRef.current = x.get();
-    animRef.current?.stop();
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   }
 
@@ -217,7 +221,9 @@ function Marquee({ children }: { children: React.ReactNode }) {
   function endDrag() {
     if (!draggingRef.current) return;
     draggingRef.current = false;
-    startLoop(x.get());
+    // A real drag resumes the scroll immediately; a plain press/click stays
+    // paused until the pointer actually leaves the carousel.
+    if (draggedRef.current) pausedRef.current = false;
   }
 
   function onClickCapture(e: React.MouseEvent) {
@@ -237,8 +243,8 @@ function Marquee({ children }: { children: React.ReactNode }) {
       onPointerUp={endDrag}
       onPointerCancel={endDrag}
       onClickCapture={onClickCapture}
-      onMouseEnter={() => { if (!draggingRef.current) animRef.current?.pause(); }}
-      onMouseLeave={() => { if (!draggingRef.current) animRef.current?.play(); }}
+      onMouseEnter={() => { pausedRef.current = true; }}
+      onMouseLeave={() => { if (!draggingRef.current) pausedRef.current = false; }}
     >
       <motion.div
         ref={trackRef}
