@@ -52,7 +52,7 @@ jobs:
       - name: Add Vercel config (cross-origin isolation headers for threads)
         run: cp vercel.json build/vercel.json
 
-      - name: Add web pages (shop / explore / quests / hackatime)
+      - name: Add web pages (quests / hackatime / vault / timeline)
         run: |
           set -euo pipefail
           cp -r web/. build/
