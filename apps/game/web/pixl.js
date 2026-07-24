@@ -1,6 +1,9 @@
 const Pixl = (() => {
   const API = "https://server.pixl.rsvp";
-  const GAME = "/";
+  // On the standalone play.* host the game is at the root; when the same build
+  // is served under pixl.rsvp (via rewrites) it lives at /play. Keep the
+  // "back to game" link pointing at the right place without a redirect.
+  const GAME = location.hostname.startsWith("play.") ? "/" : "/play";
 
   const params = new URLSearchParams(location.search);
   let token = params.get("token") || "";

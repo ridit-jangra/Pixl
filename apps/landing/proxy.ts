@@ -37,5 +37,9 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next|favicon|api|shop|hero-bg|step-|pixel_|hc-logo).*)"],
+  // Exclude the game + game-dash paths (rewritten to play.pixl.rsvp in
+  // vercel.json) so the locale redirect never rewrites them to /<lang>/….
+  matcher: [
+    "/((?!_next|favicon|api|shop|play|vault|explore|quests|timeline|projects|report|hackatime|img|fonts|pixl|index|hero-bg|step-|pixel_|hc-logo).*)",
+  ],
 };

@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    { "source": "/play", "destination": "https://play.pixl.rsvp/" },
+    { "source": "/play/:path*", "destination": "https://play.pixl.rsvp/:path*" },
+
+    { "source": "/shop", "destination": "https://play.pixl.rsvp/shop/" },
+    { "source": "/shop/", "destination": "https://play.pixl.rsvp/shop/" },
+
+    { "source": "/vault", "destination": "https://play.pixl.rsvp/vault/" },
+    { "source": "/vault/:path*", "destination": "https://play.pixl.rsvp/vault/:path*" },
+    { "source": "/explore", "destination": "https://play.pixl.rsvp/explore/" },
+    { "source": "/explore/:path*", "destination": "https://play.pixl.rsvp/explore/:path*" },
+    { "source": "/quests", "destination": "https://play.pixl.rsvp/quests/" },
+    { "source": "/quests/:path*", "destination": "https://play.pixl.rsvp/quests/:path*" },
+    { "source": "/timeline", "destination": "https://play.pixl.rsvp/timeline/" },
+    { "source": "/timeline/:path*", "destination": "https://play.pixl.rsvp/timeline/:path*" },
+    { "source": "/projects", "destination": "https://play.pixl.rsvp/projects/" },
+    { "source": "/projects/:path*", "destination": "https://play.pixl.rsvp/projects/:path*" },
+    { "source": "/report", "destination": "https://play.pixl.rsvp/report/" },
+    { "source": "/report/:path*", "destination": "https://play.pixl.rsvp/report/:path*" },
+    { "source": "/hackatime", "destination": "https://play.pixl.rsvp/hackatime/" },
+    { "source": "/hackatime/:path*", "destination": "https://play.pixl.rsvp/hackatime/:path*" },
+
+    { "source": "/pixl.css", "destination": "https://play.pixl.rsvp/pixl.css" },
+    { "source": "/pixl.js", "destination": "https://play.pixl.rsvp/pixl.js" },
+    { "source": "/img/:path*", "destination": "https://play.pixl.rsvp/img/:path*" },
+    { "source": "/fonts/:path*", "destination": "https://play.pixl.rsvp/fonts/:path*" },
+    { "source": "/index.js", "destination": "https://play.pixl.rsvp/index.js" },
+    { "source": "/index.wasm", "destination": "https://play.pixl.rsvp/index.wasm" },
+    { "source": "/index.pck", "destination": "https://play.pixl.rsvp/index.pck" },
+    { "source": "/index.side.wasm", "destination": "https://play.pixl.rsvp/index.side.wasm" },
+    { "source": "/index.audio.worklet.js", "destination": "https://play.pixl.rsvp/index.audio.worklet.js" },
+    { "source": "/index.audio.position.worklet.js", "destination": "https://play.pixl.rsvp/index.audio.position.worklet.js" },
+    { "source": "/index.icon.png", "destination": "https://play.pixl.rsvp/index.icon.png" },
+    { "source": "/index.apple-touch-icon.png", "destination": "https://play.pixl.rsvp/index.apple-touch-icon.png" },
+    { "source": "/index.png", "destination": "https://play.pixl.rsvp/index.png" }
+  ],
+  "headers": [
+    {
+      "source": "/play",
+      "headers": [
+        { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" },
+        { "key": "Cross-Origin-Embedder-Policy", "value": "require-corp" }
+      ]
+    },
+    {
+      "source": "/play/:path*",
+      "headers": [
+        { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" },
+        { "key": "Cross-Origin-Embedder-Policy", "value": "require-corp" }
+      ]
+    },
+    {
+      "source": "/index.:ext(js|wasm|pck|png)",
+      "headers": [
+        { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" },
+        { "key": "Cross-Origin-Embedder-Policy", "value": "require-corp" }
+      ]
+    }
+  ]
+}
