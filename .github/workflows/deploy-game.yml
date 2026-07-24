@@ -46,7 +46,10 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p build
-          godot --headless --path apps/game --verbose --export-release "${EXPORT_PRESET}" build/index.html
+          # Absolute output path: with --path apps/game, Godot resolves a relative
+          # export target against the project dir (apps/game/build), not the repo
+          # root where we created build/. An absolute path is unambiguous.
+          godot --headless --path apps/game --verbose --export-release "${EXPORT_PRESET}" "${GITHUB_WORKSPACE}/build/index.html"
           test -f build/index.html
 
       - name: Add Vercel config (cross-origin isolation headers for threads)
