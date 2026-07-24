@@ -1,0 +1,935 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pixl · Shop</title>
+    <link rel="icon" href="/index.icon.png" />
+    <link rel="stylesheet" href="/pixl.css" />
+    <style>
+      .shop-hero {
+        margin-top: 8px;
+        padding: 26px 28px 30px;
+        position: relative;
+        overflow: hidden;
+      }
+      .shop-hero .awning {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 22px;
+        background: repeating-linear-gradient(
+          90deg,
+          var(--gold) 0 34px,
+          #f4e3c2 34px 68px
+        );
+        border-bottom: 4px solid var(--stroke);
+      }
+      .shop-hero-inner {
+        display: flex;
+        gap: 26px;
+        align-items: flex-end;
+        flex-wrap: wrap;
+        padding-top: 16px;
+      }
+      .keeper-box {
+        display: flex;
+        align-items: flex-end;
+        gap: 14px;
+      }
+      .keeper {
+        width: 32px;
+        height: 32px;
+        background: url("/img/gabin_char.png") no-repeat 0 -64px;
+        transform: scale(4);
+        transform-origin: bottom center;
+        image-rendering: pixelated;
+        animation: keeper-bob 1.6s steps(2) infinite;
+      }
+      @keyframes keeper-bob {
+        0%,
+        100% {
+          transform: scale(4) translateY(0);
+        }
+        50% {
+          transform: scale(4) translateY(-0.5px);
+        }
+      }
+      .keeper-wrap {
+        width: 128px;
+        height: 128px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        overflow: visible;
+      }
+      .bubble {
+        position: relative;
+        background: #f4ead4;
+        color: #241710;
+        border: 3px solid var(--stroke);
+        box-shadow: 0 5px 0 rgba(0, 0, 0, 0.4);
+        padding: 12px 16px 10px;
+        font-size: 15px;
+        max-width: 330px;
+        line-height: 1.55;
+        margin-bottom: 34px;
+      }
+      .bubble::after {
+        content: "";
+        position: absolute;
+        left: -13px;
+        bottom: 12px;
+        width: 10px;
+        height: 10px;
+        background: #f4ead4;
+        border-left: 3px solid var(--stroke);
+        border-bottom: 3px solid var(--stroke);
+        transform: rotate(45deg);
+      }
+      .shop-title-box {
+        margin-left: auto;
+        text-align: right;
+      }
+      .toolbar {
+        display: flex;
+        gap: 12px;
+        margin: 26px 0 18px;
+        flex-wrap: wrap;
+      }
+      .toolbar input.field {
+        flex: 1;
+        min-width: 200px;
+      }
+      .limited-banner {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        padding: 12px 18px 10px;
+        margin-bottom: 18px;
+        background: rgba(255, 209, 102, 0.1);
+        border: 3px solid var(--stroke);
+        box-shadow: 4px 4px 0 var(--stroke);
+        color: var(--ink);
+        font-size: 15px;
+      }
+      .limited-banner .tick {
+        color: var(--gold);
+        font-weight: 700;
+      }
+      .item-card {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .item-card.limited {
+        box-shadow:
+          inset 0 0 0 3px var(--gold),
+          5px 5px 0 var(--stroke);
+      }
+      .item-img {
+        height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background:
+          radial-gradient(
+            circle at 50% 34%,
+            rgba(255, 209, 102, 0.08),
+            transparent 62%
+          ),
+          linear-gradient(var(--panel), var(--panel-deep));
+        border: 3px solid var(--stroke);
+        overflow: hidden;
+      }
+      .item-img .ph {
+        filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.4));
+        opacity: 0.9;
+      }
+      .item-img img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+      .item-img .ph {
+        font-size: 44px;
+      }
+      .item-name {
+        font-size: 19px;
+        color: var(--ink);
+        letter-spacing: 0.3px;
+      }
+      .item-desc {
+        font-size: 14.5px;
+        color: var(--dim);
+        line-height: 1.55;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 2.8em;
+      }
+      .item-foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: auto;
+      }
+      .price {
+        color: var(--teal);
+        font-size: 19px;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .price img {
+        width: 17px;
+        height: 17px;
+      }
+      .price.cant {
+        color: var(--bad);
+      }
+      .limited-tag {
+        position: absolute;
+        top: -12px;
+        right: 10px;
+        background: var(--gold);
+        color: var(--btn-ink);
+        border: 3px solid var(--stroke);
+        font-size: 11px;
+        letter-spacing: 1px;
+        padding: 4px 8px 3px;
+        animation: limited-blink 1s steps(2) infinite;
+      }
+      @keyframes limited-blink {
+        50% {
+          background: var(--gold-soft);
+        }
+      }
+      .afford-dot {
+        width: 10px;
+        height: 10px;
+        border: 2px solid var(--stroke);
+      }
+      .afford-dot.yes {
+        background: var(--good);
+      }
+      .afford-dot.no {
+        background: var(--bad);
+      }
+      #detail-img {
+        width: 240px;
+        height: 240px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background:
+          repeating-conic-gradient(
+              rgba(22, 22, 30, 0.05) 0% 25%,
+              transparent 0% 50%
+            )
+            0 0 / 26px 26px,
+          var(--panel-deep);
+        border: 3px solid var(--stroke);
+        overflow: hidden;
+      }
+      #detail-img img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+      .detail-row {
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+      }
+      .detail-info {
+        flex: 1;
+        min-width: 240px;
+        display: flex;
+        flex-direction: column;
+        gap: 13px;
+      }
+      #detail-name {
+        font-size: 27px;
+        color: var(--gold);
+        text-shadow: 3px 3px 0 var(--stroke);
+      }
+      #detail-desc {
+        font-size: 15px;
+        line-height: 1.7;
+        color: var(--ink);
+        white-space: pre-wrap;
+      }
+      .options-row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .opt-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .opt-group-name {
+        font-size: 12px;
+        letter-spacing: 1px;
+        color: var(--dim);
+      }
+      .opt-choices {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .opt-choice {
+        cursor: pointer;
+        user-select: none;
+      }
+      .opt-choice.on {
+        color: var(--btn-ink);
+        background: var(--gold);
+        border-color: var(--stroke);
+      }
+      .afford-bar {
+        height: 14px;
+        border: 3px solid var(--stroke);
+        background: var(--panel-deep);
+      }
+      .afford-bar > div {
+        height: 100%;
+        background: var(--gold);
+        transition: width 0.3s steps(6);
+      }
+      .trophy-head {
+        font-size: 20px;
+        color: var(--gold);
+        letter-spacing: 2px;
+        text-shadow: 2px 2px 0 var(--stroke);
+        margin: 6px 0 16px;
+      }
+      .trophy-card {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        position: relative;
+        overflow: hidden;
+      }
+      .trophy-card.locked {
+        filter: saturate(0.55) brightness(0.82);
+      }
+      .trophy-card.claimable {
+        box-shadow:
+          inset 0 0 0 3px var(--gold),
+          5px 5px 0 var(--stroke);
+        animation: trophy-glow 1.4s steps(2) infinite;
+      }
+      @keyframes trophy-glow {
+        50% {
+          box-shadow:
+            inset 0 0 0 3px var(--gold-soft),
+            7px 7px 0 var(--stroke);
+        }
+      }
+      .trophy-card.claimed {
+        box-shadow:
+          inset 0 0 0 3px var(--good),
+          5px 5px 0 var(--stroke);
+      }
+      .trophy-img {
+        background:
+          repeating-conic-gradient(
+              rgba(255, 209, 102, 0.07) 0% 25%,
+              transparent 0% 50%
+            )
+            0 0 / 22px 22px,
+          radial-gradient(circle at 50% 40%, #ffe9b0, var(--panel-deep));
+      }
+      .trophy-tag {
+        position: absolute;
+        top: -10px;
+        right: 10px;
+        font-size: 11px;
+        letter-spacing: 1px;
+        padding: 4px 8px 3px;
+        border: 3px solid var(--stroke);
+        background: var(--panel-deep);
+        color: var(--dim);
+      }
+      .trophy-tag.ready {
+        background: var(--gold);
+        color: var(--btn-ink);
+        animation: limited-blink 1s steps(2) infinite;
+      }
+      .trophy-tag.claimed {
+        background: var(--good);
+        color: var(--btn-ink);
+      }
+      .trophy-foot {
+        margin-top: auto;
+      }
+      .trophy-progress {
+        height: 12px;
+        border: 3px solid var(--stroke);
+        background: var(--panel-deep);
+        overflow: hidden;
+      }
+      .trophy-progress > div {
+        height: 100%;
+        background: repeating-linear-gradient(
+          90deg,
+          var(--gold) 0 8px,
+          var(--gold-soft) 8px 16px
+        );
+        transition: width 0.5s steps(8);
+      }
+      .trophy-need {
+        font-size: 14px;
+        color: var(--faint);
+        margin-top: 6px;
+      }
+      .trophy-need.earned {
+        color: var(--good);
+      }
+      .trophy-claim {
+        width: 100%;
+        justify-content: center;
+      }
+      .marquee {
+        overflow: hidden;
+        white-space: nowrap;
+        border-top: 4px solid var(--stroke);
+        border-bottom: 4px solid var(--stroke);
+        background: var(--panel-deep);
+        color: var(--faint);
+        font-size: 13px;
+        letter-spacing: 2px;
+        padding: 7px 0 5px;
+        margin: 34px 0 0;
+      }
+      .marquee > div {
+        display: inline-block;
+        animation: marquee 30s linear infinite;
+      }
+      @keyframes marquee {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <section class="shop-hero wood">
+        <div class="awning"></div>
+        <div class="shop-hero-inner">
+          <div class="keeper-box">
+            <div class="keeper-wrap">
+              <div class="keeper" id="keeper"></div>
+            </div>
+            <div class="bubble" id="bubble">HEY! WELCOME IN.</div>
+          </div>
+          <div class="shop-title-box">
+            <h1 class="page-title">THE PIXL SHOP</h1>
+            <div class="page-sub">
+              STICKERS · LICENSES · PLUSHIES · HARDWARE — ALL REAL
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="toolbar">
+        <input
+          class="field"
+          id="search"
+          type="search"
+          placeholder="Search the shelves…"
+          autocomplete="off"
+        />
+        <select class="field" id="sort">
+          <option value="featured">FEATURED</option>
+          <option value="cheap">PRICE ↑</option>
+          <option value="pricey">PRICE ↓</option>
+          <option value="name">A–Z</option>
+        </select>
+      </div>
+
+      <div class="limited-banner" id="limited-banner" hidden>
+        <span>MYSTERY MERCHANT IS IN TOWN —</span>
+        <span class="tick" id="limited-tick"></span>
+        <span>GRAB THE LIMITED GOODS BEFORE THEY VANISH!</span>
+      </div>
+
+      <div class="spin" id="loading"></div>
+      <div id="trophies"></div>
+      <div class="grid" id="items"></div>
+      <div class="empty-note" id="empty" hidden>
+        NOTHING IN STOCK.<br />CHECK BACK SOON!
+      </div>
+
+      <div class="marquee"><div id="marquee-inner"></div></div>
+    </main>
+
+    <div class="overlay" id="detail-overlay">
+      <div class="modal panel">
+        <button class="modal-close" id="detail-close">✕</button>
+        <div class="detail-row">
+          <div id="detail-img"></div>
+          <div class="detail-info">
+            <div id="detail-name"></div>
+            <div id="detail-limited"></div>
+            <div class="price" id="detail-price" style="font-size: 22px"></div>
+            <div id="detail-desc"></div>
+            <div class="options-row" id="detail-options"></div>
+            <div>
+              <div
+                class="muted"
+                style="font-size: 13.5px; margin-bottom: 6px"
+                id="afford-label"
+              ></div>
+              <div class="afford-bar"><div id="afford-fill"></div></div>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 6px">
+              <button class="btn" id="buy-btn">BUY</button>
+              <button class="btn dark" id="detail-back">KEEP BROWSING</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/pixl.js"></script>
+    <script>
+      Pixl.mountTopbar("shop");
+
+      const $ = (id) => document.getElementById(id);
+      let items = [];
+      let wallet = null;
+      let selected = null;
+      let xp = 0;
+      let claimedIds = new Set();
+      let buying = false;
+      let optionPick = {};
+
+      function optionGroups(item) {
+        const named = [];
+        const loose = [];
+        for (const raw of Array.isArray(item.options) ? item.options : []) {
+          const o = String(raw);
+          const idx = o.indexOf(":");
+          if (idx > 0) {
+            const name = o.slice(0, idx).trim();
+            const choices = o
+              .slice(idx + 1)
+              .split(",")
+              .map((s) => s.trim())
+              .filter(Boolean);
+            if (choices.length) named.push({ name, choices });
+          } else if (o.trim()) {
+            loose.push(o.trim());
+          }
+        }
+        if (loose.length) named.unshift({ name: "", choices: loose });
+        return named;
+      }
+
+      function optionSummary() {
+        if (!selected) return "";
+        return optionGroups(selected)
+          .map((g, gi) => {
+            const pick = optionPick[gi] ?? g.choices[0];
+            return g.name ? `${g.name}: ${pick}` : pick;
+          })
+          .join(" · ");
+      }
+
+      function renderOptions() {
+        const groups = optionGroups(selected);
+        $("detail-options").innerHTML = groups
+          .map((g, gi) => {
+            const pick = optionPick[gi] ?? g.choices[0];
+            const chips = g.choices
+              .map(
+                (c) =>
+                  `<span class="chip opt-choice ${c === pick ? "on" : ""}" data-g="${gi}" data-c="${Pixl.esc(c)}">${Pixl.esc(c.toUpperCase())}</span>`,
+              )
+              .join("");
+            const label = g.name
+              ? `<div class="opt-group-name">${Pixl.esc(g.name.toUpperCase())}</div>`
+              : "";
+            return `<div class="opt-group">${label}<div class="opt-choices">${chips}</div></div>`;
+          })
+          .join("");
+        for (const chip of $("detail-options").querySelectorAll(
+          ".opt-choice",
+        )) {
+          chip.addEventListener("click", () => {
+            optionPick[Number(chip.dataset.g)] = chip.dataset.c;
+            renderOptions();
+          });
+        }
+      }
+
+      function isTrophy(item) {
+        return Number(item.unlock_xp) > 0;
+      }
+      function trophyState(item) {
+        if (claimedIds.has(item.id)) return "claimed";
+        return xp >= Number(item.unlock_xp) ? "claimable" : "locked";
+      }
+
+      const GREETS = [
+        "HEY! WELCOME IN.",
+        "FRESH STOCK, STRAIGHT FROM HQ.",
+        "PIXELS WELL SPENT ARE PIXELS WELL EARNED.",
+        "CLICK ANYTHING ON THE SHELF!",
+        "SHIP PROJECTS → EARN PIXELS → LEAVE RICH.",
+      ];
+      let greetIdx = 0;
+      let bubbleTimer = null;
+
+      function say(text, hold = 2600) {
+        $("bubble").textContent = text;
+        clearTimeout(bubbleTimer);
+        bubbleTimer = setTimeout(() => {
+          greetIdx = (greetIdx + 1) % GREETS.length;
+          $("bubble").textContent = GREETS[greetIdx];
+        }, hold);
+      }
+
+      setInterval(() => {
+        if ($("detail-overlay").classList.contains("show")) return;
+        greetIdx = (greetIdx + 1) % GREETS.length;
+        $("bubble").textContent = GREETS[greetIdx];
+      }, 7000);
+
+      function canAfford(item) {
+        return wallet && wallet.pixels >= Number(item.price);
+      }
+
+      function imgHtml(item, big = false) {
+        const url = String(item.image_url || "");
+        if (!url) return `<span class="ph"></span>`;
+        return `<img src="${Pixl.esc(url)}" alt="" loading="lazy" onerror="this.outerHTML='<span class=ph></span>'">`;
+      }
+
+      function trophyCard(item) {
+        const state = trophyState(item);
+        const need = Number(item.unlock_xp);
+        const pct = Math.max(0, Math.min(100, (xp / Math.max(1, need)) * 100));
+        const badge =
+          state === "claimed"
+            ? `<div class="trophy-tag claimed">CLAIMED</div>`
+            : state === "claimable"
+              ? `<div class="trophy-tag ready">CLAIM ME!</div>`
+              : `<div class="trophy-tag">LEVEL ${need}</div>`;
+        const foot =
+          state === "locked"
+            ? `<div class="trophy-progress"><div style="width:${pct}%"></div></div>
+       <div class="trophy-need">${Math.floor(xp)} / ${need} XP · keep shipping!</div>`
+            : state === "claimable"
+              ? `<button class="btn teal trophy-claim" data-claim="${item.id}">CLAIM</button>`
+              : `<div class="trophy-need earned">Yours forever.</div>`;
+        return `
+    <div class="card panel trophy-card ${state}" data-id="${item.id}" title="Level ${need} trophy">
+      ${badge}
+      <div class="item-img trophy-img">${imgHtml(item)}</div>
+      <div class="item-name">${Pixl.esc(item.name)}</div>
+      <div class="item-desc">${Pixl.esc(Pixl.bbstrip(item.description || ""))}</div>
+      <div class="trophy-foot">${foot}</div>
+    </div>`;
+      }
+
+      function render() {
+        const q = $("search").value.trim().toLowerCase();
+        const sort = $("sort").value;
+        const match = (i) =>
+          !q ||
+          String(i.name).toLowerCase().includes(q) ||
+          String(i.description || "")
+            .toLowerCase()
+            .includes(q);
+
+        const trophies = items.filter((i) => isTrophy(i) && match(i));
+        let list = items.filter((i) => !isTrophy(i) && match(i));
+        if (sort === "cheap")
+          list = [...list].sort((a, b) => a.price - b.price);
+        else if (sort === "pricey")
+          list = [...list].sort((a, b) => b.price - a.price);
+        else if (sort === "name")
+          list = [...list].sort((a, b) =>
+            String(a.name).localeCompare(String(b.name)),
+          );
+
+        $("trophies").innerHTML =
+          trophies.length === 0
+            ? ""
+            : `<div class="trophy-head">TROPHIES — EARNED, NOT BOUGHT</div>
+     <div class="grid">${trophies.map(trophyCard).join("")}</div>
+     <div class="divider"></div>`;
+
+        $("empty").hidden = list.length + trophies.length > 0;
+        $("items").innerHTML = list
+          .map(
+            (item, idx) => `
+    <div class="card panel item-card ${item.limited ? "limited" : ""}" data-id="${item.id}" style="animation: toast-in .2s steps(4) both; animation-delay:${Math.min(idx * 30, 400)}ms">
+      ${item.limited ? `<div class="limited-tag">LIMITED</div>` : ""}
+      <div class="item-img">${imgHtml(item)}</div>
+      <div class="item-name">${Pixl.esc(item.name)}</div>
+      <div class="item-desc">${Pixl.esc(Pixl.bbstrip(item.description || ""))}</div>
+      <div class="item-foot">
+        <span class="price ${canAfford(item) ? "" : "cant"}"><img src="/img/pixel.png" alt="">${Number(item.price)} PX</span>
+        <span class="afford-dot ${canAfford(item) ? "yes" : "no"}" title="${canAfford(item) ? "You can afford this" : "Keep shipping!"}"></span>
+      </div>
+    </div>`,
+          )
+          .join("");
+
+        for (const card of $("trophies").querySelectorAll(".card")) {
+          card.addEventListener("click", (e) => {
+            if (e.target.closest("[data-claim]")) return;
+            openDetail(Number(card.dataset.id));
+          });
+        }
+        for (const btn of $("trophies").querySelectorAll("[data-claim]")) {
+          btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            claimTrophy(Number(btn.dataset.claim));
+          });
+        }
+        for (const card of $("items").querySelectorAll(".card")) {
+          card.addEventListener("click", () =>
+            openDetail(Number(card.dataset.id)),
+          );
+        }
+      }
+
+      async function claimTrophy(id) {
+        const r = await Pixl.send("POST", `/api/shop/claim/${id}`);
+        if (r.ok && r.claimed) {
+          claimedIds.add(id);
+          Pixl.toast("🏆 TROPHY CLAIMED! The team will reach out.");
+          say("A LEGEND CLAIMS THEIR PRIZE!", 4000);
+          render();
+          if (selected && selected.id === id) openDetail(id);
+        } else if (r.error === "not_eligible") {
+          Pixl.toast(
+            `Not yet — you're at ${Math.floor(r.xp)} / ${r.need} XP.`,
+            true,
+          );
+        } else {
+          Pixl.toast("Couldn't claim that right now.", true);
+        }
+      }
+
+      function openDetail(id) {
+        selected = items.find((i) => i.id === id);
+        if (!selected) return;
+        $("detail-img").innerHTML = imgHtml(selected, true);
+        $("detail-name").textContent = selected.name;
+        $("detail-desc").innerHTML = Pixl.bbcode(selected.description || "");
+
+        if (isTrophy(selected)) {
+          $("detail-options").innerHTML = optionGroups(selected)
+            .flatMap((g) => g.choices)
+            .map(
+              (o) =>
+                `<span class="chip gold">${Pixl.esc(o.toUpperCase())}</span>`,
+            )
+            .join("");
+          const state = trophyState(selected);
+          const need = Number(selected.unlock_xp);
+          const pct = Math.max(
+            0,
+            Math.min(100, (xp / Math.max(1, need)) * 100),
+          );
+          $("detail-limited").innerHTML =
+            `<span class="chip ${state === "locked" ? "" : "gold"}">LEVEL ${need} TROPHY — EARNED, NOT BOUGHT</span>`;
+          $("detail-price").innerHTML =
+            state === "claimed"
+              ? "CLAIMED"
+              : state === "claimable"
+                ? "READY TO CLAIM!"
+                : `LOCKED — REACH ${need} XP`;
+          $("detail-price").classList.toggle("cant", state === "locked");
+          $("afford-fill").style.width = pct + "%";
+          $("afford-fill").style.background =
+            pct >= 100 ? "var(--good)" : "var(--gold)";
+          $("afford-label").textContent =
+            `YOU'RE AT ${Math.floor(xp)} / ${need} XP` +
+            (pct >= 100
+              ? "  —  EARNED!"
+              : `  ·  ${need - Math.floor(xp)} to go`);
+          $("buy-btn").textContent =
+            state === "claimed"
+              ? "CLAIMED"
+              : state === "claimable"
+                ? "CLAIM"
+                : "LOCKED";
+          $("buy-btn").disabled = state !== "claimable";
+          $("detail-overlay").classList.add("show");
+          say(
+            state === "claimable"
+              ? "YOU EARNED THAT ONE!"
+              : state === "claimed"
+                ? "A TRUE LEGEND."
+                : "SHIP MORE TO EARN IT!",
+            4000,
+          );
+          return;
+        }
+
+        optionPick = {};
+        renderOptions();
+        $("detail-limited").innerHTML = selected.limited
+          ? `<span class="chip red">LIMITED — ${Pixl.countdown(selected.limited_until)}</span>`
+          : "";
+        $("detail-price").innerHTML =
+          `<img src="/img/pixel.png" style="width:20px;height:20px" alt="">${Number(selected.price)} PIXELS`;
+        $("detail-price").classList.toggle("cant", !canAfford(selected));
+        $("buy-btn").textContent = "BUY";
+        $("buy-btn").disabled = !canAfford(selected);
+        const have = wallet ? wallet.pixels : 0;
+        const pct = Math.max(
+          0,
+          Math.min(100, (have / Math.max(1, selected.price)) * 100),
+        );
+        $("afford-fill").style.width = pct + "%";
+        $("afford-fill").style.background =
+          pct >= 100 ? "var(--good)" : "var(--gold)";
+        $("afford-label").textContent =
+          `YOU HAVE ${Math.round(have)} / ${Number(selected.price)} PX` +
+          (pct >= 100 ? "  —  EASY." : "");
+        $("detail-overlay").classList.add("show");
+        say(
+          canAfford(selected)
+            ? "OOH, GOOD EYE."
+            : "BIT PRICEY FOR YOU… FOR NOW.",
+          4000,
+        );
+      }
+
+      function closeDetail() {
+        $("detail-overlay").classList.remove("show");
+      }
+
+      $("detail-close").addEventListener("click", closeDetail);
+      $("detail-back").addEventListener("click", closeDetail);
+      $("detail-overlay").addEventListener("click", (e) => {
+        if (e.target === e.currentTarget) closeDetail();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeDetail();
+      });
+
+      $("buy-btn").addEventListener("click", () => {
+        if (!selected) return;
+        if (isTrophy(selected)) {
+          if (trophyState(selected) === "claimable") {
+            closeDetail();
+            claimTrophy(selected.id);
+          }
+          return;
+        }
+        if (!canAfford(selected)) {
+          Pixl.toast("BIT PRICEY FOR YOU, FOR NOW.", true);
+          say("SHIP A FEW MORE PROJECTS\nAND COME BACK!", 3600);
+          nudgeKeeper();
+          return;
+        }
+        buyItem(selected.id);
+      });
+
+      function nudgeKeeper() {
+        const k = $("keeper");
+        k.style.animation = "none";
+        void k.offsetWidth;
+        k.style.animation = "";
+      }
+
+      async function buyItem(id) {
+        if (buying) return;
+        buying = true;
+        $("buy-btn").disabled = true;
+        $("buy-btn").textContent = "BUYING...";
+        const option = optionSummary();
+        const r = await Pixl.send("POST", `/api/shop/buy/${id}`, { option });
+        buying = false;
+        if (r.ok) {
+          if (wallet && typeof r.balance === "number")
+            wallet.pixels = r.balance;
+          const el = document.getElementById("pixl-wallet");
+          if (el && typeof r.balance === "number")
+            el.querySelector(".px").textContent = Math.round(
+              r.balance,
+            ).toLocaleString();
+          closeDetail();
+          Pixl.toast("ORDER PLACED! The team will reach out.");
+          say("GREAT PICK! WE'LL BE IN TOUCH\nABOUT GETTING IT TO YOU.", 4500);
+          render();
+        } else if (r.error === "insufficient") {
+          Pixl.toast("Not enough pixels for that.", true);
+          $("buy-btn").disabled = false;
+          $("buy-btn").textContent = "BUY";
+        } else if (r.error === "not_for_sale") {
+          Pixl.toast("That one isn't for sale.", true);
+          $("buy-btn").disabled = false;
+          $("buy-btn").textContent = "BUY";
+        } else {
+          Pixl.toast("Couldn't place that order right now.", true);
+          $("buy-btn").disabled = false;
+          $("buy-btn").textContent = "BUY";
+        }
+      }
+
+      $("search").addEventListener("input", render);
+      $("sort").addEventListener("change", render);
+
+      function tickLimited() {
+        const lim = items.filter((i) => i.limited && i.limited_until);
+        if (lim.length === 0) {
+          $("limited-banner").hidden = true;
+          return;
+        }
+        $("limited-banner").hidden = false;
+        $("limited-tick").textContent = Pixl.countdown(lim[0].limited_until);
+      }
+      setInterval(tickLimited, 1000);
+
+      async function boot() {
+        if (!Pixl.hasToken) return;
+        wallet = await Pixl.loadWallet();
+        try {
+          const data = await Pixl.api("/api/shop/items");
+          items = (data.items || []).map((i) => ({
+            ...i,
+            id: Number(i.id),
+            price: Number(i.price),
+            unlock_xp: Number(i.unlock_xp || 0),
+          }));
+          xp = Number(data.xp || 0);
+          claimedIds = new Set((data.claimed || []).map(Number));
+        } catch (e) {
+          if (e.message !== "unauthorized")
+            Pixl.toast("Couldn't reach the shop server.", true);
+        }
+        $("loading").remove();
+        render();
+        tickLimited();
+        const names =
+          items
+            .filter((i) => !isTrophy(i))
+            .map((i) => `${Pixl.esc(i.name)} · ${i.price} PX`)
+            .join("  ◆  ") || "THE SHELVES ARE BARE TODAY";
+        $("marquee-inner").innerHTML =
+          `<span>${names}  ◆  ${names}  ◆  </span>`;
+        if (wallet)
+          say(`HEY! YOU'VE GOT ${Math.round(wallet.pixels)} PX TO BURN.`, 5000);
+      }
+      boot();
+    </script>
+  </body>
+</html>

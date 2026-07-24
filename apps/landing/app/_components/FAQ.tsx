@@ -2,59 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const faqs = [
-  {
-    question: "Who can join?",
-    answer:
-      "Teen hackers, first-time builders, designers, coders, and curious friends who want to make something real.",
-  },
-  {
-    question: "Wait, why is it called Pixl?",
-    answer:
-      "The world was originally called Origin, until its Core got overloaded with every invention ever made and broke apart into pixelated islands. Its survivors crossed universes looking for the only people they figured could actually help rebuild it: Hack Clubbers. Together they're now the Pixelians, and they renamed the place Pixl.",
-  },
-  {
-    question: "Do I need a team?",
-    answer: "No. Come solo or with friends. ",
-  },
-  {
-    question: "Is this only for expert coders?",
-    answer:
-      "Nope. Bring curiosity. Mentors will help with ideas, debugging, demos, and shipping.",
-  },
-  {
-    question: "When is Pixl starting?",
-    answer:
-      "Pixl launches August 18th, 2026 , there's a live countdown ticking down to it further up the page. Stay tuned!",
-  },
-  {
-    question: "Is this free?",
-    answer:
-      "Yes! Each of your projects will be funded, and the event itself is 100% free.",
-  },
-  {
-    question: "Who is running Pixl?",
-    answer: (
-      <>
-        A big team of friends!{" "}
-        <a
-          href="https://docs.google.com/document/d/1Bq4wNR3PsDhs6BdLDFssY3Ltl-pAnn6IoL8DVkVsPXo/edit?usp=sharing"
-          target="_blank"
-          rel="noreferrer"
-          className="text-[#ec3750] font-bold underline"
-          onClick={(e) => e.stopPropagation()}
-        >
-          Meet the whole team here.
-        </a>
-      </>
-    ),
-  },
-  {
-    question: "I have more questions!",
-    answer: "Ask us in #pixl-help on the Hack Club Slack.",
-  },
-];
+import { useLocale } from "./LocaleProvider";
 
 function FAQItem({
   question,
@@ -69,7 +17,6 @@ function FAQItem({
   open: boolean;
   onToggle: () => void;
 }) {
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 28 }}
@@ -126,7 +73,10 @@ function FAQItem({
 }
 
 export function FAQ() {
+  const { dict } = useLocale();
+  const t = dict.faq;
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+
   return (
     <section
       className="my-10 md:my-30 px-4 md:px-20 text-center flex flex-col items-center w-full"
@@ -139,7 +89,7 @@ export function FAQ() {
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        FAQ
+        {t.badge}
       </motion.p>
       <motion.p
         className="text-6xl font-black text-black mb-10"
@@ -148,16 +98,34 @@ export function FAQ() {
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
       >
-        Quick answers
+        {t.title}
       </motion.p>
 
       <div className="flex flex-col gap-4 max-w-200 w-full">
-        {faqs.map((faq, i) => (
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+        {(t.items as any[]).map((faq: any, i: number) => (
           <FAQItem
             key={i}
             index={i}
             question={faq.question}
-            answer={faq.answer}
+            answer={
+              i === 6 ? (
+                <>
+                  {faq.answer}{" "}
+                  <a
+                    href="https://docs.google.com/document/d/1Bq4wNR3PsDhs6BdLDFssY3Ltl-pAnn6IoL8DVkVsPXo/edit?usp=sharing"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-[#ec3750] font-bold underline"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {t.meetTheTeam}
+                  </a>
+                </>
+              ) : (
+                faq.answer
+              )
+            }
             open={openIndex === i}
             onToggle={() => setOpenIndex(openIndex === i ? null : i)}
           />

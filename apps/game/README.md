@@ -5,27 +5,27 @@
 **A pixelated multiplayer world where you level up by shipping IRL projects.**
 
 [![Hack Club](https://img.shields.io/badge/Hack%20Club-YSWS-ec3750?style=flat-square)](https://hackclub.com/)
-[![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](../../LICENSE)
+[![License](https://img.shields.io/badge/license-apache-green?style=flat-square)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/Pixl-YSWS/Game?style=flat-square&color=yellow)](https://github.com/Pixl-YSWS/Game/stargazers)
+[![Forks](https://img.shields.io/github/forks/Pixl-YSWS/Game?style=flat-square)](https://github.com/Pixl-YSWS/Game/forks)
 
-[**Play Now**](https://play.pixl.rsvp) · [RSVP](https://pixl.rsvp) · [Server](../../apps/server)
+[**▶ Play Now**](https://play.pixl.rsvp) · [RSVP](https://pixl.rsvp) · [Report a Bug](https://github.com/Pixl-YSWS/Game/issues) · [Request a Feature](https://github.com/Pixl-YSWS/Game/issues)
 
 </div>
 
 ---
 
-This is the Godot game client for Pixl. See the [monorepo root](../../README.md) for other apps (server, dashboards, Slack bot).
-
 ## About
 
-**Pixl** is a pixel-themed [YSWS](https://hackclub.com) where you explore a retro 2D open world and level up by building real projects. Explore regions like a cyberpunk city, an underwater world, or a gambling zone. Each region has NPCs with sidequests — build apps, websites, or hardware and get paid in Pixels, the in-game currency. Spend them in the shop on prizes and unlock better regions.
+**Pixl** Pixl is a pixel-themed [YSWS](https://hackclub.com) where you evolve in a retro 2D open world and level up by building real projects. By exploring the map, you will discover different regions such as a cyberpunk city, an underwater region or even a gambling one (regions comming soon, not in game yet). Each region will have sidequests like making apps, websites, or hardware for in-game characters that will pay you with a base prize (or base funding for hardware) and give you some pixels, the in-game currency, for you to spend in the shop. The more pixels you get, the best regions you can unlock and the more pixels you will get from the merchants.
 
-- **Shared open world** — explore with other Hack Clubbers in real time
-- **Private village** — your own personal space
-- **Shop & economy** — spend Pixels on prizes (mainly grants)
-- **Custom skins** — draw your own 16×16 pixel avatar
-- **In-game chat** — communicate with nearby players
-- **Project submissions** — ship projects via the **Pip** NPC
-- **Hackatime integration** — coding time is automatically tracked and rewarded
+- **Shared open world** - explore with other Hack Clubbers in real time
+- **Private village** - your own personal space
+- **Shop & economy** - spend Pixels on a shop to get prizes (mainly grants as we know you love that)
+- **Custom skins** - draw your own 16×16 pixel avatar --- WILL BE ADDED LATER
+- **Chat & voice** - communicate with nearby players
+- **Project submissions** - ship projects via the in-game **Pip** NPC
+- **Hackatime integration** - coding time is automatically tracked and rewarded
 
 ---
 
@@ -112,13 +112,21 @@ World switches are requested via the `world:enter` socket event. The server vali
 
 ## Contributing
 
-See the [monorepo contributing guide](../../README.md#contributing).
+Contributions are very welcome! Here is how to get started:
+
+1. Fork the repository
+2. Create a feature branch - `git checkout -b feat/amazing-feature`
+3. Commit your changes - `git commit -m 'feat: add amazing feature'`
+4. Push to the branch - `git push origin feat/amazing-feature`
+5. Open a Pull Request
+
+Please check the [open issues](https://github.com/Pixl-YSWS/Game/issues) before starting work on something new.
 
 ---
 
 ## License
 
-MIT — see the [monorepo license](../../LICENSE).
+Distributed under the MIT License. See [`LICENSE`](LICENSE.md) for more information.
 
 ---
 

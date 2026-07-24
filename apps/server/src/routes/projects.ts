@@ -59,6 +59,33 @@ function isGithubRepoUrl(url: string): boolean {
   return u.pathname.split("/").filter(Boolean).length >= 2;
 }
 
+// Players routinely paste a link without the scheme ("foo.itch.io/game"). Store
+// it with https:// so it's a real URL — otherwise every liveness check (which
+// does fetch(url)) throws and the ship is rejected as "unreachable".
+function ensureProtocol(raw: string): string {
+  const s = String(raw ?? "").trim();
+  if (!s) return "";
+  return /^[a-z][a-z0-9+.-]*:\/\//i.test(s) ? s : `https://${s}`;
+}
+
+// A demo must be a playable page, not the source. A bare github.com/<user>/<repo>
+// link is rejected; github *releases* pages are allowed (they host builds).
+function normalizeDemoUrl(raw: string): { error: string } | { url: string } {
+  const s = ensureProtocol(raw).slice(0, 500);
+  if (!s) return { url: "" };
+  let u: URL;
+  try {
+    u = new URL(s);
+  } catch {
+    return { error: "demo_invalid" };
+  }
+  if (u.protocol !== "https:" && u.protocol !== "http:") return { error: "demo_invalid" };
+  const host = u.hostname.replace(/^www\./, "");
+  if (host === "github.com" && !/\/releases(\/|$)/.test(u.pathname))
+    return { error: "demo_is_repo" };
+  return { url: u.toString() };
+}
+
 async function urlAlive(url: string): Promise<boolean> {
   try {
     let r = await fetch(url, {
@@ -97,8 +124,10 @@ function parseProjectBody(
 ): { error: string; fields?: never } | { error?: never; fields: ProjectFields } {
   const name = String(body?.name ?? "").trim().slice(0, 120);
   if (!name) return { error: "name_required" };
-  const repoUrl = String(body?.repoUrl ?? "").trim().slice(0, 500);
+  const repoUrl = ensureProtocol(body?.repoUrl).slice(0, 500);
   if (repoUrl && !isGithubRepoUrl(repoUrl)) return { error: "repo_not_github" };
+  const demo = normalizeDemoUrl(body?.demoUrl);
+  if ("error" in demo) return { error: demo.error };
   const usedAi = body?.usedAi === true;
   const aiNotes = String(body?.aiNotes ?? "").trim().slice(0, 500);
   if (usedAi && aiNotes.length < 10) return { error: "ai_notes_required" };
@@ -108,7 +137,7 @@ function parseProjectBody(
       name,
       description: String(body?.description ?? "").trim().slice(0, 2000),
       repo_url: repoUrl,
-      demo_url: String(body?.demoUrl ?? "").trim().slice(0, 500),
+      demo_url: demo.url,
       image_url: String(body?.imageUrl ?? "").trim().slice(0, 500),
       level: Number.isInteger(level) && level >= 1 && level <= 4 ? level : 1,
       used_ai: usedAi,

@@ -2,38 +2,14 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
+import { useLocale } from "./LocaleProvider";
 
-const steps = [
-  {
-    step: 1,
-    title: "Join the World",
-    description: "Enter Pixl, create your character and join others in a retro 2D open world",
-    video: "https://cdn.hackclub.com/019eee3b-5ab8-7923-9c8c-3a901acadfce/step-1.mp4",
-  },
-  {
-    step: 2,
-    title: "Explore Regions",
-    description: "Discover cyberpunk cities, underwater zones & more",
-    video: "https://cdn.hackclub.com/019eee3b-a3fa-7c98-8c0d-76f7b0ac78e4/step-2.mp4",
-  },
-  {
-    step: 3,
-    title: "Accept Sidequests",
-    description: "Build apps, websites & hardware for in-game characters",
-    video: "/step-3.mp4",
-  },
-  {
-    step: 4,
-    title: "Get Rewarded",
-    description: "NPCs reward you for your work with real prizes and pixels, the in-game currency you can spend in shops",
-    video: "/step-4.mp4",
-  },
-  {
-    step: 5,
-    title: "Spend your Pixels",
-    description: "Take your pixels to merchants and spend them on items, upgrades and real-world rewards",
-    video: "/step-5.mp4",
-  },
+const videos = [
+  "https://cdn.hackclub.com/019eee3b-5ab8-7923-9c8c-3a901acadfce/step-1.mp4",
+  "https://cdn.hackclub.com/019eee3b-a3fa-7c98-8c0d-76f7b0ac78e4/step-2.mp4",
+  "/step-3.mp4",
+  "/step-4.mp4",
+  "/step-5.mp4",
 ];
 
 const containerVariants = {
@@ -52,7 +28,8 @@ const cardVariants = {
   },
 };
 
-function VideoCard({ s }: { s: typeof steps[number] }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function VideoCard({ s, t }: { s: any; t: any }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const comingSoon = s.step >= 3;
 
@@ -87,7 +64,7 @@ function VideoCard({ s }: { s: typeof steps[number] }) {
         {comingSoon && (
           <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 bg-black/70 backdrop-blur-sm">
             <p className="font-pixel text-[#ec3750] text-4xl">Pixl</p>
-            <p className="font-pixel text-[#F5EED2] text-lg tracking-wide">Coming Soon</p>
+            <p className="font-pixel text-[#F5EED2] text-lg tracking-wide">{t.comingSoon}</p>
           </div>
         )}
       </div>
@@ -98,6 +75,11 @@ function VideoCard({ s }: { s: typeof steps[number] }) {
 }
 
 export function WTFISTHIS() {
+  const { dict } = useLocale();
+  const t = dict.description;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const steps = (t.steps as any[]).map((s: any, i: number) => ({ ...s, step: i + 1, video: videos[i], tags: [] }));
+
   return (
     <section
       className="my-20 px-4 md:px-8 text-center flex flex-col items-center gap-10"
@@ -110,7 +92,7 @@ export function WTFISTHIS() {
         viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       >
-        What is Pixl?
+        {t.title}
       </motion.h2>
 
       <motion.p
@@ -120,10 +102,7 @@ export function WTFISTHIS() {
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
       >
-        Centuries ago, Origin was the greatest digital civilization ever built, until the Great
-        Static shattered it into islands lost in the Void. Its people crossed universes and found
-        Hack Clubbers, who helped rebuild it under a new name: Pixl. A pixel-themed YSWS where
-        every real project you ship repairs the world and unlocks real-world rewards.
+        {t.body}
       </motion.p>
 
       <motion.div
@@ -133,18 +112,19 @@ export function WTFISTHIS() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
       >
-        {steps.map((s) => (
-          <VideoCard key={s.step} s={s} />
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+        {steps.map((s: any) => (
+          <VideoCard key={s.step} s={s} t={t} />
         ))}
         <motion.div variants={cardVariants} className="flex flex-col gap-2 text-left">
           <div className="aspect-square flex flex-col">
             <div className="flex-1 flex flex-col justify-center gap-1">
-              <p className="font-pixel text-[#ff8c37] leading-none" style={{ fontSize: "clamp(1rem, 4vw, 3rem)" }}>You Repair</p>
-              <p className="text-black/70 leading-snug text-xs sm:text-sm md:text-lg lg:text-xl">Ship real hardware & software sidequests for NPCs. Every project becomes Restoration Energy that rebuilds a broken piece of Pixl</p>
+              <p className="font-pixel text-[#ff8c37] leading-none" style={{ fontSize: "clamp(1rem, 4vw, 3rem)" }}>{t.youRepair}</p>
+              <p className="text-black/70 leading-snug text-xs sm:text-sm md:text-lg lg:text-xl">{t.youRepairDesc}</p>
             </div>
             <div className="flex-1 flex flex-col justify-center gap-1">
-              <p className="font-pixel text-[#ec3750] leading-none" style={{ fontSize: "clamp(1rem, 4vw, 3rem)" }}>The Core Pays</p>
-              <p className="text-black/70 leading-snug text-xs sm:text-sm md:text-lg lg:text-xl">The Core is a vault of old Pixelian tech. As you repair it, it gives its treasures back: real prizes and grants matched to what you built</p>
+              <p className="font-pixel text-[#ec3750] leading-none" style={{ fontSize: "clamp(1rem, 4vw, 3rem)" }}>{t.theCorePays}</p>
+              <p className="text-black/70 leading-snug text-xs sm:text-sm md:text-lg lg:text-xl">{t.theCorePaysDesc}</p>
             </div>
           </div>
         </motion.div>

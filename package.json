@@ -17,8 +17,7 @@
   "scripts": {
     "dev": "turbo dev",
     "landing": "turbo dev --filter=@pixl/landing",
-    "internal": "turbo dev --filter=@pixl/internal-dashboard",
-    "player": "turbo dev --filter=@pixl/player-dashboard",
+    "dashboard": "turbo dev --filter=@pixl/dashboard",
     "build": "turbo build"
   },
   "packageManager": "bun@1.3.13"

@@ -103,7 +103,9 @@ const Pixl = (() => {
     ["vault", "VAULT"],
     ["explore", "EXPLORE"],
     ["quests", "QUESTS"],
-    ["timeline", "STORY"],
+    // STORY (The Chronicle) is disabled in the dash for now — the storyline is
+    // surfaced through community goals instead. Re-enable when it's ready.
+    // ["timeline", "STORY"],
     ["projects", "PROJECTS"],
     ["report", "REPORT"],
   ];

@@ -50,17 +50,17 @@ jobs:
           test -f build/index.html
 
       - name: Add Vercel config (cross-origin isolation headers for threads)
-        run: cp vercel.json build/vercel.json
+        run: cp apps/game/vercel.json build/vercel.json
 
       - name: Add web pages (quests / hackatime / vault / timeline)
         run: |
           set -euo pipefail
-          cp -r web/. build/
+          cp -r apps/game/web/. build/
           rm -f build/.gdignore
           mkdir -p build/fonts build/img
-          cp assets/fonts/Monocraft.ttf build/fonts/Monocraft.ttf
-          cp assets/npcs/cheetah_char.png build/img/cheetah_char.png
-          cp assets/ui/pixel_currency_red.png build/img/pixel.png
+          cp apps/game/assets/fonts/Monocraft.ttf build/fonts/Monocraft.ttf
+          cp apps/game/assets/npcs/cheetah_char.png build/img/cheetah_char.png
+          cp apps/game/assets/ui/pixel_currency_red.png build/img/pixel.png
 
       - name: Deploy to Vercel
         env:

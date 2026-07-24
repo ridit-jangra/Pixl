@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pixl · Report a Player</title>
+<link rel="icon" href="/index.icon.png">
+<link rel="stylesheet" href="/pixl.css">
+<style>
+  .wrap { max-width: 720px; }
+  .hero { padding: 24px 26px; margin-top: 8px; border: 3px solid var(--stroke);
+    background: radial-gradient(130% 150% at 12% -30%, rgba(255,209,102,.14), transparent 55%), linear-gradient(var(--panel), var(--panel-2));
+    box-shadow: var(--drop); }
+  .card { border: 3px solid var(--stroke); background: var(--panel); padding: 20px; margin-top: 22px; }
+  .card-h { font-size: 16px; color: var(--gold); letter-spacing: 1px; margin-bottom: 14px; }
+  .field { width: 100%; font: inherit; padding: 10px 12px; border: 2px solid var(--stroke); background: var(--panel-deep); color: var(--ink); }
+  .search-wrap { position: relative; }
+  .search-menu { position: absolute; z-index: 10; left: 0; right: 0; margin-top: 2px; border: 2px solid var(--stroke); background: var(--panel-deep); max-height: 220px; overflow-y: auto; }
+  .search-menu button { display: block; width: 100%; text-align: left; padding: 9px 12px; background: none; border: 0; color: var(--ink); font: inherit; cursor: pointer; }
+  .search-menu button:hover { background: rgba(255,209,102,.12); }
+  .picked { display: flex; align-items: center; gap: 10px; margin-top: 10px; font-size: 14px; }
+  .picked .chip { background: rgba(255,209,102,.14); color: var(--gold); border: 2px solid var(--stroke); padding: 3px 9px; }
+  .row { margin-top: 14px; }
+  .lbl { font-size: 13px; color: var(--faint); margin-bottom: 6px; }
+  .check-row { display: flex; gap: 9px; align-items: flex-start; margin-top: 14px; font-size: 13.5px; line-height: 1.5; }
+  .check-row input { margin-top: 3px; }
+  .mine { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+  .rep { border: 2px solid var(--stroke); background: var(--panel-deep); padding: 12px 14px; }
+  .rep-head { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+  .rep-target { font-weight: 700; }
+  .rep-meta { font-size: 12px; color: var(--faint); margin-left: auto; }
+  .rep-reason { font-size: 13.5px; margin-top: 6px; line-height: 1.5; }
+  .tag { font-size: 11px; padding: 2px 7px; border: 2px solid var(--stroke); }
+  .tag.open { color: var(--gold); } .tag.done { color: var(--teal); }
+  .tag.anon { color: var(--faint); }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="hero">
+    <h1 class="page-title">REPORT A PLAYER</h1>
+    <div class="page-sub" style="color:#f0dcb4">SEEN SOMEONE BEING MEAN? LET THE TEAM KNOW. YOU CAN STAY ANONYMOUS.</div>
+  </section>
+
+  <div class="card">
+    <div class="card-h">FILE A REPORT</div>
+    <div class="lbl">Who are you reporting?</div>
+    <div class="search-wrap">
+      <input class="field" id="q" autocomplete="off" placeholder="Search a player's name…">
+      <div class="search-menu" id="menu" hidden></div>
+    </div>
+    <div class="picked" id="picked" hidden>Reporting: <span class="chip" id="picked-name"></span> <button class="btn dark" id="clear" style="padding:3px 10px">change</button></div>
+
+    <div class="row">
+      <div class="lbl">What happened? (optional but helps a lot)</div>
+      <textarea class="field" id="reason" maxlength="500" rows="3" placeholder="e.g. they kept insulting me in chat near the village…"></textarea>
+    </div>
+
+    <label class="check-row"><input type="checkbox" id="anon" checked> Report anonymously — the review team won't be shown who you are. Uncheck to reveal your name to them.</label>
+
+    <div class="row"><button class="btn" id="submit" disabled>SUBMIT REPORT</button></div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">YOUR REPORTS</div>
+    <div class="mine" id="mine"><div class="spin"></div></div>
+  </div>
+</main>
+
+<script src="/pixl.js"></script>
+<script>
+Pixl.mountTopbar("report");
+Pixl.loadWallet();
+
+let picked = null;
+let searchTimer = null;
+const $ = (id) => document.getElementById(id);
+
+function setPicked(p) {
+  picked = p;
+  $("picked").hidden = !p;
+  $("q").parentElement.hidden = !!p;
+  if (p) $("picked-name").textContent = p.display_name;
+  $("submit").disabled = !p;
+}
+
+$("q").addEventListener("input", () => {
+  const q = $("q").value.trim();
+  clearTimeout(searchTimer);
+  if (q.length < 2) { $("menu").hidden = true; return; }
+  searchTimer = setTimeout(async () => {
+    let players = [];
+    try { players = (await Pixl.api("/api/reports/players?q=" + encodeURIComponent(q))).players || []; } catch {}
+    const menu = $("menu");
+    if (players.length === 0) { menu.hidden = true; return; }
+    menu.innerHTML = players.map((p) => `<button data-id="${p.id}" data-name="${Pixl.esc(p.display_name)}">${Pixl.esc(p.display_name)}</button>`).join("");
+    menu.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => {
+      setPicked({ id: b.dataset.id, display_name: b.dataset.name });
+      menu.hidden = true;
+    }));
+    menu.hidden = false;
+  }, 220);
+});
+
+$("clear").addEventListener("click", () => { setPicked(null); $("q").value = ""; });
+
+$("submit").addEventListener("click", async () => {
+  if (!picked) return;
+  $("submit").disabled = true;
+  const r = await Pixl.send("POST", "/api/reports", {
+    targetId: picked.id,
+    reason: $("reason").value.trim(),
+    anonymous: $("anon").checked,
+  });
+  if (r.ok) {
+    Pixl.toast("Report filed — thanks for keeping Pixl safe.");
+    $("reason").value = "";
+    setPicked(null); $("q").value = "";
+    loadMine();
+  } else {
+    $("submit").disabled = false;
+    Pixl.toast(r.error === "rate_limited" ? "You're reporting too often — try again later." : "Couldn't file the report.", true);
+  }
+});
+
+async function loadMine() {
+  let reports = [];
+  try { reports = (await Pixl.api("/api/reports/mine")).reports || []; } catch {}
+  const el = $("mine");
+  if (reports.length === 0) { el.innerHTML = `<div class="faint" style="font-size:13px;padding:6px">You haven't filed any reports.</div>`; return; }
+  el.innerHTML = reports.map((r) => {
+    const done = r.status !== "open";
+    return `<div class="rep">
+      <div class="rep-head">
+        <span class="rep-target">${Pixl.esc(r.target_name)}</span>
+        <span class="tag ${done ? "done" : "open"}">${done ? r.status.toUpperCase() : "OPEN"}</span>
+        <span class="tag anon">${r.anonymous ? "ANONYMOUS" : "IDENTITY SHARED"}</span>
+        <span class="rep-meta">${Pixl.timeAgo(r.created_at)}</span>
+      </div>
+      ${r.reason ? `<div class="rep-reason">${Pixl.esc(r.reason)}</div>` : ""}
+    </div>`;
+  }).join("");
+}
+
+if (Pixl.hasToken) loadMine();
+</script>
+</body>
+</html>

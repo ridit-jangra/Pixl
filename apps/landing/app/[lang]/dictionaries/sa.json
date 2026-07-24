@@ -1,0 +1,417 @@
+{
+  "menu": {
+    "testTheGame": "Test the game!",
+    "stillInDev": "still in dev!"
+  },
+  "hero": {
+    "youShip": "You ship",
+    "projectsInside": "projects inside a story-driven game,",
+    "weShip": "we ship",
+    "realPrizes": "real prizes to your door.",
+    "placeholder": "your@email.com",
+    "rsvp": "RSVP",
+    "alreadyIn": "you\u2019re already in",
+    "viewYourRsvp": "view your RSVP",
+    "errorNoEmail": "yo, drop your email first \ud83d\udc40",
+    "errorInvalidEmail": "that doesn't look like a real email lol"
+  },
+  "description": {
+    "title": "What is Pixl?",
+    "body": "Centuries ago, Origin was the greatest digital civilization ever built, until the Great Static shattered it into islands lost in the Void. Its people crossed universes and found Hack Clubbers, who helped rebuild it under a new name: Pixl. A pixel-themed YSWS where every real project you ship repairs the world and unlocks real-world rewards.",
+    "steps": [
+      {
+        "title": "Join the World",
+        "description": "Enter Pixl, create your character and join others in a retro 2D open world"
+      },
+      {
+        "title": "Explore Regions",
+        "description": "Discover cyberpunk cities, underwater zones & more"
+      },
+      {
+        "title": "Accept Sidequests",
+        "description": "Build apps, websites & hardware for in-game characters"
+      },
+      {
+        "title": "Get Rewarded",
+        "description": "NPCs reward you for your work with real prizes and pixels, the in-game currency you can spend in shops"
+      },
+      {
+        "title": "Spend your Pixels",
+        "description": "Take your pixels to merchants and spend them on items, upgrades and real-world rewards"
+      }
+    ],
+    "youRepair": "You Repair",
+    "youRepairDesc": "Ship real hardware & software sidequests for NPCs. Every project becomes Restoration Energy that rebuilds a broken piece of Pixl",
+    "theCorePays": "The Core Pays",
+    "theCorePaysDesc": "The Core is a vault of old Pixelian tech. As you repair it, it gives its treasures back: real prizes and grants matched to what you built",
+    "comingSoon": "Coming Soon"
+  },
+  "story": {
+    "badge": "The Restoration",
+    "title": "How it works",
+    "subtitle": "Pixl runs as a story in seasons: chapters move the world forward, and everything you ship repairs it.",
+    "paths": [
+      {
+        "title": "Take a sidequest",
+        "text": "The Core already knows about these: known problems NPCs across unlocked regions need solved. Pick one and ship it."
+      },
+      {
+        "title": "Build your own thing",
+        "text": "The Core can't predict every invention. Ship something original it never asked for, and it still counts as Restoration Energy."
+      }
+    ],
+    "andOr": "and/or",
+    "rhythm": [
+      {
+        "title": "Chapters (~3 weeks)",
+        "text": "The story moves forward in chapters. Each chapter is a push to repair a part of the world: you take sidequests from the regions already unlocked, ship real projects, and your work counts toward the chapter's restoration goal. When the community hits it, the story advances: a new region opens, new NPCs return, new sidequests appear."
+      },
+      {
+        "title": "Operations (~1 week)",
+        "text": "Between chapters, short themed events: a game jam, a hackathon, a tool-building week. One week, one theme, one piece of the world brought back online. Perfect if you want something intense with a clear deadline."
+      },
+      {
+        "title": "Joining late? All good",
+        "text": "Unlocked regions never close. Whenever you arrive, you can pick any available sidequest, ship it, and earn your prizes and pixels like everyone else. Chapters only decide what unlocks next, never what you're allowed to build."
+      }
+    ],
+    "mechanics": [
+      {
+        "title": "You always win",
+        "text": "Every shipped project earns you its prize and pixels, no matter what the rest of the community does."
+      },
+      {
+        "title": "Restoration Energy",
+        "text": "Hours of shipped work convert into Restoration Energy. Keep shipping and it stacks into multipliers on what you earn."
+      },
+      {
+        "title": "Community goals",
+        "text": "All Restoration Energy also repairs the world itself. At big milestones, new regions unlock, NPCs return and the Core gives back more of what it holds."
+      }
+    ],
+    "ctaTitle": "Want to know more about the story?",
+    "ctaText": "The rest of the lore drops when Pixl launches.",
+    "liveNow": "Pixl is live!",
+    "days": "days",
+    "hours": "hours",
+    "min": "min",
+    "sec": "sec"
+  },
+  "sidequests": {
+    "badge": "Examples",
+    "title": "Sidequests and Rewards",
+    "description": "These are only examples and might change over the weeks.",
+    "howRewardsWork": "How rewards work",
+    "howRewardsWorkDesc": "You get the base prize for each sidequest you complete. The more hours you put in, the more currency you earn to spend in the shop. Don't want the listed prize or already have it? No problem, swap it for anything of equivalent value.",
+    "seeFullExample": "See a full example submission",
+    "seeFullExampleDesc": "Not sure what a complete submission looks like? Check out this example that hits every deadline.",
+    "sidequestLabel": "Sidequest",
+    "prizeLabel": "Prize",
+    "levels": [
+      {
+        "level": "Beginner",
+        "hours": "min 7h of work",
+        "quest": {
+          "title": "Build a merchant's storefront",
+          "description": "Zara the cloth merchant needs a simple website to showcase her wares. Build her a clean landing page with item listings and a contact form."
+        },
+        "prize": {
+          "title": "Domain + Sticker Pack",
+          "description": "A custom domain of your choice (.com, .dev, .xyz\u2026) + a Hack Club sticker pack shipped to your door."
+        }
+      },
+      {
+        "level": "Intermediate",
+        "hours": "min 30h of work",
+        "quest": {
+          "title": "Ship a mobile app for the Traveler",
+          "description": "Marco the traveling merchant needs a mobile app to track his routes, log his inventory on the go, and send notifications when he arrives at a new region."
+        },
+        "prize": {
+          "title": "Apple Developer Account",
+          "description": "A 1-year Apple Developer Program membership ($99). Publish your app on the App Store under your own name."
+        }
+      },
+      {
+        "level": "Expert",
+        "hours": "min 55h of work",
+        "quest": {
+          "title": "Secure the Cyberpunk City network",
+          "description": "GHOST, a rogue hacker NPC, needs a network intrusion detection system that monitors traffic, flags anomalies, and sends real-time alerts to a dashboard."
+        },
+        "prize": {
+          "title": "Flipper Zero",
+          "description": "A Flipper Zero shipped to you. The multi-tool for hardware hackers. Sub-GHz, NFC, infrared, GPIO and more."
+        }
+      },
+      {
+        "level": "Beginner",
+        "hours": "min 7h of work",
+        "quest": {
+          "title": "Make me a Roblox game!!",
+          "description": "Tim, a 9-year-old NPC from the village, really wants a Roblox game where you collect coins. Build it in Roblox Studio and publish it so he can play with his friends."
+        },
+        "prize": {
+          "title": "2000 Robux",
+          "description": "A grant of 2000 Robux to spend on the Roblox platform, items, avatar upgrades or whatever you want."
+        }
+      },
+      {
+        "level": "Intermediate",
+        "hours": "min 20h of work",
+        "quest": {
+          "title": "Design your own region",
+          "description": "Create a new region for the Pixl world: map, NPCs, assets and sidequests. Then code it into a playable demo, it's not just an art quest. If it's polished enough, it gets added to the real game."
+        },
+        "prize": {
+          "title": "Graphics Tablet",
+          "description": "A graphics tablet to keep drawing regions, character sprites and UI assets, whether your region ships or not."
+        }
+      },
+      {
+        "level": "Beginner",
+        "hours": "min 8.5h of work",
+        "quest": {
+          "title": "Draw sprites for the Item Shop",
+          "description": "Loot, the item shop NPC, needs a pack of pixel art icons: potions, weapons, tools and collectibles. Build a website to showcase them, art can be at most 50% of your submitted time. The best ones get added to the real game."
+        },
+        "prize": {
+          "title": "Sticker Pack + Poster",
+          "description": "A Hack Club sticker pack and a printed poster of your sprite sheet shipped to you."
+        }
+      },
+      {
+        "level": "Expert",
+        "hours": "~65h of work",
+        "quest": {
+          "title": "Build a robot arm for the Factory",
+          "description": "ARIA, the automation NPC at the Industrial District, needs a working 3-axis robot arm controlled via a custom web interface, with live position feedback and programmable sequences."
+        },
+        "prize": {
+          "title": "Full PCB Manufacturing Run",
+          "description": "Budget for a full PCB manufacturing run. Boards, components and shipping covered. Build the real thing."
+        }
+      }
+    ],
+    "tags": {
+      "htmlCss": "HTML/CSS",
+      "web": "Web",
+      "reactNative": "React Native",
+      "mobile": "Mobile",
+      "networking": "Networking",
+      "security": "Security",
+      "backend": "Backend",
+      "roblox": "Roblox",
+      "lua": "Lua",
+      "gameDev": "Game Dev",
+      "pixelArt": "Pixel Art",
+      "design": "Design",
+      "code": "Code",
+      "robotics": "Robotics",
+      "firmware": "Firmware",
+      "hardware": "Hardware"
+    }
+  },
+  "shop": {
+    "badge": "Spend your pixels",
+    "title": "The Shop",
+    "description": "1 hour of work = 50 pixels.",
+    "moreComing": "...and even more coming!",
+    "items": [
+      {
+        "name": "Signed Org Photo",
+        "description": "A signed photo of one of the org members, shipped to your door."
+      },
+      {
+        "name": "Game Assets Grant",
+        "description": "A stackable $10 grant to buy tilesets, sprites, music and sounds for your game."
+      },
+      {
+        "name": "Hack Club Sticker Pack",
+        "description": "An envelope of Hack Club and Pixl stickers."
+      },
+      {
+        "name": "AI Credits",
+        "description": "A $10 grant for AI credits for the provider of your choice."
+      },
+      {
+        "name": "Music Grant",
+        "description": "A stackable $10 grant to spend on instruments, plugins, samples or any music gear you want. Don't use it for subscription to spotify/apple music etc"
+      },
+      {
+        "name": "Random Desk Object",
+        "description": "A random object from our desks: a PCB, a sticker stash, anything. Comes with a signed letter. Only a few in stock!"
+      },
+      {
+        "name": "Art Supply Grant",
+        "description": "A stackable $10 grant to spend on paints, pens, canvases or any art supplies you want."
+      },
+      {
+        "name": "Pixel Composer License",
+        "description": "VFX compositor for pixel art. Effects and animations for your sprites."
+      },
+      {
+        "name": "PICO-8 License",
+        "description": "The fantasy console. Code, draw and compose tiny games in one tool."
+      },
+      {
+        "name": "PIXL Poster",
+        "description": "A $20 print grant for the PIXL poster or any poster you want. Everyone loves posters."
+      },
+      {
+        "name": "Aseprite License",
+        "description": "The pixel art editor. Animated sprites, tilesets and more."
+      },
+      {
+        "name": "Pixl Tamagotchi DIY Kit",
+        "description": "Solder and code your own pocket pet, designed by mangoman."
+      },
+      {
+        "name": "Indie Game of Your Choice",
+        "description": "Pick from our selection of cool indie games. Sent as a gift link on Steam or Humble Bundle."
+      },
+      {
+        "name": "ESP32 Starter Kit",
+        "description": "ESP32 dev board with a breadboard and components to start hacking."
+      },
+      {
+        "name": "Godot Plush (Limited Edition)",
+        "description": "The official Godot robot plushie. Emotional support for game jams."
+      },
+      {
+        "name": "PIXL Hoodie",
+        "description": "Limited PIXL hoodie with the logo on the chest."
+      },
+      {
+        "name": "Wacom Intuos (Small)",
+        "description": "A Wacom drawing tablet, the classic for digital art."
+      },
+      {
+        "name": "Retro Handheld (Miyoo Mini+ / RG35XX)",
+        "description": "A retro handheld to play your builds and the classics on the go."
+      },
+      {
+        "name": "Epomaker TH80 V2 Pro",
+        "description": "Hot-swap mechanical keyboard with a little screen. Add a note to pick your color."
+      },
+      {
+        "name": "Epomaker x Aula F75",
+        "description": "75% hot-swap mechanical keyboard. Add a note to pick your color."
+      },
+      {
+        "name": "GameMaker Pro",
+        "description": "GameMaker Professional license to export your games everywhere."
+      },
+      {
+        "name": "Monitor Grant (Stackable)",
+        "description": "A stackable $100 grant towards the monitor of your choice. Your pixels deserve more pixels."
+      },
+      {
+        "name": "Raspberry Pi 5",
+        "description": "A Raspberry Pi 5 (4GB) to run your servers, emulators and experiments. 8GB version for 3150 px."
+      },
+      {
+        "name": "Bambu Lab A1 Mini",
+        "description": "A fast, quiet 3D printer. Print your own game props and cases."
+      },
+      {
+        "name": "Sony WH-1000XM5",
+        "description": "Noise cancelling headphones to get in the zone."
+      },
+      {
+        "name": "Bambu Lab A1",
+        "description": "A reliable, well-rounded 3D printer for props, cases and prototypes."
+      },
+      {
+        "name": "Centauri Carbon",
+        "description": "A fast, enclosed 3D printer built for tougher, higher-temp filaments."
+      },
+      {
+        "name": "iPad (11th gen)",
+        "description": "An iPad with pencil support for drawing and playtesting."
+      },
+      {
+        "name": "Bambu Lab A1 Combo",
+        "description": "The A1 bundled with the AMS Lite for multi-color prints out of the box."
+      },
+      {
+        "name": "AirPods Max 2",
+        "description": "Apple's over-ear noise cancelling headphones. The endgame flex."
+      },
+      {
+        "name": "MacBook Neo",
+        "description": "A light, portable MacBook for code, art and everything in between. 256GB shown, add a note to pick 512GB for 11500 px."
+      },
+      {
+        "name": "MacBook Air M5",
+        "description": "Apple's air laptop, 16GB/512GB shown, add a note to pick 24GB/1TB for 24250 px."
+      }
+    ]
+  },
+  "faq": {
+    "badge": "FAQ",
+    "title": "Quick answers",
+    "items": [
+      {
+        "question": "Who can join?",
+        "answer": "Teen hackers, first-time builders, designers, coders, and curious friends who want to make something real."
+      },
+      {
+        "question": "Wait, why is it called Pixl?",
+        "answer": "The world was originally called Origin, until its Core got overloaded with every invention ever made and broke apart into pixelated islands. Its survivors crossed universes looking for the only people they figured could actually help rebuild it: Hack Clubbers. Together they're now the Pixelians, and they renamed the place Pixl."
+      },
+      {
+        "question": "Do I need a team?",
+        "answer": "No. Come solo or with friends."
+      },
+      {
+        "question": "Is this only for expert coders?",
+        "answer": "Nope. Bring curiosity. Mentors will help with ideas, debugging, demos, and shipping."
+      },
+      {
+        "question": "When is Pixl starting?",
+        "answer": "Pixl launches August 18th, 2026, there's a live countdown ticking down to it further up the page. Stay tuned!"
+      },
+      {
+        "question": "Is this free?",
+        "answer": "Yes! Each of your projects will be funded, and the event itself is 100% free."
+      },
+      {
+        "question": "Who is running Pixl?",
+        "answer": "A big team of friends!"
+      },
+      {
+        "question": "I have more questions!",
+        "answer": "Ask us in #pixl-help on the Hack Club Slack."
+      }
+    ],
+    "meetTheTeam": "Meet the whole team here."
+  },
+  "footer": {
+    "aProjectBy": "A project by",
+    "teens": "Teens",
+    "hackClubDesc1": "Hack Club is a 501(c)(3) nonprofit and network of 60k+ technical high schoolers. We believe you learn best by building, so we\u2019re creating community and providing grants so you can make awesome projects. In the past few years, we\u2019ve",
+    "partneredWithGithub": "partnered with GitHub to run Summer of Making",
+    "hostedWorldsLongest": "hosted the world\u2019s longest hackathon on land",
+    "ranCanadasLargest": "ran Canada\u2019s largest high school hackathon",
+    "hackClubMotto": "At Hack Club, students aren\u2019t just learning, they\u2019re shipping.",
+    "pixl": "Pixl",
+    "whatIsPixl": "What is Pixl",
+    "howItWorks": "How it works",
+    "faq": "FAQ",
+    "docs": "Docs",
+    "resources": "Resources",
+    "joinOurSlack": "Join our Slack",
+    "communityEvents": "Community Events",
+    "workshops": "Workshops",
+    "codeOfConduct": "Code of Conduct",
+    "hackClub": "Hack Club",
+    "philosophy": "Philosophy",
+    "ourTeamAndBoard": "Our Team & Board",
+    "branding": "Branding",
+    "donate": "Donate",
+    "madeWithLove": "Pixl is made with \u2665 by teenagers for teenagers",
+    "addSomething": "want to add something ? Make a PR on",
+    "github": "GitHub"
+  }
+}

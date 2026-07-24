@@ -1,10 +1,13 @@
 "use client";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLocale } from "./LocaleProvider";
 
 const RSVP_KEY = "pixl-rsvped";
 
 export function Hero() {
+  const { dict } = useLocale();
+  const t = dict.hero;
   const [email, setEmail] = useState("");
   const [shake, setShake] = useState(false);
   const [msg, setMsg] = useState("");
@@ -50,11 +53,11 @@ export function Hero() {
       return;
     }
     if (!email) {
-      triggerError("yo, drop your email first 👀");
+      triggerError(t.errorNoEmail);
       return;
     }
     if (!isValid) {
-      triggerError("that doesn't look like a real email lol");
+      triggerError(t.errorInvalidEmail);
       return;
     }
 
@@ -109,8 +112,8 @@ export function Hero() {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.45 }}
           >
             <p className="font-sans font-bold text-xs sm:text-sm leading-snug text-center text-black">
-              <span className="text-[#ff8c37]">You ship</span> projects inside a story-driven
-              game, <span className="text-[#ec3750]">we ship</span> real prizes to your door.
+              <span className="text-[#ff8c37]">{t.youShip}</span> {t.projectsInside}{" "}
+              <span className="text-[#ec3750]">{t.weShip}</span> {t.realPrizes}
             </p>
           </motion.div>
           <motion.p
@@ -131,13 +134,13 @@ export function Hero() {
             {rsvped ? (
               <div className="flex flex-col items-center self-center bg-[#ec3750] px-24 py-1.5 text-white border-black border-r-8 border-t-2 border-l-2 border-b-8">
                 <p className="text-base sm:text-lg text-center">
-                  you&apos;re already in
+                  {t.alreadyIn}
                 </p>
                 <button
                   onClick={() => window.open(`https://rsvp.soon.it/pixl`, "_blank")}
                   className="text-xs underline cursor-pointer opacity-80 hover:opacity-100"
                 >
-                  view your RSVP
+                  {t.viewYourRsvp}
                 </button>
               </div>
             ) : (
@@ -152,7 +155,7 @@ export function Hero() {
                   onChange={(e) => setEmail(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleRSVP()}
                   className="w-full px-5 py-3 text-lg sm:text-2xl md:text-3xl focus:outline-0 bg-[#ec3750] text-white transition-all placeholder:text-white/60"
-                  placeholder="your@email.com"
+                  placeholder={t.placeholder}
                 />
                 <motion.button
                   onClick={handleRSVP}
@@ -160,7 +163,7 @@ export function Hero() {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                 >
-                  RSVP
+                  {t.rsvp}
                 </motion.button>
               </motion.div>
             )}

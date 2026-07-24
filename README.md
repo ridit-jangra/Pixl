@@ -43,7 +43,7 @@ Pixl/
 │   ├── game/                Godot game client
 │   ├── landing/             Next.js landing page (pixl.rsvp)
 │   ├── player-dashboard/    Next.js player dashboard
-│   ├── internal-dashboard/  Next.js admin/review dashboard
+│   ├── dashboard/  Next.js admin/review dashboard
 │   └── pixorpheus/          Slack bot (tickets, AI chat, moderation)
 ├── packages/                Shared packages (types, ui, utils, config)
 ├── package.json             Monorepo root (Bun workspaces + Turborepo)
@@ -58,7 +58,7 @@ Pixl/
 | `game` | Godot 4 | Game client - the 2D multiplayer world players see |
 | `landing` | Next.js 16, Tailwind | Marketing site at [pixl.rsvp](https://pixl.rsvp) |
 | `player-dashboard` | Next.js 16, Tailwind | Player-facing dashboard for tracking projects |
-| `internal-dashboard` | Next.js 16, Tailwind, shadcn, Supabase | Admin dashboard - review queue, moderation, tickets, stats |
+| `dashboard` | Next.js 16, Tailwind, shadcn, Supabase | Admin dashboard - review queue, moderation, tickets, stats |
 | `pixorpheus` | Node.js, Slack Bolt, Supabase | Slack bot - help tickets, AI chat, slash commands, moderation DMs |
 
 ### Packages
@@ -94,7 +94,7 @@ bun install
 Each app has its own `.env` (see `.env.example` in each app). At minimum you need:
 
 - `SUPABASE_URL` + `SUPABASE_SERVICE_KEY` - shared across all apps
-- `SLACK_*` tokens - for pixorpheus and internal-dashboard
+- `SLACK_*` tokens - for pixorpheus and dashboard
 
 ### Run
 
@@ -109,7 +109,7 @@ bun run --cwd apps/landing dev
 bun run --cwd apps/player-dashboard dev
 
 # Internal admin dashboard
-bun run --cwd apps/internal-dashboard dev
+bun run --cwd apps/dashboard dev
 
 # Slack bot
 bun run --cwd apps/pixorpheus start
@@ -117,7 +117,7 @@ bun run --cwd apps/pixorpheus start
 # Or use Turborepo shortcuts:
 bun run dev        # all apps
 bun run landing    # @pixl/landing only
-bun run internal   # @pixl/internal-dashboard only
+bun run dashboard   # @pixl/dashboard only
 bun run player     # @pixl/player-dashboard only
 ```
 
