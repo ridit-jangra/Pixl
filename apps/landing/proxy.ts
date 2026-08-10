@@ -55,6 +55,6 @@ export const config = {
   // Exclude the game + game-dash paths (rewritten to play.pixl.rsvp in
   // vercel.json) so the locale redirect never rewrites them to /<lang>/….
   matcher: [
-    "/((?!_next|favicon|api|shop|play|vault|explore|quests|timeline|projects|report|hackatime|img|fonts|pixl|index|hero-bg|step-|pixel_|hc-logo).*)",
+    "/((?!_next|favicon|icon|apple-icon|api|shop|orders|collectibles|play|vault|explore|ideas|quests|timeline|projects|report|hackatime|refers|account|docs|home|img|fonts|pixl|index|hero-bg|step-|pixel_|hc-logo|world-map).*)",
   ],
 };

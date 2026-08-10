@@ -40,7 +40,7 @@ function FAQItem({
         whileTap={{ x: 0, y: 0, boxShadow: "2px 2px 0px #000" }}
       >
         <div className="flex items-center justify-between px-6 py-5">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 text-left">
             <motion.span
               className="text-[#ec3750] font-black text-xl"
               animate={{ rotate: open ? 90 : 0 }}

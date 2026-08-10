@@ -3,56 +3,123 @@
 import { motion, useMotionValue } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { useLocale } from "./LocaleProvider";
+import { config } from "../_generated/config";
 
 const ITEM_IMAGES = [
-  "/shop/signed-photo.svg",
+  "/shop/signed-photo.png",
+  "/shop/meme-pack.png",
   "/shop/assets-grant.png",
   "/shop/hc-stickers.png",
   "/shop/api.png",
   "/shop/music-grant.png",
-  "/shop/mystery-box.svg",
+  "/shop/soldering-grant.png",
+  "/shop/hardware-grant.png",
+  "/shop/domain-grant.png",
+  "/shop/hosting-grant.png",
+  "/shop/mystery-box.png",
   "/shop/art-grant.png",
+  "/shop/cookie-cutter.png",
+  "/shop/soldering-iron.png",
+  "/shop/food-grant.png",
   "/shop/pixel-composer.png",
   "/shop/pico8.png",
   "/shop/poster.png",
   "/shop/aseprite.png",
+  "/shop/google-play.png",
   "/shop/tamagotchi.png",
   "/shop/indie-game.png",
+  "/shop/screwdriver.png",
   "/shop/esp32.png",
+  "/shop/furycube.png",
   "/shop/godot-plush.png",
   "/shop/hoodie.png",
+  "/shop/blahaj.png",
+  "/shop/cpu-grant.png",
+  "/shop/gpu-grant.png",
+  "/shop/ram-grant.png",
   "/shop/wacom.png",
   "/shop/retro-handheld.png",
-  "/shop/keyboard-th80.png",
-  "/shop/keyboard-f75.png",
+  "/shop/keyboard-s75-pro.png",
   "/shop/gamemaker.png",
+  "/shop/steam-license.png",
+  "/shop/apple-dev.png",
   "/shop/monitor-4k.png",
+  "/shop/pencil-pro.png",
   "/shop/rpi.png",
+  "/shop/sony-ch720n.png",
+  "/shop/ender3-v3.png",
+  "/shop/airpods-pro-3.png",
   "/shop/a1-mini.png",
+  "/shop/samsung-t7-ssd.png",
   "/shop/sony-headphones.png",
+  "/shop/sparkx-i7.png",
   "/shop/bambu-a1.png",
   "/shop/centauri-carbon.png",
   "/shop/ipad.png",
   "/shop/bambu-a1-combo.png",
+  "/shop/samsung-s24.png",
   "/shop/airpods-max.png",
+  "/shop/nothing-phone.png",
   "/shop/macbook-neo.png",
+  "/shop/ipad-air-m4.png",
   "/shop/macbook-air.png",
+  "/shop/framework-13.png",
+  "/shop/framework-16.png",
+  "/shop/mac-mini.png",
+  "/shop/nintendo-switch-2.png",
 ];
 
+// Repriced at the payout floor (hours rounded to the nearest 0.5). That floor
+// is the worst rate anyone gets - it only climbs from there as shipped
+// projects build up Restoration Energy.
 const ITEM_PRICES = [
-  100, 150, 150, 150, 150, 200, 200, 250, 250, 300, 350, 400, 400, 500, 650,
-  700, 750, 1000, 1000, 1000, 1450, 1500, 2000, 3350, 3600, 4250, 5000, 5750,
-  5750, 6450, 10000, 17150,
+  125, 125, 150, 150, 150, 150, 150, 150, 175, 150, 225, 150, 250, 225, 150, 225, 225, 275, 325, 350, 650, 350, 425, 475, 500, 650, 725, 575, 725, 725, 725, 725, 1000, 1025, 1425, 1425, 1425, 1425, 1850, 2000, 2150, 2725, 2850, 3350, 3275, 3575, 3725, 4275, 5150, 5725, 5725, 5725, 6425, 7150, 10000, 10000, 17150, 17150, 17900, 22425, 7150,
 ];
 
-const NICHE_INDICES = new Set([0, 5, 11]);
+const NICHE_INDICES = new Set([0, 1, 10, 12, 18]);
+
+function fmtHours(h: number, lang: string) {
+  return new Intl.NumberFormat(lang, { maximumFractionDigits: 1 }).format(h);
+}
+
+// Spells out both rates every time (not just two bare numbers) so it's clear
+// why there are two: hours needed at the payout floor, then hours needed at
+// the ceiling you reach once you've built up Restoration Energy. Each locale
+// keeps its own currency formatting in the hoursRate template; the rates
+// themselves are substituted in from config so they can't drift from the
+// server's payout maths.
+function hoursRange(price: number, template: string, lang: string) {
+  const lo = price / (config.economy.basePayoutUsd / config.economy.pixelValueUsd);
+  const hi = (lo * config.economy.basePayoutUsd) / config.economy.maxPayoutUsd;
+  return template
+    .replace("{lo}", fmtHours(lo, lang))
+    .replace("{hi}", fmtHours(hi, lang))
+    .replace("{loRate}", fmtRate(config.economy.basePayoutUsd, lang))
+    .replace("{hiRate}", fmtRate(config.economy.maxPayoutUsd, lang));
+}
+
+function fmtRate(usd: number, lang: string) {
+  return new Intl.NumberFormat(lang, {
+    style: "currency",
+    currency: "USD",
+    // narrowSymbol keeps the French form as "3,50 $" rather than "3,50 $US",
+    // which is what the hand-written template used to say.
+    currencyDisplay: "narrowSymbol",
+    // Whole dollars stay whole ("$6"), cents keep their cents ("$3.50").
+    minimumFractionDigits: Number.isInteger(usd) ? 0 : 2,
+  }).format(usd);
+}
 
 function ShopCard({
   item,
   index,
+  rateTemplate,
+  lang,
 }: {
   item: { name: string; description: string };
   index: number;
+  rateTemplate: string;
+  lang: string;
 }) {
   const accent = NICHE_INDICES.has(index) ? "#ec3750" : "#ff8c37";
   const price = ITEM_PRICES[index];
@@ -81,12 +148,17 @@ function ShopCard({
       <div className="px-3 py-2.5 flex flex-col gap-1 flex-1">
         <p className="font-pixel text-xs leading-snug">{item.name}</p>
         <p className="text-black/60 text-[11px] leading-snug font-sans flex-1">{item.description}</p>
-        <span
-          className="self-start font-pixel text-[11px] text-white px-2 py-0.5 border-2 border-black mt-1"
-          style={{ background: accent, boxShadow: "2px 2px 0px #000" }}
-        >
-          {price} px
-        </span>
+        <div className="flex flex-col gap-1 mt-1">
+          <span
+            className="self-start font-pixel text-[11px] text-white px-2 py-0.5 border-2 border-black"
+            style={{ background: accent, boxShadow: "2px 2px 0px #000" }}
+          >
+            {price} px
+          </span>
+          <span className="text-black/40 text-[9px] leading-snug font-sans">
+            {hoursRange(price, rateTemplate, lang)}
+          </span>
+        </div>
       </div>
     </div>
   );
@@ -174,7 +246,7 @@ function Marquee({ children }: { children: React.ReactNode }) {
 }
 
 export function Shop() {
-  const { dict } = useLocale();
+  const { dict, lang } = useLocale();
   const t = dict.shop;
 
   return (
@@ -212,7 +284,13 @@ export function Shop() {
       <Marquee>
         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
         {[...(t.items as any[]), ...(t.items as any[])].map((item: any, i: number) => (
-          <ShopCard key={i} item={item} index={i % t.items.length} />
+          <ShopCard
+            key={i}
+            item={item}
+            index={i % t.items.length}
+            rateTemplate={t.hoursRate}
+            lang={lang}
+          />
         ))}
       </Marquee>
 

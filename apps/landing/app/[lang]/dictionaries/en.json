@@ -1,7 +1,17 @@
 {
+  "meta": {
+    "title": "Pixl",
+    "description": "A pixelated YSWS!"
+  },
   "menu": {
-    "testTheGame": "Test the game!",
-    "stillInDev": "still in dev!"
+    "playTheGame": "Play the game!",
+    "language": "Language"
+  },
+  "easterEgg": {
+    "title": "PIXLIFY — secret text converter",
+    "hint": "you found the secret — turn your text into pixl emojis for Slack",
+    "close": "Close",
+    "dialogLabel": "Pixlify converter"
   },
   "hero": {
     "youShip": "You ship",
@@ -10,10 +20,12 @@
     "realPrizes": "real prizes to your door.",
     "placeholder": "your@email.com",
     "rsvp": "RSVP",
-    "alreadyIn": "you\u2019re already in",
+    "alreadyIn": "you’re already in",
     "viewYourRsvp": "view your RSVP",
-    "errorNoEmail": "yo, drop your email first \ud83d\udc40",
-    "errorInvalidEmail": "that doesn't look like a real email lol"
+    "errorNoEmail": "yo, drop your email first 👀",
+    "errorInvalidEmail": "that doesn't look like a real email lol",
+    "scrollHint": "keep scrolling",
+    "openDash": "Open your dash"
   },
   "description": {
     "title": "What is Pixl?",
@@ -28,7 +40,7 @@
         "description": "Discover cyberpunk cities, underwater zones & more"
       },
       {
-        "title": "Accept Sidequests",
+        "title": "Accept Trials",
         "description": "Build apps, websites & hardware for in-game characters"
       },
       {
@@ -41,7 +53,7 @@
       }
     ],
     "youRepair": "You Repair",
-    "youRepairDesc": "Ship real hardware & software sidequests for NPCs. Every project becomes Restoration Energy that rebuilds a broken piece of Pixl",
+    "youRepairDesc": "Ship real hardware & software Trials for NPCs. Every project becomes Restoration Energy that rebuilds a broken piece of Pixl",
     "theCorePays": "The Core Pays",
     "theCorePaysDesc": "The Core is a vault of old Pixelian tech. As you repair it, it gives its treasures back: real prizes and grants matched to what you built",
     "comingSoon": "Coming Soon"
@@ -52,7 +64,7 @@
     "subtitle": "Pixl runs as a story in seasons: chapters move the world forward, and everything you ship repairs it.",
     "paths": [
       {
-        "title": "Take a sidequest",
+        "title": "Take a Trial",
         "text": "The Core already knows about these: known problems NPCs across unlocked regions need solved. Pick one and ship it."
       },
       {
@@ -64,7 +76,7 @@
     "rhythm": [
       {
         "title": "Chapters (~3 weeks)",
-        "text": "The story moves forward in chapters. Each chapter is a push to repair a part of the world: you take sidequests from the regions already unlocked, ship real projects, and your work counts toward the chapter's restoration goal. When the community hits it, the story advances: a new region opens, new NPCs return, new sidequests appear."
+        "text": "The story moves forward in chapters. Each chapter is a push to repair a part of the world: you take Trials from the regions already unlocked, ship real projects, and your work counts toward the chapter's restoration goal. When the community hits it, the story advances: a new region opens, new NPCs return, new Trials appear."
       },
       {
         "title": "Operations (~1 week)",
@@ -72,7 +84,7 @@
       },
       {
         "title": "Joining late? All good",
-        "text": "Unlocked regions never close. Whenever you arrive, you can pick any available sidequest, ship it, and earn your prizes and pixels like everyone else. Chapters only decide what unlocks next, never what you're allowed to build."
+        "text": "Unlocked regions never close. Whenever you arrive, you can pick any available Trial, ship it, and earn your prizes and pixels like everyone else. Chapters only decide what unlocks next, never what you're allowed to build."
       }
     ],
     "mechanics": [
@@ -82,7 +94,7 @@
       },
       {
         "title": "Restoration Energy",
-        "text": "Hours of shipped work convert into Restoration Energy. Keep shipping and it stacks into multipliers on what you earn."
+        "text": "Hours of shipped work convert into Restoration Energy. Keep shipping and it lifts the rate every future hour pays."
       },
       {
         "title": "Community goals",
@@ -97,15 +109,21 @@
     "min": "min",
     "sec": "sec"
   },
+  "mapPreview": {
+    "badge": "The World",
+    "title": "Every region looks different",
+    "subtitle": "A real screenshot straight out of the game engine. Drag it around and take a look.",
+    "hint": "Drag to explore"
+  },
   "sidequests": {
     "badge": "Examples",
-    "title": "Sidequests and Rewards",
+    "title": "Trials and Rewards",
     "description": "These are only examples and might change over the weeks.",
     "howRewardsWork": "How rewards work",
-    "howRewardsWorkDesc": "You get the base prize for each sidequest you complete. The more hours you put in, the more currency you earn to spend in the shop. Don't want the listed prize or already have it? No problem, swap it for anything of equivalent value.",
+    "howRewardsWorkDesc": "You get the base prize for each Trial you complete. The more hours you put in, the more currency you earn to spend in the shop. Don't want the listed prize or already have it? No problem, swap it for anything of equivalent value.",
     "seeFullExample": "See a full example submission",
     "seeFullExampleDesc": "Not sure what a complete submission looks like? Check out this example that hits every deadline.",
-    "sidequestLabel": "Sidequest",
+    "sidequestLabel": "Trial",
     "prizeLabel": "Prize",
     "levels": [
       {
@@ -117,7 +135,7 @@
         },
         "prize": {
           "title": "Domain + Sticker Pack",
-          "description": "A custom domain of your choice (.com, .dev, .xyz\u2026) + a Hack Club sticker pack shipped to your door."
+          "description": "A custom domain of your choice (.com, .dev, .xyz…) + a Hack Club sticker pack shipped to your door."
         }
       },
       {
@@ -161,7 +179,7 @@
         "hours": "min 20h of work",
         "quest": {
           "title": "Design your own region",
-          "description": "Create a new region for the Pixl world: map, NPCs, assets and sidequests. Then code it into a playable demo, it's not just an art quest. If it's polished enough, it gets added to the real game."
+          "description": "Create a new region for the Pixl world: map, NPCs, assets and Trials. Then code it into a playable demo, it's not just an art Trial. If it's polished enough, it gets added to the real game."
         },
         "prize": {
           "title": "Graphics Tablet",
@@ -217,10 +235,15 @@
     "title": "The Shop",
     "description": "1 hour of work = 50 pixels.",
     "moreComing": "...and even more coming!",
+    "hoursRate": "{lo}h at {loRate}/h → {hi}h at {hiRate}/h",
     "items": [
       {
         "name": "Signed Org Photo",
         "description": "A signed photo of one of the org members, shipped to your door."
+      },
+      {
+        "name": "Community Meme Pack (5-Pack)",
+        "description": "5 random memes made by the community team, printed on real photo paper and shipped to your door."
       },
       {
         "name": "Game Assets Grant",
@@ -228,7 +251,7 @@
       },
       {
         "name": "Hack Club Sticker Pack",
-        "description": "An envelope of Hack Club and Pixl stickers."
+        "description": "An envelope of Hack Club and Pixl stickers, made in collaboration with several artists."
       },
       {
         "name": "AI Credits",
@@ -239,12 +262,40 @@
         "description": "A stackable $10 grant to spend on instruments, plugins, samples or any music gear you want. Don't use it for subscription to spotify/apple music etc"
       },
       {
+        "name": "Soldering Tools Grant",
+        "description": "A stackable $10 grant for soldering tools and supplies."
+      },
+      {
+        "name": "Hardware Grant",
+        "description": "A stackable $10 grant to spend on any hardware for your projects."
+      },
+      {
+        "name": "Domain Grant",
+        "description": "A stackable $12 grant to register a domain for your project."
+      },
+      {
+        "name": "Hosting Grant",
+        "description": "A stackable $10 grant for hosting, like Railway or any cloud platform."
+      },
+      {
         "name": "Random Desk Object",
         "description": "A random object from our desks: a PCB, a sticker stash, anything. Comes with a signed letter. Only a few in stock!"
       },
       {
         "name": "Art Supply Grant",
         "description": "A stackable $10 grant to spend on paints, pens, canvases or any art supplies you want."
+      },
+      {
+        "name": "PIXL Cookie Cutter",
+        "description": "Big pixelated PIXL letter cookie cutters, designed by Ricky. Bake a batch for Barnav, our resident cookie muncher."
+      },
+      {
+        "name": "Soldering Iron",
+        "description": "A soldering iron kit with fresh tips and flux — handy for the Tamagotchi kit and other hardware builds."
+      },
+      {
+        "name": "Food Grant",
+        "description": "A stackable $10 grant for food and snacks while you build."
       },
       {
         "name": "Pixel Composer License",
@@ -263,6 +314,10 @@
         "description": "The pixel art editor. Animated sprites, tilesets and more."
       },
       {
+        "name": "Google Play Developer License",
+        "description": "A $25 grant for your Google Play developer license."
+      },
+      {
         "name": "Pixl Tamagotchi DIY Kit",
         "description": "Solder and code your own pocket pet, designed by mangoman."
       },
@@ -271,8 +326,16 @@
         "description": "Pick from our selection of cool indie games. Sent as a gift link on Steam or Humble Bundle."
       },
       {
+        "name": "Electric Screwdriver Set",
+        "description": "An electric screwdriver set for building and fixing your hardware projects."
+      },
+      {
         "name": "ESP32 Starter Kit",
         "description": "ESP32 dev board with a breadboard and components to start hacking."
+      },
+      {
+        "name": "FURYCUBE 68%",
+        "description": "A cheap hot-swap mechanical keyboard for late night game jams."
       },
       {
         "name": "Godot Plush (Limited Edition)",
@@ -283,6 +346,22 @@
         "description": "Limited PIXL hoodie with the logo on the chest."
       },
       {
+        "name": "Blahaj Plush",
+        "description": "A plush Blahaj shark shipped to your door."
+      },
+      {
+        "name": "CPU Grant",
+        "description": "A stackable $50 grant for CPU upgrades only."
+      },
+      {
+        "name": "GPU Grant",
+        "description": "A stackable $50 grant for GPU upgrades only."
+      },
+      {
+        "name": "RAM Grant",
+        "description": "A stackable $50 grant for RAM upgrades only."
+      },
+      {
         "name": "Wacom Intuos (Small)",
         "description": "A Wacom drawing tablet, the classic for digital art."
       },
@@ -291,32 +370,60 @@
         "description": "A retro handheld to play your builds and the classics on the go."
       },
       {
-        "name": "Epomaker TH80 V2 Pro",
+        "name": "Epomaker x Aula S75 Pro",
         "description": "Hot-swap mechanical keyboard with a little screen. Add a note to pick your color."
-      },
-      {
-        "name": "Epomaker x Aula F75",
-        "description": "75% hot-swap mechanical keyboard. Add a note to pick your color."
       },
       {
         "name": "GameMaker Pro",
         "description": "GameMaker Professional license to export your games everywhere."
       },
       {
+        "name": "Steam License",
+        "description": "A grant for publishing your game on Steam."
+      },
+      {
+        "name": "Apple Developer License",
+        "description": "A $100 grant for your Apple Developer Program membership."
+      },
+      {
         "name": "Monitor Grant (Stackable)",
         "description": "A stackable $100 grant towards the monitor of your choice. Your pixels deserve more pixels."
+      },
+      {
+        "name": "Apple Pencil Pro",
+        "description": "Apple's Pencil Pro, works great with our iPad for sketching and pixel art."
       },
       {
         "name": "Raspberry Pi 5",
         "description": "A Raspberry Pi 5 (4GB) to run your servers, emulators and experiments. 8GB version for 3150 px."
       },
       {
+        "name": "Sony WH-CH720N",
+        "description": "Lightweight noise cancelling headphones, easy on the budget."
+      },
+      {
+        "name": "Creality Ender 3 V3",
+        "description": "A dependable entry-level 3D printer for props and prototypes."
+      },
+      {
+        "name": "AirPods Pro 3",
+        "description": "Apple's noise cancelling earbuds, compact and easy to bring everywhere."
+      },
+      {
         "name": "Bambu Lab A1 Mini",
         "description": "A fast, quiet 3D printer. Print your own game props and cases."
       },
       {
+        "name": "Samsung T7 External SSD (1TB)",
+        "description": "A fast portable SSD for backups, builds and moving big files around."
+      },
+      {
         "name": "Sony WH-1000XM5",
         "description": "Noise cancelling headphones to get in the zone."
+      },
+      {
+        "name": "Creality Sparkx i7",
+        "description": "A fast, capable 3D printer for bigger builds."
       },
       {
         "name": "Bambu Lab A1",
@@ -335,16 +442,44 @@
         "description": "The A1 bundled with the AMS Lite for multi-color prints out of the box."
       },
       {
+        "name": "Samsung Galaxy S24",
+        "description": "A solid Android flagship for everyday use and testing your apps."
+      },
+      {
         "name": "AirPods Max 2",
         "description": "Apple's over-ear noise cancelling headphones. The endgame flex."
       },
       {
+        "name": "Nothing Phone (4a) Pro",
+        "description": "A sleek Android phone with Nothing's signature transparent design."
+      },
+      {
         "name": "MacBook Neo",
-        "description": "A light, portable MacBook for code, art and everything in between. 256GB shown, add a note to pick 512GB for 11500 px."
+        "description": "A light, portable MacBook for code, art and everything in between. 256GB shown, add a note to pick 512GB for 11425 px."
+      },
+      {
+        "name": "iPad Air (M4, 128GB)",
+        "description": "A faster, roomier iPad with the M4 chip. Comes with pencil support for drawing and playtesting."
       },
       {
         "name": "MacBook Air M5",
-        "description": "Apple's air laptop, 16GB/512GB shown, add a note to pick 24GB/1TB for 24250 px."
+        "description": "Apple's air laptop, 16GB/512GB shown, add a note to pick 24GB/1TB for 24275 px."
+      },
+      {
+        "name": "Framework 13 DIY",
+        "description": "A modular, repairable 13-inch laptop you build yourself."
+      },
+      {
+        "name": "Framework 16 DIY",
+        "description": "The bigger 16-inch Framework laptop, build it yourself."
+      },
+      {
+        "name": "Mac Mini (24GB/512GB)",
+        "description": "A compact desktop Mac for coding, streaming and everyday builds."
+      },
+      {
+        "name": "Nintendo Switch 2",
+        "description": "Nintendo's newest handheld/console hybrid. Play your builds and everything else on the go or on the big screen."
       }
     ]
   },
@@ -377,6 +512,14 @@
         "answer": "Yes! Each of your projects will be funded, and the event itself is 100% free."
       },
       {
+        "question": "How much can I earn?",
+        "answer": "You earn pixels for every hour of shipped work — 1 hour = 50 pixels, about $3.50 to start. As your Restoration Energy levels up, your rate climbs, up to about $6/hr. Spend your pixels in the shop on real prizes, from stickers to a MacBook Air."
+      },
+      {
+        "question": "What's Restoration Energy?",
+        "answer": "It's the number everything runs on. Every ship earns Restoration Energy based on how many hours you put in AND how complex the project is (reviewers tier it 1 to 4), so bigger, harder builds earn more. Your RE sets your pay rate, which climbs from 50 px/hr to about 86 px/hr as you ship, and your level is a display of the RE you've built up. The whole community's Restoration Energy also unlocks community goals, like new skins for your in-game house."
+      },
+      {
         "question": "Who is running Pixl?",
         "answer": "A big team of friends!"
       },
@@ -390,11 +533,12 @@
   "footer": {
     "aProjectBy": "A project by",
     "teens": "Teens",
-    "hackClubDesc1": "Hack Club is a 501(c)(3) nonprofit and network of 60k+ technical high schoolers. We believe you learn best by building, so we\u2019re creating community and providing grants so you can make awesome projects. In the past few years, we\u2019ve",
+    "hackClubDesc1": "Hack Club is a 501(c)(3) nonprofit and network of 60k+ technical high schoolers. We believe you learn best by building, so we’re creating community and providing grants so you can make awesome projects. In the past few years, we’ve",
     "partneredWithGithub": "partnered with GitHub to run Summer of Making",
-    "hostedWorldsLongest": "hosted the world\u2019s longest hackathon on land",
-    "ranCanadasLargest": "ran Canada\u2019s largest high school hackathon",
-    "hackClubMotto": "At Hack Club, students aren\u2019t just learning, they\u2019re shipping.",
+    "hostedWorldsLongest": "hosted the world’s longest hackathon on land",
+    "ranCanadasLargest": "ran Canada’s largest high school hackathon",
+    "and": "and",
+    "hackClubMotto": "At Hack Club, students aren’t just learning, they’re shipping.",
     "pixl": "Pixl",
     "whatIsPixl": "What is Pixl",
     "howItWorks": "How it works",
@@ -410,7 +554,7 @@
     "ourTeamAndBoard": "Our Team & Board",
     "branding": "Branding",
     "donate": "Donate",
-    "madeWithLove": "Pixl is made with \u2665 by teenagers for teenagers",
+    "madeWithLove": "Pixl is made with ♥ by teenagers for teenagers",
     "addSomething": "want to add something ? Make a PR on",
     "github": "GitHub"
   }

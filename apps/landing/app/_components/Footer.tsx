@@ -60,7 +60,7 @@ export function Footer() {
           >
             {t.hostedWorldsLongest}
           </a>
-          , and{" "}
+          , {t.and}{" "}
           <a
             href="https://losangeles.hackclub.com"
             target="_blank"

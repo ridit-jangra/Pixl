@@ -1,7 +1,17 @@
 {
+  "meta": {
+    "title": "Pixl",
+    "description": "Un YSWS pixelisé !"
+  },
   "menu": {
-    "testTheGame": "Teste le jeu !",
-    "stillInDev": "encore en dev !"
+    "playTheGame": "Joue au jeu !",
+    "language": "Langue"
+  },
+  "easterEgg": {
+    "title": "PIXLIFY — convertisseur de texte secret",
+    "hint": "tu as trouvé le secret — transforme ton texte en emojis pixl pour Slack",
+    "close": "Fermer",
+    "dialogLabel": "Convertisseur Pixlify"
   },
   "hero": {
     "youShip": "Tu livres",
@@ -13,7 +23,9 @@
     "alreadyIn": "tu es déjà inscrit",
     "viewYourRsvp": "voir ton RSVP",
     "errorNoEmail": "eh, mets ton email d'abord 👀",
-    "errorInvalidEmail": "ça ne ressemble pas à un vrai email mdr"
+    "errorInvalidEmail": "ça ne ressemble pas à un vrai email mdr",
+    "scrollHint": "continue de scroller",
+    "openDash": "Ouvre ton tableau de bord"
   },
   "description": {
     "title": "C'est quoi Pixl ?",
@@ -28,7 +40,7 @@
         "description": "Découvre des villes cyberpunk, des zones sous-marines et plus encore"
       },
       {
-        "title": "Accepte des quêtes annexes",
+        "title": "Accepte des épreuves",
         "description": "Crée des apps, des sites et du hardware pour les personnages du jeu"
       },
       {
@@ -41,9 +53,9 @@
       }
     ],
     "youRepair": "Tu répares",
-    "youRepairDesc": "Livre de vraies quêtes hardware et software pour les PNJ. Chaque projet devient de l'Énergie de Restauration qui reconstruit un morceau brisé de Pixl",
-    "theCorePays": "Le Cœur paie",
-    "theCorePaysDesc": "Le Cœur est un coffre de vieille technologie pixelienne. À mesure que tu le répares, il rend ses trésors : de vrais prix et des bourses adaptés à ce que tu as construit",
+    "youRepairDesc": "Livre de vraies épreuves hardware et software pour les PNJ. Chaque projet devient de l'Énergie de Restauration qui reconstruit un morceau brisé de Pixl",
+    "theCorePays": "Le Noyau paie",
+    "theCorePaysDesc": "Le Noyau est un coffre de vieille technologie pixelienne. À mesure que tu le répares, il rend ses trésors : de vrais prix et des subventions correspondant à ce que tu as construit",
     "comingSoon": "Bientôt disponible"
   },
   "story": {
@@ -52,19 +64,19 @@
     "subtitle": "Pixl se déroule comme une histoire en saisons : les chapitres font avancer le monde, et tout ce que tu livres le répare.",
     "paths": [
       {
-        "title": "Prends une quête annexe",
-        "text": "Le Cœur les connaît déjà : des problèmes que les PNJ des régions débloquées ont besoin de résoudre. Choisis-en une et livre-la."
+        "title": "Prends une épreuve",
+        "text": "Le Noyau les connaît déjà : des problèmes que les PNJ des régions débloquées doivent résoudre. Choisis-en une et livre-la."
       },
       {
         "title": "Crée ton propre truc",
-        "text": "Le Cœur ne peut pas prévoir chaque invention. Livre quelque chose d'original qu'il n'a jamais demandé, et ça compte quand même comme de l'Énergie de Restauration."
+        "text": "Le Noyau ne peut pas prévoir chaque invention. Livre quelque chose d'original qu'il n'a jamais demandé, et ça compte quand même comme de l'Énergie de Restauration."
       }
     ],
     "andOr": "et/ou",
     "rhythm": [
       {
         "title": "Chapitres (~3 semaines)",
-        "text": "L'histoire avance par chapitres. Chaque chapitre est un effort pour réparer une partie du monde : tu prends des quêtes dans les régions déjà débloquées, tu livres de vrais projets, et ton travail compte pour l'objectif de restauration du chapitre. Quand la communauté l'atteint, l'histoire progresse : une nouvelle région s'ouvre, de nouveaux PNJ reviennent, de nouvelles quêtes apparaissent."
+        "text": "L'histoire avance par chapitres. Chaque chapitre est un effort pour réparer une partie du monde : tu prends des épreuves dans les régions déjà débloquées, tu livres de vrais projets, et ton travail compte pour l'objectif de restauration du chapitre. Quand la communauté l'atteint, l'histoire progresse : une nouvelle région s'ouvre, de nouveaux PNJ reviennent, de nouvelles épreuves apparaissent."
       },
       {
         "title": "Opérations (~1 semaine)",
@@ -72,7 +84,7 @@
       },
       {
         "title": "Tu arrives en retard ? Pas de souci",
-        "text": "Les régions débloquées ne ferment jamais. Quand tu arrives, tu peux choisir n'importe quelle quête disponible, la livrer et gagner tes prix et pixels comme tout le monde. Les chapitres décident seulement de ce qui se débloque ensuite, jamais de ce que tu as le droit de construire."
+        "text": "Les régions débloquées ne ferment jamais. Quand tu arrives, tu peux choisir n'importe quelle épreuve disponible, la livrer et gagner tes prix et pixels comme tout le monde. Les chapitres décident seulement de ce qui se débloque ensuite, jamais de ce que tu as le droit de construire."
       }
     ],
     "mechanics": [
@@ -82,11 +94,11 @@
       },
       {
         "title": "Énergie de Restauration",
-        "text": "Les heures de travail livré se convertissent en Énergie de Restauration. Continue de livrer et elle s'accumule en multiplicateurs sur ce que tu gagnes."
+        "text": "Les heures de travail livré se convertissent en Énergie de Restauration. Continue de livrer et elle fait monter le taux payé pour chaque heure suivante."
       },
       {
         "title": "Objectifs communautaires",
-        "text": "Toute l'Énergie de Restauration répare aussi le monde lui-même. Aux grandes étapes, de nouvelles régions se débloquent, les PNJ reviennent et le Cœur rend davantage de ce qu'il détient."
+        "text": "Toute l'Énergie de Restauration répare aussi le monde lui-même. Aux grandes étapes, de nouvelles régions se débloquent, les PNJ reviennent et le Noyau rend davantage de ce qu'il détient."
       }
     ],
     "ctaTitle": "Envie d'en savoir plus sur l'histoire ?",
@@ -97,20 +109,26 @@
     "min": "min",
     "sec": "sec"
   },
+  "mapPreview": {
+    "badge": "Le monde",
+    "title": "Chaque région est différente",
+    "subtitle": "Une vraie capture tout droit sortie du moteur du jeu. Faites-la glisser pour l'explorer.",
+    "hint": "Glissez pour explorer"
+  },
   "sidequests": {
     "badge": "Exemples",
-    "title": "Quêtes annexes et récompenses",
+    "title": "Épreuves et récompenses",
     "description": "Ce ne sont que des exemples qui peuvent changer au fil des semaines.",
     "howRewardsWork": "Comment fonctionnent les récompenses",
-    "howRewardsWorkDesc": "Tu reçois le prix de base pour chaque quête que tu termines. Plus tu y passes d'heures, plus tu gagnes de monnaie à dépenser en boutique. Tu ne veux pas le prix indiqué ou tu l'as déjà ? Pas de problème, échange-le contre n'importe quoi de valeur équivalente.",
+    "howRewardsWorkDesc": "Tu reçois le prix de base pour chaque épreuve que tu termines. Plus tu y passes d'heures, plus tu gagnes de monnaie à dépenser en boutique. Tu ne veux pas le prix indiqué ou tu l'as déjà ? Pas de problème, échange-le contre n'importe quoi de valeur équivalente.",
     "seeFullExample": "Voir un exemple complet de soumission",
     "seeFullExampleDesc": "Tu ne sais pas à quoi ressemble une soumission complète ? Regarde cet exemple qui respecte chaque échéance.",
-    "sidequestLabel": "Quête",
+    "sidequestLabel": "Épreuve",
     "prizeLabel": "Prix",
     "levels": [
       {
         "level": "Débutant",
-        "hours": "min 7h de travail",
+        "hours": "min. 7 h de travail",
         "quest": {
           "title": "Crée la boutique d'une marchande",
           "description": "Zara, la marchande de tissus, a besoin d'un site simple pour présenter ses articles. Construis-lui une page d'accueil propre avec une liste d'articles et un formulaire de contact."
@@ -122,19 +140,19 @@
       },
       {
         "level": "Intermédiaire",
-        "hours": "min 30h de travail",
+        "hours": "min. 30 h de travail",
         "quest": {
           "title": "Livre une app mobile pour le Voyageur",
           "description": "Marco, le marchand itinérant, a besoin d'une app mobile pour suivre ses itinéraires, noter son inventaire en déplacement et envoyer des notifications quand il arrive dans une nouvelle région."
         },
         "prize": {
           "title": "Compte Apple Developer",
-          "description": "Une adhésion d'un an au Apple Developer Program (99 $). Publie ton app sur l'App Store à ton nom."
+          "description": "Une adhésion d'un an à l'Apple Developer Program (99 $). Publie ton app sur l'App Store à ton nom."
         }
       },
       {
         "level": "Expert",
-        "hours": "min 55h de travail",
+        "hours": "min. 55 h de travail",
         "quest": {
           "title": "Sécurise le réseau de la Cité Cyberpunk",
           "description": "GHOST, un PNJ hacker rebelle, a besoin d'un système de détection d'intrusion qui surveille le trafic, signale les anomalies et envoie des alertes en temps réel à un tableau de bord."
@@ -146,22 +164,22 @@
       },
       {
         "level": "Débutant",
-        "hours": "min 7h de travail",
+        "hours": "min. 7 h de travail",
         "quest": {
           "title": "Fais-moi un jeu Roblox !!",
           "description": "Tim, un PNJ de 9 ans du village, veut vraiment un jeu Roblox où on collecte des pièces. Construis-le dans Roblox Studio et publie-le pour qu'il puisse jouer avec ses amis."
         },
         "prize": {
           "title": "2000 Robux",
-          "description": "Une bourse de 2000 Robux à dépenser sur la plateforme Roblox : objets, améliorations d'avatar ou ce que tu veux."
+          "description": "Un crédit de 2000 Robux à dépenser sur la plateforme Roblox : objets, améliorations d'avatar ou ce que tu veux."
         }
       },
       {
         "level": "Intermédiaire",
-        "hours": "min 20h de travail",
+        "hours": "min. 20 h de travail",
         "quest": {
           "title": "Conçois ta propre région",
-          "description": "Crée une nouvelle région pour le monde de Pixl : carte, PNJ, assets et quêtes. Puis code-la en démo jouable, ce n'est pas qu'une quête artistique. Si elle est assez soignée, elle est ajoutée au vrai jeu."
+          "description": "Crée une nouvelle région pour le monde de Pixl : carte, PNJ, assets et épreuves. Puis code-la en démo jouable, ce n'est pas qu'une épreuve artistique. Si elle est assez soignée, elle est ajoutée au vrai jeu."
         },
         "prize": {
           "title": "Tablette graphique",
@@ -170,7 +188,7 @@
       },
       {
         "level": "Débutant",
-        "hours": "min 8.5h de travail",
+        "hours": "min. 8,5 h de travail",
         "quest": {
           "title": "Dessine des sprites pour la boutique d'objets",
           "description": "Loot, le PNJ de la boutique d'objets, a besoin d'un pack d'icônes en pixel art : potions, armes, outils et objets à collectionner. Construis un site pour les présenter, l'art peut représenter au plus 50 % du temps soumis. Les meilleurs sont ajoutés au vrai jeu."
@@ -182,7 +200,7 @@
       },
       {
         "level": "Expert",
-        "hours": "~65h de travail",
+        "hours": "~65 h de travail",
         "quest": {
           "title": "Construis un bras robotisé pour l'Usine",
           "description": "ARIA, le PNJ d'automatisation du District Industriel, a besoin d'un bras robotisé 3 axes fonctionnel, contrôlé via une interface web personnalisée, avec retour de position en direct et séquences programmables."
@@ -217,34 +235,67 @@
     "title": "La boutique",
     "description": "1 heure de travail = 50 pixels.",
     "moreComing": "...et encore plus à venir !",
+    "hoursRate": "{lo} h à {loRate}/h → {hi} h à {hiRate}/h",
     "items": [
       {
         "name": "Photo signée de l'orga",
         "description": "Une photo signée d'un membre de l'orga, livrée à ta porte."
       },
       {
-        "name": "Bourse assets de jeu",
-        "description": "Une bourse cumulable de 10 $ pour acheter des tilesets, sprites, musiques et sons pour ton jeu."
+        "name": "Pack de mèmes communautaires (x5)",
+        "description": "5 mèmes aléatoires faits par l'équipe communauté, imprimés sur vrai papier photo et livrés chez toi."
+      },
+      {
+        "name": "Crédit assets de jeu",
+        "description": "Un crédit cumulable de 10 $ pour acheter des tilesets, sprites, musiques et sons pour ton jeu."
       },
       {
         "name": "Pack de stickers Hack Club",
-        "description": "Une enveloppe de stickers Hack Club et Pixl."
+        "description": "Une enveloppe de stickers Hack Club et Pixl, réalisés en collaboration avec plusieurs artistes."
       },
       {
         "name": "Crédits IA",
-        "description": "Une bourse de 10 $ de crédits IA chez le fournisseur de ton choix."
+        "description": "Un crédit de 10 $ d'IA chez le fournisseur de ton choix."
       },
       {
-        "name": "Bourse musique",
-        "description": "Une bourse cumulable de 10 $ à dépenser en instruments, plugins, samples ou tout matériel musical. À ne pas utiliser pour un abonnement Spotify/Apple Music etc."
+        "name": "Crédit musique",
+        "description": "Un crédit cumulable de 10 $ à dépenser en instruments, plugins, samples ou tout matériel musical. À ne pas utiliser pour un abonnement Spotify/Apple Music etc."
+      },
+      {
+        "name": "Crédit outils de soudure",
+        "description": "Un crédit cumulable de 10 $ pour des outils et fournitures de soudure."
+      },
+      {
+        "name": "Crédit matériel",
+        "description": "Un crédit cumulable de 10 $ à dépenser sur du matériel pour tes projets."
+      },
+      {
+        "name": "Crédit nom de domaine",
+        "description": "Un crédit cumulable de 12 $ pour réserver un nom de domaine pour ton projet."
+      },
+      {
+        "name": "Crédit hébergement",
+        "description": "Un crédit cumulable de 10 $ pour de l'hébergement, comme Railway ou toute autre plateforme cloud."
       },
       {
         "name": "Objet de bureau aléatoire",
         "description": "Un objet au hasard de nos bureaux : un PCB, une réserve de stickers, n'importe quoi. Livré avec une lettre signée. Quelques exemplaires seulement !"
       },
       {
-        "name": "Bourse fournitures d'art",
-        "description": "Une bourse cumulable de 10 $ à dépenser en peintures, stylos, toiles ou toutes fournitures d'art."
+        "name": "Crédit fournitures d'art",
+        "description": "Un crédit cumulable de 10 $ à dépenser en peintures, stylos, toiles ou toutes fournitures d'art."
+      },
+      {
+        "name": "Emporte-pièce PIXL",
+        "description": "D'énormes emporte-pièces en forme des lettres pixelisées PIXL, dessinés par Ricky. Prépare une fournée pour Barnav, notre dévoreur de cookies officiel."
+      },
+      {
+        "name": "Fer à souder",
+        "description": "Un kit de fer à souder avec des pointes neuves et du flux — utile pour le kit Tamagotchi et d'autres montages hardware."
+      },
+      {
+        "name": "Crédit nourriture",
+        "description": "Un crédit cumulable de 10 $ pour de la nourriture et des snacks pendant que tu codes."
       },
       {
         "name": "Licence Pixel Composer",
@@ -252,15 +303,19 @@
       },
       {
         "name": "Licence PICO-8",
-        "description": "La console fantastique. Code, dessine et compose de petits jeux dans un seul outil."
+        "description": "La console fantasy. Code, dessine et compose de petits jeux dans un seul outil."
       },
       {
         "name": "Poster PIXL",
-        "description": "Une bourse d'impression de 20 $ pour le poster PIXL ou n'importe quel poster. Tout le monde adore les posters."
+        "description": "Un crédit d'impression de 20 $ pour le poster PIXL ou n'importe quel poster. Tout le monde adore les posters."
       },
       {
         "name": "Licence Aseprite",
         "description": "L'éditeur de pixel art. Sprites animés, tilesets et plus."
+      },
+      {
+        "name": "Licence développeur Google Play",
+        "description": "Un crédit de 25 $ pour ta licence développeur Google Play."
       },
       {
         "name": "Kit DIY Tamagotchi Pixl",
@@ -271,8 +326,16 @@
         "description": "Choisis parmi notre sélection de jeux indé sympas. Envoyé en lien cadeau sur Steam ou Humble Bundle."
       },
       {
+        "name": "Kit de tournevis électrique",
+        "description": "Un kit de tournevis électrique pour construire et réparer tes projets hardware."
+      },
+      {
         "name": "Kit de démarrage ESP32",
         "description": "Carte de dev ESP32 avec une breadboard et des composants pour commencer à bidouiller."
+      },
+      {
+        "name": "FURYCUBE 68%",
+        "description": "Un clavier mécanique hot-swap pas cher pour tes game jams nocturnes."
       },
       {
         "name": "Peluche Godot (édition limitée)",
@@ -283,6 +346,22 @@
         "description": "Hoodie PIXL en édition limitée avec le logo sur la poitrine."
       },
       {
+        "name": "Peluche Blahaj",
+        "description": "Une peluche requin Blahaj livrée chez toi."
+      },
+      {
+        "name": "Crédit CPU",
+        "description": "Un crédit cumulable de 50 $ réservé aux mises à niveau de CPU."
+      },
+      {
+        "name": "Crédit GPU",
+        "description": "Un crédit cumulable de 50 $ réservé aux mises à niveau de GPU."
+      },
+      {
+        "name": "Crédit RAM",
+        "description": "Un crédit cumulable de 50 $ réservé aux mises à niveau de RAM."
+      },
+      {
         "name": "Wacom Intuos (Small)",
         "description": "Une tablette à dessin Wacom, la classique de l'art numérique."
       },
@@ -291,32 +370,60 @@
         "description": "Une console portable rétro pour jouer à tes créations et aux classiques en déplacement."
       },
       {
-        "name": "Epomaker TH80 V2 Pro",
+        "name": "Epomaker x Aula S75 Pro",
         "description": "Clavier mécanique hot-swap avec un petit écran. Ajoute une note pour choisir ta couleur."
-      },
-      {
-        "name": "Epomaker x Aula F75",
-        "description": "Clavier mécanique hot-swap 75 %. Ajoute une note pour choisir ta couleur."
       },
       {
         "name": "GameMaker Pro",
         "description": "Licence GameMaker Professional pour exporter tes jeux partout."
       },
       {
-        "name": "Bourse écran (cumulable)",
-        "description": "Une bourse cumulable de 100 $ pour l'écran de ton choix. Tes pixels méritent plus de pixels."
+        "name": "Licence Steam",
+        "description": "Un crédit pour publier ton jeu sur Steam."
+      },
+      {
+        "name": "Licence développeur Apple",
+        "description": "Un crédit de 100 $ pour ton abonnement au programme développeur Apple."
+      },
+      {
+        "name": "Crédit écran (cumulable)",
+        "description": "Un crédit cumulable de 100 $ pour l'écran de ton choix. Tes pixels méritent plus de pixels."
+      },
+      {
+        "name": "Apple Pencil Pro",
+        "description": "L'Apple Pencil Pro, parfait avec notre iPad pour dessiner et faire du pixel art."
       },
       {
         "name": "Raspberry Pi 5",
         "description": "Un Raspberry Pi 5 (4 Go) pour faire tourner tes serveurs, émulateurs et expériences. Version 8 Go pour 3150 px."
       },
       {
+        "name": "Sony WH-CH720N",
+        "description": "Casque léger à réduction de bruit, doux pour le budget."
+      },
+      {
+        "name": "Creality Ender 3 V3",
+        "description": "Une imprimante 3D d'entrée de gamme fiable pour tes props et prototypes."
+      },
+      {
+        "name": "AirPods Pro 3",
+        "description": "Les écouteurs à réduction de bruit d'Apple, compacts et faciles à emporter partout."
+      },
+      {
         "name": "Bambu Lab A1 Mini",
         "description": "Une imprimante 3D rapide et silencieuse. Imprime tes propres accessoires et boîtiers de jeu."
       },
       {
+        "name": "SSD externe Samsung T7 (1 To)",
+        "description": "Un SSD portable rapide pour tes sauvegardes, tes builds et tes gros fichiers."
+      },
+      {
         "name": "Sony WH-1000XM5",
         "description": "Casque à réduction de bruit pour entrer dans la zone."
+      },
+      {
+        "name": "Creality Sparkx i7",
+        "description": "Une imprimante 3D rapide et robuste pour tes plus gros projets."
       },
       {
         "name": "Bambu Lab A1",
@@ -327,7 +434,7 @@
         "description": "Une imprimante 3D rapide et fermée, conçue pour les filaments plus résistants et à haute température."
       },
       {
-        "name": "iPad (11e gén)",
+        "name": "iPad (11e génération)",
         "description": "Un iPad compatible avec le stylet pour dessiner et tester tes jeux."
       },
       {
@@ -335,16 +442,44 @@
         "description": "La A1 avec l'AMS Lite pour des impressions multicolores dès la sortie de la boîte."
       },
       {
+        "name": "Samsung Galaxy S24",
+        "description": "Un flagship Android solide pour ton quotidien et tester tes apps."
+      },
+      {
         "name": "AirPods Max 2",
         "description": "Le casque circum-auriculaire à réduction de bruit d'Apple. Le flex ultime."
       },
       {
+        "name": "Nothing Phone (4a) Pro",
+        "description": "Un téléphone Android élégant avec le design transparent signature de Nothing."
+      },
+      {
         "name": "MacBook Neo",
-        "description": "Un MacBook léger et portable pour le code, l'art et tout le reste. 256 Go affiché, ajoute une note pour choisir 512 Go pour 11500 px."
+        "description": "Un MacBook léger et portable pour le code, l'art et tout le reste. 256 Go affiché, ajoute une note pour choisir 512 Go pour 11425 px."
+      },
+      {
+        "name": "iPad Air (M4, 128 Go)",
+        "description": "Un iPad plus rapide et plus spacieux avec la puce M4. Compatible stylet pour dessiner et tester tes jeux."
       },
       {
         "name": "MacBook Air M5",
-        "description": "Le portable Air d'Apple, 16 Go/512 Go affiché, ajoute une note pour choisir 24 Go/1 To pour 24250 px."
+        "description": "Le portable Air d'Apple, 16 Go/512 Go affiché, ajoute une note pour choisir 24 Go/1 To pour 24275 px."
+      },
+      {
+        "name": "Framework 13 DIY",
+        "description": "Un ordinateur portable 13 pouces, modulaire et réparable, que tu assembles toi-même."
+      },
+      {
+        "name": "Framework 16 DIY",
+        "description": "Le grand frère 16 pouces du Framework, à assembler toi-même."
+      },
+      {
+        "name": "Mac Mini (24 Go/512 Go)",
+        "description": "Un Mac de bureau compact pour coder, streamer et tes projets du quotidien."
+      },
+      {
+        "name": "Nintendo Switch 2",
+        "description": "La toute nouvelle console hybride de Nintendo. Joue à tes projets et à tout le reste en mobilité ou sur grand écran."
       }
     ]
   },
@@ -358,7 +493,7 @@
       },
       {
         "question": "Attends, pourquoi ça s'appelle Pixl ?",
-        "answer": "Le monde s'appelait à l'origine Origin, jusqu'à ce que son Cœur, surchargé par toutes les inventions jamais créées, se brise en îles pixelisées. Ses survivants ont traversé les univers à la recherche des seules personnes capables de vraiment aider à le reconstruire : les Hack Clubbers. Ensemble, ils sont désormais les Pixeliens, et ils ont rebaptisé l'endroit Pixl."
+        "answer": "Le monde s'appelait à l'origine Origin, jusqu'à ce que son Noyau, surchargé par toutes les inventions jamais créées, se brise en îles pixelisées. Ses survivants ont traversé les univers à la recherche des seules personnes capables de vraiment aider à le reconstruire : les Hack Clubbers. Ensemble, ils sont désormais les Pixeliens, et ils ont rebaptisé l'endroit Pixl."
       },
       {
         "question": "J'ai besoin d'une équipe ?",
@@ -370,11 +505,19 @@
       },
       {
         "question": "Quand commence Pixl ?",
-        "answer": "Pixl est lancé le 18 août 2026, il y a un compte à rebours en direct plus haut sur la page. Reste à l'affût !"
+        "answer": "Pixl sort le 18 août 2026, il y a un compte à rebours en direct plus haut sur la page. Reste à l'affût !"
       },
       {
         "question": "C'est gratuit ?",
         "answer": "Oui ! Chacun de tes projets sera financé, et l'événement lui-même est 100 % gratuit."
+      },
+      {
+        "question": "Combien puis-je gagner ?",
+        "answer": "Tu gagnes des pixels pour chaque heure de travail livré : 1 heure = 50 pixels, environ 3,50 $ au départ. À mesure que ton Énergie de Restauration monte en niveau, ton taux augmente, jusqu'à environ 6 $/h. Dépense tes pixels en boutique pour de vrais prix, des stickers jusqu'à un MacBook Air."
+      },
+      {
+        "question": "C'est quoi l'Énergie de Restauration ?",
+        "answer": "C'est le chiffre sur lequel tout repose. Chaque livraison rapporte de l'Énergie de Restauration selon le nombre d'heures ET la complexité du projet (les relecteurs lui donnent un palier de 1 à 4), donc les builds plus gros et plus difficiles en rapportent plus. Ton ÉR fixe ton taux de paiement, qui monte de 50 px/h à environ 86 px/h à mesure que tu livres, et ton niveau affiche l'ÉR que tu as accumulée. L'Énergie de Restauration de toute la communauté débloque aussi des objectifs communautaires, comme de nouveaux skins pour ta maison en jeu."
       },
       {
         "question": "Qui organise Pixl ?",
@@ -382,7 +525,7 @@
       },
       {
         "question": "J'ai d'autres questions !",
-        "answer": "Demande-nous dans #pixl-help sur le Slack Hack Club."
+        "answer": "Demande-nous dans #pixl-help sur le Slack de Hack Club."
       }
     ],
     "meetTheTeam": "Rencontre toute l'équipe ici."
@@ -390,11 +533,12 @@
   "footer": {
     "aProjectBy": "Un projet de",
     "teens": "Teens",
-    "hackClubDesc1": "Hack Club est une association à but non lucratif 501(c)(3) et un réseau de plus de 60 000 lycéens techos. On croit qu'on apprend mieux en construisant, alors on crée une communauté et on offre des bourses pour que tu puisses réaliser des projets géniaux. Ces dernières années, on a",
+    "hackClubDesc1": "Hack Club est une association à but non lucratif 501(c)(3) et un réseau de plus de 60 000 lycéens techos. On croit qu'on apprend mieux en construisant, alors on crée une communauté et on distribue des subventions pour que tu puisses réaliser des projets géniaux. Ces dernières années, on a",
     "partneredWithGithub": "collaboré avec GitHub pour organiser Summer of Making",
     "hostedWorldsLongest": "organisé le plus long hackathon du monde sur terre",
     "ranCanadasLargest": "mené le plus grand hackathon lycéen du Canada",
-    "hackClubMotto": "Chez Hack Club, les élèves n'apprennent pas juste, ils livrent.",
+    "and": "et",
+    "hackClubMotto": "Chez Hack Club, les élèves ne font pas qu'apprendre : ils livrent.",
     "pixl": "Pixl",
     "whatIsPixl": "C'est quoi Pixl",
     "howItWorks": "Comment ça marche",

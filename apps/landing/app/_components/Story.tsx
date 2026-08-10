@@ -3,8 +3,12 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useLocale } from "./LocaleProvider";
+import { launchDate } from "../_generated/config";
 
-const LAUNCH_DATE = new Date("2026-08-18T00:00:00").getTime();
+// Was new Date("2026-08-18T00:00:00") - no timezone, so the countdown hit zero
+// at midnight *local to each visitor*, i.e. a different moment per timezone.
+// The config date carries its Z, so everyone counts down to the same instant.
+const LAUNCH_DATE = launchDate.getTime();
 
 function useCountdown(target: number) {
   const [now, setNow] = useState<number | null>(null);

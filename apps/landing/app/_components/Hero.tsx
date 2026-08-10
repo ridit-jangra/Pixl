@@ -167,6 +167,14 @@ export function Hero() {
                 </motion.button>
               </motion.div>
             )}
+            {/* Straight into the Builder Terminal for anyone who already has an
+                account, so returning players don't have to hunt for it. */}
+            <a
+              href="https://pixl.rsvp/home"
+              className="mt-3 self-center text-center px-6 py-2 text-base sm:text-lg md:text-xl bg-black text-white cursor-pointer hover:-translate-y-1 hover:-translate-x-1 border-black border-r-8 border-t-2 border-l-2 hover:border-b-12 border-b-8 transition-all"
+            >
+              {t.openDash}
+            </a>
             <AnimatePresence>
               {msg && (
                 <motion.p
@@ -182,6 +190,35 @@ export function Hero() {
             </AnimatePresence>
           </motion.div>
         </div>
+        <motion.div
+          className="absolute bottom-5 sm:bottom-8 flex flex-col items-center gap-2 select-none pointer-events-none"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 1.4 }}
+        >
+          <p
+            className="font-pixel text-white text-sm sm:text-lg md:text-xl uppercase tracking-widest"
+            style={{ textShadow: "0 2px 6px rgba(0,0,0,0.7)" }}
+          >
+            {t.scrollHint}
+          </p>
+          <motion.svg
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="white"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="sm:w-9 sm:h-9"
+            style={{ filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.6))" }}
+            animate={{ y: [0, 7, 0] }}
+            transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <path d="M6 9l6 6 6-6" />
+          </motion.svg>
+        </motion.div>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLocale } from "./LocaleProvider";
 
 // Hidden easter egg: enter the Konami code (↑ ↑ ↓ ↓ ← → ← → B A) anywhere on
 // the site to pop the LingoJam "Pixlify" text-to-pixl-emoji converter.
@@ -18,6 +19,8 @@ const SEQUENCE = [
 ];
 
 export function EasterEgg() {
+  const { dict } = useLocale();
+  const t = dict.easterEgg;
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -52,7 +55,7 @@ export function EasterEgg() {
       className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
       role="dialog"
       aria-modal="true"
-      aria-label="Pixlify converter"
+      aria-label={t.dialogLabel}
     >
       <div
         onClick={(e) => e.stopPropagation()}
@@ -60,24 +63,22 @@ export function EasterEgg() {
       >
         <div className="mb-3 flex items-center justify-between">
           <span className="text-sm font-bold tracking-widest text-amber-300">
-            ✨ PIXLIFY — secret text converter
+            ✨ {t.title}
           </span>
           <button
             onClick={() => setOpen(false)}
             className="rounded px-2 py-0.5 text-neutral-400 transition-colors hover:bg-white/10 hover:text-white"
-            aria-label="Close"
+            aria-label={t.close}
           >
             ✕
           </button>
         </div>
         <iframe
           src="https://lingojam.com/embed/Pixlify"
-          title="Pixlify text converter"
+          title={t.dialogLabel}
           className="h-[300px] w-full rounded-md border-0 bg-white"
         />
-        <p className="mt-2 text-center text-xs text-neutral-500">
-          you found the secret — turn your text into pixl emojis for Slack
-        </p>
+        <p className="mt-2 text-center text-xs text-neutral-500">{t.hint}</p>
       </div>
     </div>
   );
