@@ -10,6 +10,12 @@ import {
   tierKickerUsd,
 } from "./_generated/config";
 import {
+  notifyShopInsert,
+  notifyShopDelete,
+  notifyShopUpdates,
+  type ShopRowSnapshot,
+} from "@/lib/shopNotify";
+import {
   db,
   getAdmin,
   listAdmins,
@@ -2414,16 +2420,21 @@ export async function addShopItem(formData: FormData): Promise<void> {
     if (image.size > 4 * 1024 * 1024) throw new Error("Image too big (max 4 MB).");
     imageUrl = await uploadShopImage(image);
   }
-  const { error } = await db.from("shop_items").insert({
-    name,
-    description,
-    price,
-    image_url: imageUrl,
-    options,
-    region,
-    created_by: actorName(access),
-  });
+  const { data: inserted, error } = await db
+    .from("shop_items")
+    .insert({
+      name,
+      description,
+      price,
+      image_url: imageUrl,
+      options,
+      region,
+      created_by: actorName(access),
+    })
+    .select("*")
+    .single();
   if (error) throw new Error(error.message);
+  if (inserted) await notifyShopInsert(inserted as ShopRowSnapshot);
   revalidatePath("/shop");
 }
 
@@ -2442,26 +2453,46 @@ export async function updateShopItem(formData: FormData): Promise<void> {
     if (image.size > 4 * 1024 * 1024) throw new Error("Image too big (max 4 MB).");
     patch.image_url = await uploadShopImage(image);
   }
-  const { error } = await db.from("shop_items").update(patch).eq("id", id);
-  if (error) throw new Error(error.message);
-
   // "Apply name & description to every region": the same item lives as one row
   // per region (matched by name), so propagate just those two shared fields to
   // its siblings. Match on the ORIGINAL name (the edit may rename it), and skip
   // trophies (unlock_xp > 0) since those aren't region-scoped.
   const applyAllRegions = String(formData.get("apply_all_regions") ?? "") === "1";
-  if (applyAllRegions) {
-    const originalName = String(formData.get("original_name") ?? "").trim();
-    if (originalName) {
-      const { error: propErr } = await db
-        .from("shop_items")
-        .update({ name, description })
-        .eq("name", originalName)
-        .eq("unlock_xp", 0)
-        .neq("id", id);
-      if (propErr) throw new Error(propErr.message);
-    }
+  const originalName = String(formData.get("original_name") ?? "").trim();
+
+  // Snapshot every row this call may touch BEFORE writing, so pixorpheus can be
+  // handed an old → new diff. The sibling ids have to be resolved up front too:
+  // once the main row is renamed they no longer all share `originalName`.
+  const affectedIds = [id];
+  if (applyAllRegions && originalName) {
+    const { data: siblings } = await db
+      .from("shop_items")
+      .select("id")
+      .eq("name", originalName)
+      .eq("unlock_xp", 0)
+      .neq("id", id);
+    for (const s of siblings ?? []) affectedIds.push(s.id as number);
   }
+  const { data: before } = await db.from("shop_items").select("*").in("id", affectedIds);
+
+  const { error } = await db.from("shop_items").update(patch).eq("id", id);
+  if (error) throw new Error(error.message);
+
+  if (applyAllRegions && originalName) {
+    const { error: propErr } = await db
+      .from("shop_items")
+      .update({ name, description })
+      .eq("name", originalName)
+      .eq("unlock_xp", 0)
+      .neq("id", id);
+    if (propErr) throw new Error(propErr.message);
+  }
+
+  const { data: after } = await db.from("shop_items").select("*").in("id", affectedIds);
+  await notifyShopUpdates(
+    (before ?? []) as ShopRowSnapshot[],
+    (after ?? []) as ShopRowSnapshot[],
+  );
 
   revalidatePath("/shop");
 }
@@ -2471,8 +2502,17 @@ export async function toggleShopItem(formData: FormData): Promise<void> {
   const id = Number(formData.get("id") ?? 0);
   const active = String(formData.get("active") ?? "") === "1";
   if (!id) return;
-  const { error } = await db.from("shop_items").update({ active }).eq("id", id);
+  const { data: before } = await db.from("shop_items").select("*").eq("id", id).maybeSingle();
+  const { data: after, error } = await db
+    .from("shop_items")
+    .update({ active })
+    .eq("id", id)
+    .select("*")
+    .single();
   if (error) throw new Error(error.message);
+  if (before && after) {
+    await notifyShopUpdates([before as ShopRowSnapshot], [after as ShopRowSnapshot]);
+  }
   revalidatePath("/shop");
 }
 
@@ -2480,8 +2520,10 @@ export async function deleteShopItem(formData: FormData): Promise<void> {
   await requireSuper();
   const id = Number(formData.get("id") ?? 0);
   if (!id) return;
+  const { data: removed } = await db.from("shop_items").select("*").eq("id", id).maybeSingle();
   const { error } = await db.from("shop_items").delete().eq("id", id);
   if (error) throw new Error(error.message);
+  if (removed) await notifyShopDelete(removed as ShopRowSnapshot);
   revalidatePath("/shop");
 }
 

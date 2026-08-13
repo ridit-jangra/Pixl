@@ -1,3 +1,23 @@
+-- ⛔ OBSOLETE — DO NOT RUN. Superseded by app-level notification.
+--
+-- This migration depends on pg_net, which is a Supabase extension. On the
+-- orchard/CNPG cluster the stack now runs on, pg_net is not installed and not
+-- even available (it is absent from pg_available_extensions), so this cannot
+-- be applied at all. It was also never filled in — the two placeholders below
+-- were left literal, so any run of it would have POSTed to the invalid host
+-- "<PIXORPHEUS_PUBLIC_URL>" and failed silently (pg_net reports errors
+-- asynchronously into net._http_response, which nothing here ever read).
+--
+-- The notification is now sent from the dashboard after a successful write:
+-- apps/dashboard/lib/shopNotify.ts, called from the shop mutations in
+-- apps/dashboard/app/actions.ts. That works on any Postgres.
+--
+-- Kept only for history. If this trigger was ever installed on the old
+-- Supabase project, drop it there with:
+--   DROP TRIGGER IF EXISTS shop_items_change_webhook ON public.shop_items;
+--   DROP FUNCTION IF EXISTS public.notify_shop_change();
+--
+-- ─────────────────────────────────────────────────────────────────────────────
 -- Notify pixorpheus (Slack bot) whenever the shop catalog changes — new item,
 -- price change, description edit, activate/deactivate, delete, etc. An AFTER
 -- INSERT/UPDATE/DELETE trigger on shop_items POSTs the changed row

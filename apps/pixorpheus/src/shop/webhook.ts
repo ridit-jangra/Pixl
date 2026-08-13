@@ -211,15 +211,18 @@ function handleShopChange(payload: WebhookPayload): void {
   }
 }
 
-// Supabase Database Webhooks POST JSON here. Optionally protect with a shared
-// secret sent as a custom header (set SHOP_WEBHOOK_SECRET and add the matching
-// header in the Supabase webhook config / trigger).
+// The dashboard POSTs JSON here after a shop_items write (see the dashboard's
+// lib/shopNotify.ts). The payload keeps the shape a Supabase Database Webhook
+// used to send. The shared secret is mandatory: SHOP_WEBHOOK_SECRET must be set
+// here and match the value the caller sends in x-shop-webhook-secret.
 receiver.app.post("/webhooks/shop", express.json({ limit: "1mb" }), (req, res) => {
   const secret = process.env.SHOP_WEBHOOK_SECRET;
-  if (secret) {
-    const provided = req.headers["x-shop-webhook-secret"];
-    if (provided !== secret) return res.status(401).send("Invalid secret");
+  if (!secret) {
+    console.error("[shop-webhook] SHOP_WEBHOOK_SECRET is not set; refusing request");
+    return res.status(503).send("Service misconfigured");
   }
+  const provided = req.headers["x-shop-webhook-secret"];
+  if (provided !== secret) return res.status(401).send("Invalid secret");
   res.status(200).send("ok");
   try {
     handleShopChange(req.body as WebhookPayload);
